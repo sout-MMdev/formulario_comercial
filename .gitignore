@@ -1,0 +1,24 @@
+# Dependências
+node_modules/
+
+# Build
+dist/
+
+# Configurações de editor / ferramentas locais
+.vscode/
+.claude/
+settings.json
+
+# Projeto separado (CRM em React) — possui repositório próprio
+cativa-crm/
+
+# Versão antiga do formulário (mantida apenas localmente)
+estrutura.html
+
+# Sistema operacional
+Thumbs.db
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*

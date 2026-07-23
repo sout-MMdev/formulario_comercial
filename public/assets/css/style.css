@@ -1,0 +1,2468 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ========== VARIÁVEIS ==========
+   Variáveis são "apelidos" para valores que usamos
+   muito. Se precisar mudar uma cor, muda só aqui
+   e o site inteiro atualiza automaticamente.
+   Para usar uma variável escrevemos: var(--nome)
+   ================================ */
+:root {
+    /* Cores principais da Cativa */
+    --azul-escuro:   #004b8a;   /* azul escuro do logo — cabeçalho, textos */
+    --azul-medio:    #005baa;   /* azul médio — gradientes, legends */
+    --azul-claro:    #0077cc;   /* azul claro — foco dos campos */
+    --amarelo:       #ffcd28;   /* amarelo do logo — destaque, botão enviar */
+    --amarelo-claro: #ffd166;   /* amarelo mais suave — gradiente do botão */
+
+    /* Cores neutras */
+    --branco:        #ffffff;
+    --cinza-fundo:   #f4f6f9;   /* fundo geral da página */
+    --cinza-borda:   #d0d7e2;   /* bordas dos campos */
+    --cinza-texto:   #444444;   /* texto padrão */
+    --cinza-suave:   #7a8a99;   /* textos secundários, placeholder */
+
+    /* Cores de feedback */
+    --verde-ok:      #2ecc71;   /* etapa concluída no progresso */
+    --laranja-alerta: #f39c12;  /* nível de estresse "Alto" */
+    --vermelho-erro: #e74c3c;   /* campo inválido, nível "Crítico" */
+
+    /* Sombras — dão profundidade aos cartões */
+    --sombra:        0 2px 12px rgba(0, 51, 102, 0.10);
+    --sombra-forte:  0 4px 20px rgba(0, 51, 102, 0.18);
+
+    /* Bordas arredondadas */
+    --raio:          10px;      /* usado nos cartões */
+    --raio-pequeno:  6px;       /* usado nos campos e botões */
+
+    /* Fontes */
+    --fonte-titulo:  'Inter', sans-serif;       /* títulos */
+    --fonte-corpo:   'Inter', sans-serif;       /* textos gerais */
+
+    /* Velocidade das animações */
+    --transicao:     0.25s ease;
+}
+
+
+/* ========== RESET ==========
+   Por padrão cada navegador (Chrome, Firefox, Safari)
+   aplica estilos próprios nos elementos HTML.
+   O reset "zera" esses estilos para garantir que
+   o site fique igual em todos os navegadores.
+   ============================= */
+*, *::before, *::after {
+    box-sizing: border-box; /* faz o padding não "crescer" o elemento */
+    margin: 0;              /* remove margens padrão */
+    padding: 0;             /* remove espaçamentos padrão */
+}
+
+
+/* ========== BASE ==========
+   Estilos aplicados no <body> valem para
+   toda a página, a menos que outro elemento
+   sobrescreva.
+   =========================== */
+body {
+    font-family: var(--fonte-corpo);
+    font-size: 15px;
+    color: var(--cinza-texto);
+    background-color: var(--cinza-fundo);
+    min-height: 100vh;      /* ocupa no mínimo a altura inteira da tela */
+    display: flex;          /* ativa o flexbox no body */
+    flex-direction: column; /* empilha os filhos: header, main, footer */
+}
+
+
+/* ========== CABEÇALHO ==========
+   O <header> fica no topo com fundo azul gradiente.
+   Usamos flexbox para colocar logo e título
+   lado a lado na mesma linha.
+   ================================= */
+.cabecalho {
+    
+    background: var(--branco);
+    border-bottom: 3px solid var(--amarelo); /* linha amarela embaixo igual ao site */
+    padding: 20px 32px;     /* espaço interno: 20px em cima/baixo, 32px nas laterais */
+    display: flex;          /* logo e título ficam lado a lado */
+    align-items: center;    /* alinha verticalmente ao centro */
+    justify-content: center;
+    gap: 320px;              /* espaço entre a logo e o título */
+    box-shadow: var(--sombra-forte);
+}
+
+.logo {
+    height: 52px;  /* altura fixa — a largura ajusta sozinha */
+    width: auto;
+}
+
+.titulo-principal {
+    font-family: var(--fonte-corpo);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--azul-escuro); /* azul escuro — fundo agora é branco */
+    letter-spacing: -0.3px;
+}
+
+
+/* ========== BARRA DE PROGRESSO ==========
+   Mostra em qual etapa o usuário está.
+   O JS vai adicionar as classes "ativo" e
+   "concluido" conforme o usuário avança.
+   ========================================== */
+.progresso {
+    background-color: var(--azul-escuro); /* mantém azul escuro na barra de progresso */
+    padding: 0 32px;
+    box-shadow: 0 2px 8px rgba(0,51,102,0.15);
+    cursor: auto;
+}
+
+.progresso-lista {
+    display: flex;          /* etapas ficam lado a lado */
+    list-style: none;       /* remove os pontinhos de lista */
+    justify-content: center;
+    gap: 4px;
+    max-width: 700px;       /* limita a largura máxima */
+    margin: 0 auto;         /* centraliza horizontalmente */
+
+}
+
+/* Cada item da barra de progresso */
+.progresso-item {
+    display: flex;
+    flex-direction: column; /* número em cima, texto embaixo */
+    align-items: center;
+    gap: 6px;
+    padding: 14px 16px;
+    opacity: 0.45;          /* itens inativas ficam transparentes */
+    transition: opacity var(--transicao);
+    flex: 1;                /* divide o espaço igualmente entre os itens */
+    border-bottom: 3px solid transparent; /* borda invisível por padrão */
+}
+
+/* Etapa atual */
+.progresso-item.ativo {
+    opacity: 1;
+    border-bottom: 3px solid var(--amarelo); /* linha amarela embaixo */
+}
+
+/* Etapa já concluída */
+.progresso-item.concluido {
+    opacity: 0.75;
+    border-bottom: 3px solid var(--verde-ok); /* linha verde embaixo */
+}
+
+/* Círculo com o número da etapa */
+.progresso-numero {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;     /* deixa o elemento redondo */
+    background-color: rgba(255, 255, 255, 0.15);
+    color: var(--branco);
+    font-size: 0.85rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.progresso-item.ativo .progresso-numero {
+    background-color: var(--amarelo);
+    color: var(--azul-escuro);
+}
+
+.progresso-item.concluido .progresso-numero {
+    background-color: var(--verde-ok);
+    color: var(--branco);
+}
+
+/* Nome da etapa (ex: "Viagem", "Notas Fiscais") */
+.progresso-texto {
+    font-size: 0.72rem;
+    color: var(--branco);
+    text-transform: uppercase; /* texto em maiúsculas */
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
+
+/* ========== CONTEÚDO PRINCIPAL ==========
+   O <main> é onde ficam as etapas do formulário.
+   max-width limita a largura para não ficar
+   muito largo em telas grandes.
+   margin: 0 auto centraliza o conteúdo.
+   ========================================== */
+.conteudo {
+    flex: 1;                /* ocupa todo o espaço disponível entre header e footer */
+    padding: 32px 16px;
+    max-width: 760px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+
+/* ========== ETAPAS ==========
+   Cada etapa é uma <section>.
+   A classe "oculto" esconde a seção.
+   O JS remove e adiciona "oculto" para
+   mostrar a etapa correta.
+   ============================== */
+.etapa {
+    animation: entrar 0.3s ease; /* animação ao aparecer */
+}
+
+.oculto {
+    display: none; /* esconde completamente o elemento */
+}
+
+/* Animação de entrada da etapa */
+@keyframes entrar {
+    from {
+        opacity: 0;
+        transform: translateY(12px); /* começa 12px abaixo */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);    /* sobe para a posição normal */
+    }
+}
+
+/* Título de cada etapa (ex: "Logística da Viagem") */
+.etapa-titulo {
+    font-family: var(--fonte-titulo);
+    font-size: 1.3rem;
+    color: var(--azul-escuro);
+    margin-bottom: 24px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--amarelo); /* linha amarela embaixo do título */
+}
+
+
+/* ========== INSTRUÇÕES ==========
+   Caixa azul clara com as instruções
+   da etapa 1 para o usuário.
+   ================================== */
+.instrucoes {
+    background-color: #e8f0fb;
+    border-left: 4px solid var(--azul-claro); /* barra azul na esquerda */
+    border-radius: var(--raio-pequeno);
+    padding: 14px 18px;
+    margin-bottom: 24px;
+}
+
+.instrucoes ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Adiciona a seta antes de cada item da lista */
+.instrucoes ul li::before {
+    content: '→ ';
+    color: var(--azul-claro);
+    font-weight: bold;
+}
+
+
+/* ========== CAMPOS ==========
+   Cada campo é uma <div class="campo">
+   que agrupa o <label> e o <input>.
+   Usamos flexbox em coluna para que
+   o label fique em cima do input.
+   ============================== */
+.campo {
+    display: flex;
+    flex-direction: column; /* label em cima, input embaixo */
+    gap: 6px;               /* espaço entre label e input */
+    margin-bottom: 18px;    /* espaço entre um campo e o próximo */
+}
+
+/* Texto do label (ex: "Seu nome:") */
+.campo label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--azul-escuro);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+/* Estilo base para input, select e textarea */
+.campo input,
+.campo select,
+.campo textarea {
+    width: 100%;            /* ocupa toda a largura disponível */
+    padding: 10px 14px;
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio-pequeno);
+    font-family: var(--fonte-corpo);
+    font-size: 0.95rem;     /* tamanho mínimo para não dar zoom automático no iPhone */
+    color: var(--cinza-texto);
+    background-color: var(--branco);
+    transition: border-color var(--transicao), box-shadow var(--transicao);
+    outline: none;          /* remove o contorno padrão do navegador */
+}
+
+/* Quando o usuário clica no campo (foco) */
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+    border-color: var(--azul-claro);
+    box-shadow: 0 0 0 3px rgba(0, 119, 204, 0.15); /* brilho azul ao redor */
+}
+
+/* Texto de dica dentro do campo */
+.campo input::placeholder,
+.campo textarea::placeholder {
+    color: var(--cinza-suave);
+}
+
+/* Select personalizado — remove a seta padrão e coloca a nossa */
+.campo select {
+    cursor: pointer;
+    appearance: none;       /* remove o estilo padrão do navegador */
+    /* seta personalizada como imagem SVG embutida no CSS */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23005baa' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center; /* posiciona a seta à direita */
+    padding-right: 36px;    /* espaço para não sobrepor o texto */
+}
+
+/* Textarea pode ser redimensionado só verticalmente */
+.campo textarea {
+    resize: vertical;
+    min-height: 70px;
+}
+
+/* Campo de upload de arquivo */
+.campo input[type="file"] {
+    padding: 8px;
+    cursor: pointer;
+    background-color: #f0f4fa;
+    border-style: dashed;   /* borda tracejada para indicar área de upload */
+}
+
+.campo input[type="file"]:hover {
+    background-color: #e2ebf7;
+    border-color: var(--azul-claro);
+}
+
+/* Campo com valor inválido (campo obrigatório vazio ou email errado) */
+.campo input:invalid:not(:placeholder-shown),
+.campo select:invalid,
+.campo textarea:invalid:not(:placeholder-shown) {
+    border-color: var(--vermelho-erro);
+}
+
+
+/* ========== FIELDSETS (BLOCOS) ==========
+   Cada agência e despesa fica dentro de um <fieldset>.
+   O <legend> é o título do bloco
+   (ex: "Agência 1", "Despesa 2").
+   ========================================= */
+fieldset.bloco-trajeto,
+fieldset.bloco-despesa,
+fieldset.bloco-agencia-comercial,
+fieldset.bloco-agencia-termometro {
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio);
+    padding: 24px;
+    margin-bottom: 24px;
+    background-color: var(--branco);
+    box-shadow: var(--sombra); /* sombra suave para parecer um cartão */
+}
+
+/* Estilo específico para bloco de termômetro (diferenciação visual) */
+fieldset.bloco-agencia-termometro {
+    background-color: rgba(100, 150, 200, 0.03); /* fundo levemente azulado */
+}
+
+/* Título do bloco (ex: "AGÊNCIA 1") */
+fieldset.bloco-trajeto legend,
+fieldset.bloco-despesa legend,
+fieldset.bloco-agencia-comercial legend,
+fieldset.bloco-agencia-termometro legend {
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: var(--branco);
+    background-color: var(--azul-medio);
+    padding: 4px 14px;
+    border-radius: 20px;    /* pílula arredondada */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Linha divisória dentro do bloco de agência
+   (separa logística da análise comercial) */
+.divisor {
+    border: none;
+    border-top: 1px dashed var(--cinza-borda);
+    margin: 20px 0;
+}
+
+/* Separador de seção dentro de um bloco
+   (separa dados comerciais do termômetro) */
+.separador-secao {
+    border: none;
+    border-top: 1px solid var(--cinza-borda);
+    margin: 24px 0;
+}
+
+/* Subtítulo do termômetro */
+.subtitulo-termometro {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--azul-escuro);
+    margin-bottom: 8px;
+    margin-top: 0;
+}
+
+/* Instruções do termômetro */
+.instrucoes-termometro {
+    font-size: 0.85rem;
+    color: var(--cinza-suave);
+    font-style: italic;
+    margin: 6px 0 14px 0;
+    padding: 0;
+}
+
+
+/* ========== BOTÃO ADICIONAR ==========
+   Botão tracejado para adicionar mais
+   blocos (agência, NF ou cartão).
+   ======================================= */
+.acoes-adicionar {
+    margin-bottom: 28px;
+    text-align: center;
+}
+
+.acoes-adicionar button {
+    background-color: transparent;
+    color: var(--azul-claro);
+    border: 2px dashed var(--azul-claro);
+    border-radius: var(--raio);
+    padding: 10px 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color var(--transicao), color var(--transicao);
+}
+
+/* Ao passar o mouse, preenche o botão */
+.acoes-adicionar button:hover {
+    background-color: var(--azul-claro);
+    color: var(--branco);
+}
+
+
+/* ========== AÇÕES (VOLTAR / PRÓXIMO / ENVIAR) ==========
+   Ficam no rodapé de cada etapa.
+   Usamos space-between para empurrar
+   Voltar para a esquerda e Próximo para a direita.
+   ========================================================= */
+.acoes {
+    display: flex;
+    justify-content: space-between; /* um botão em cada extremo */
+    align-items: center;
+    gap: 12px;
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid var(--cinza-borda);
+}
+
+/* Botão Próximo */
+.btn-proximo {
+    background: linear-gradient(135deg, var(--azul-medio), var(--azul-claro));
+    color: var(--branco);
+    border: none;
+    border-radius: var(--raio-pequeno);
+    padding: 12px 28px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity var(--transicao), transform var(--transicao);
+    letter-spacing: 0.3px;
+}
+
+.btn-proximo:hover {
+    opacity: 0.88;
+    transform: translateY(-1px); /* sobe 1px ao passar o mouse */
+}
+
+/* Botão Finalizar — similar ao Próximo mas com ênfase */
+.btn-finalizar {
+    background: linear-gradient(135deg, var(--amarelo), var(--amarelo-claro));
+    color: var(--azul-escuro);
+    border: none;
+    border-radius: var(--raio-pequeno);
+    padding: 12px 28px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity var(--transicao), transform var(--transicao);
+    letter-spacing: 0.3px;
+}
+
+/* Botão Enviar — amarelo para chamar atenção */
+#btn-enviar {
+    background: linear-gradient(135deg, var(--amarelo), var(--amarelo-claro));
+    color: var(--azul-escuro);
+    border: none;
+    border-radius: var(--raio-pequeno);
+    padding: 12px 28px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity var(--transicao), transform var(--transicao);
+    letter-spacing: 0.3px;
+}
+
+#btn-enviar:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
+}
+
+/* Botão Voltar — discreto, só contorno */
+.btn-voltar {
+    background-color: transparent;
+    color: var(--cinza-suave);
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio-pequeno);
+    padding: 11px 22px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: color var(--transicao), border-color var(--transicao);
+}
+
+.btn-voltar:hover {
+    color: var(--azul-escuro);
+    border-color: var(--azul-escuro);
+}
+
+/* Quando só existe um botão na linha (sem Voltar),
+   empurra ele para a direita */
+.acoes:has(> :only-child) {
+    justify-content: flex-end;
+}
+
+
+/* ========== RESUMO (ETAPA 5) ==========
+   Mostra todos os dados preenchidos
+   antes do envio. O JS vai gerar
+   o conteúdo dinamicamente.
+   ======================================= */
+.resumo-descricao {
+    color: var(--cinza-suave);
+    margin-bottom: 24px;
+    line-height: 1.6; /* espaçamento entre linhas para facilitar leitura */
+}
+
+/* Cartão branco que envolve o resumo */
+#resumo-conteudo {
+    background-color: var(--branco);
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio);
+    padding: 24px;
+    box-shadow: var(--sombra);
+}
+
+/* Cada grupo de informações no resumo
+   (ex: bloco de identificação, bloco de viagem) */
+.resumo-bloco {
+    margin-bottom: 24px;
+}
+
+.resumo-bloco:last-child {
+    margin-bottom: 0;
+}
+
+/* Título de cada bloco no resumo */
+.resumo-bloco h3 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--azul-medio);
+    border-bottom: 1px solid var(--cinza-borda);
+    padding-bottom: 6px;
+    margin-bottom: 12px;
+}
+
+/* Cada linha do resumo (chave: valor) */
+.resumo-linha {
+    display: flex;
+    gap: 8px;
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+}
+
+/* Parte esquerda: nome do campo (ex: "Nome:") */
+.resumo-chave {
+    font-weight: 600;
+    color: var(--azul-escuro);
+    min-width: 180px; /* largura mínima para alinhar os valores */
+}
+
+/* Parte direita: valor preenchido */
+.resumo-valor {
+    color: var(--cinza-texto);
+}
+
+
+/* ========== RODAPÉ ==========
+   Faixa azul escura no final da página.
+   margin-top: auto empurra o rodapé
+   para o final mesmo quando o conteúdo
+   é pequeno.
+   ============================== */
+.rodape {
+    background-color: var(--azul-escuro);
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    padding: 16px;
+    font-size: 0.8rem;
+    margin-top: auto;
+}
+
+
+/* ========== OPÇÕES RADIO (faturamento, estresse) ==========
+   Layout vertical com cards clicáveis.
+   ========================================================= */
+.opcoes-radio {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.opcao-radio {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1px solid var(--cinza-borda);
+    border-radius: var(--raio-borda);
+    cursor: pointer;
+    transition: border-color 0.2s, background-color 0.2s;
+    font-size: 0.9rem;
+}
+
+.opcao-radio:hover {
+    border-color: var(--azul-medio);
+    background-color: rgba(0, 75, 138, 0.03);
+}
+
+/* Checkbox/radio com appearance:none: desenhamos a marcação nós
+   mesmos. Isso evita a "tremida" que o Windows/Chrome aplicam ao
+   redimensionar (via width/height) o controle nativo do sistema. */
+.opcao-radio input[type="radio"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    flex-shrink: 0;
+    border: 2px solid var(--cinza-borda);
+    border-radius: 50%;
+    background-color: var(--branco);
+    cursor: pointer;
+    position: relative;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.opcao-radio input[type="radio"]:checked {
+    border-color: var(--azul-medio);
+    background-color: var(--azul-medio);
+}
+
+.opcao-radio input[type="radio"]:checked::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: var(--branco);
+    transform: translate(-50%, -50%);
+}
+
+.opcao-radio input[type="radio"]:checked + span {
+    font-weight: 600;
+    color: var(--azul-escuro);
+}
+
+
+/* ========== OPÇÕES CHECKBOX (categorias) ========== */
+.opcoes-checkbox {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.opcao-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1px solid var(--cinza-borda);
+    border-radius: var(--raio-borda);
+    cursor: pointer;
+    transition: border-color 0.2s, background-color 0.2s;
+    font-size: 0.9rem;
+}
+
+.opcao-checkbox:hover {
+    border-color: var(--azul-medio);
+    background-color: rgba(0, 75, 138, 0.03);
+}
+
+.opcao-checkbox input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    flex-shrink: 0;
+    border: 2px solid var(--cinza-borda);
+    border-radius: 4px;
+    background-color: var(--branco);
+    cursor: pointer;
+    position: relative;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.opcao-checkbox input[type="checkbox"]:checked {
+    border-color: var(--azul-medio);
+    background-color: var(--azul-medio);
+}
+
+.opcao-checkbox input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    top: 1px;
+    left: 5px;
+    width: 5px;
+    height: 9px;
+    border: solid var(--branco);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.opcao-checkbox input[type="checkbox"]:checked + span {
+    font-weight: 600;
+    color: var(--azul-escuro);
+}
+
+
+/* ========== CAMPOS CONDICIONAIS (estresse detalhe) ========== */
+.campo-condicional {
+    margin-top: 12px;
+    padding: 16px;
+    background-color: rgba(0, 75, 138, 0.03);
+    border-left: 3px solid var(--azul-medio);
+    border-radius: 0 var(--raio-borda) var(--raio-borda) 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+
+.campo-condicional label {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--azul-escuro);
+}
+
+.campo-condicional.oculto,
+.textarea-acao.oculto {
+    display: none;
+}
+
+
+
+/* ========== AÇÃO ACORDADA (setores + textareas) ========== */
+.opcoes-acao {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.bloco-acao-setor {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.bloco-acao-setor .opcao-checkbox {
+    margin: 0;
+}
+
+.textarea-acao {
+    margin-left: 28px;
+    border-left: 3px solid var(--amarelo);
+    padding-left: 12px;
+}
+
+
+/* ========== RESPONSIVO ==========
+   @media é uma "condição":
+   as regras aqui dentro só valem
+   quando a tela tiver até 600px de largura
+   (celulares em geral).
+
+   Dica: o navegador sempre lê o CSS de cima
+   para baixo, então o @media no final
+   sobrescreve os estilos anteriores
+   apenas no celular.
+   ================================== */
+@media (max-width: 600px) {
+
+    /* Cabeçalho menor no celular */
+    .cabecalho {
+    
+        padding: 16px;
+        gap: 12px;
+    }
+
+    .logo {
+        height: 40px;
+    }
+
+    .titulo-principal {
+        font-size: 1.1rem;
+    }
+
+    /* Esconde o texto das etapas no progresso
+       para não ficar espremido no celular
+       (mantém só os números) */
+    .progresso-texto {
+        display: none;
+    }
+
+    .progresso-item {
+        padding: 12px 8px;
+    }
+
+    /* Menos espaço nas laterais no celular */
+    .conteudo {
+        padding: 20px 12px;
+    }
+
+    /* Blocos com menos padding no celular */
+    fieldset.bloco-trajeto,
+    fieldset.bloco-despesa,
+    fieldset.bloco-agencia-comercial,
+    fieldset.bloco-agencia-termometro {
+        padding: 16px;
+    }
+
+    /* Botões empilhados no celular.
+       column-reverse coloca o Próximo em cima
+       e o Voltar embaixo — mais natural no celular */
+    .acoes {
+        flex-direction: column-reverse;
+    }
+
+    /* Botões ocupam toda a largura no celular
+       para facilitar o toque com o dedo */
+    .btn-proximo,
+    .btn-voltar,
+    #btn-enviar {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* No resumo, chave e valor ficam
+       um em cima do outro no celular */
+    .resumo-linha {
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .resumo-chave {
+        min-width: unset; /* remove a largura mínima no celular */
+    }
+
+    /* Checkboxes em coluna única no celular */
+    .opcoes-checkbox {
+        grid-template-columns: 1fr;
+    }
+
+    /* Textarea da ação acordada sem margin no celular */
+    .textarea-acao {
+        margin-left: 0;
+    }
+}
+
+
+/* ========== AUTOCOMPLETE DE CIDADES ==========
+   Lista suspensa que aparece quando o executivo
+   digita o nome de uma cidade.
+   O <ul> fica posicionado logo abaixo do input.
+   =============================================== */
+
+/* O .campo precisa ser position: relative para
+   a lista suspensa se posicionar em relação a ele */
+.campo {
+    position: relative;
+}
+
+/* A lista suspensa de cidades */
+.lista-cidades {
+    position: absolute;     /* flutua sobre o restante da página */
+    top: 100%;              /* começa logo abaixo do input */
+    left: 0;
+    right: 0;
+    background-color: var(--branco);
+    border: 1.5px solid var(--azul-claro);
+    border-top: none;       /* remove borda do topo para "grudar" no input */
+    border-radius: 0 0 var(--raio-pequeno) var(--raio-pequeno);
+    box-shadow: var(--sombra-forte);
+    list-style: none;
+    max-height: 220px;      /* altura máxima — se passar, aparece scroll */
+    overflow-y: auto;       /* scroll vertical se a lista for grande */
+    z-index: 100;           /* fica na frente de outros elementos */
+    margin: 0;
+    padding: 0;
+}
+
+/* Cada item da lista */
+.lista-cidades-item {
+    padding: 10px 14px;
+    font-size: 0.92rem;
+    color: var(--cinza-texto);
+    cursor: pointer;        /* mostra a mãozinha ao passar o mouse */
+    border-bottom: 1px solid var(--cinza-fundo);
+    transition: background-color var(--transicao);
+}
+
+/* Último item não tem borda embaixo */
+.lista-cidades-item:last-child {
+    border-bottom: none;
+}
+
+/* Cor de fundo ao passar o mouse ou navegar com teclado */
+.lista-cidades-item:hover {
+    background-color: #e8f0fb;
+    color: var(--azul-escuro);
+    font-weight: 600;
+}
+
+/* Input de cidade quando a lista está aberta —
+   remove o arredondamento inferior para grudar na lista */
+.input-cidade:focus {
+    border-radius: var(--raio-pequeno) var(--raio-pequeno) 0 0;
+}
+
+/* Campo readonly (reembolso calculado automaticamente) */
+input[readonly] {
+    background-color: #f0f4fa;  /* fundo levemente diferente */
+    color: var(--azul-escuro);
+    font-weight: 600;
+    cursor: not-allowed;        /* mostra o cursor de bloqueio */
+    border-color: var(--cinza-borda);
+}
+
+
+/* ========== LINHAS DE AGÊNCIA (ETAPA 2) ==========
+   Cada linha tem um input de texto e um botão
+   de remover lado a lado.
+   =================================================== */
+
+/* Container das linhas de agência dentro de um dia */
+.container-agencias-dia {
+    display: flex;
+    flex-direction: column; /* linhas empilhadas */
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+/* Cada linha: input + botão remover lado a lado */
+.linha-agencia {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* O input ocupa todo o espaço disponível */
+.linha-agencia input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio-pequeno);
+    font-family: var(--fonte-corpo);
+    font-size: 0.95rem;
+    color: var(--cinza-texto);
+    background-color: var(--branco);
+    outline: none;
+    transition: border-color var(--transicao), box-shadow var(--transicao);
+}
+
+.linha-agencia input:focus {
+    border-color: var(--azul-claro);
+    box-shadow: 0 0 0 3px rgba(0, 119, 204, 0.15);
+}
+
+.linha-agencia input::placeholder {
+    color: var(--cinza-suave);
+}
+
+/* Botão de remover a linha — pequeno e discreto */
+.btn-remover-agencia {
+    background-color: transparent;
+    color: var(--cinza-suave);
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio-pequeno);
+    width: 34px;
+    height: 34px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    flex-shrink: 0; /* não encolhe */
+    transition: color var(--transicao), border-color var(--transicao),
+                background-color var(--transicao);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-remover-agencia:hover {
+    color: var(--vermelho-erro);
+    border-color: var(--vermelho-erro);
+    background-color: #fdf0f0;
+}
+
+/* Botão "+ Adicionar agência" dentro do campo */
+.btn-add-agencia-linha {
+    background-color: transparent;
+    color: var(--azul-claro);
+    border: 1.5px dashed var(--azul-claro);
+    border-radius: var(--raio-pequeno);
+    padding: 7px 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 4px;
+    transition: background-color var(--transicao), color var(--transicao);
+}
+
+.btn-add-agencia-linha:hover {
+    background-color: var(--azul-claro);
+    color: var(--branco);
+}
+
+@media (max-width: 600px) {
+    .btn-add-agencia-linha {
+        font-size: 0.82rem;
+        padding: 8px 12px;
+    }
+}
+
+
+/* ========== E-MAIL PREENCHIDO AUTOMATICAMENTE ==========
+   Quando o JS preenche o campo de e-mail,
+   adicionamos a classe "preenchido-auto" para
+   dar um feedback visual sutil ao executivo. */
+#email_executivo.preenchido-auto {
+    background-color: #f0f7ff;
+    border-color: var(--azul-claro);
+    color: var(--azul-escuro);
+}
+
+
+/* ========== PAINEL DE DIAS SALVOS (ETAPA 1) ==========
+   Mostra os dias que o executivo salvou durante a semana.
+   ======================================================= */
+.painel-dias-salvos {
+    margin-bottom: 24px;
+    display: none; /* não exibir o painel de dias salvos */
+}
+
+/* Mensagem quando não há dias salvos */
+.painel-vazio {
+    background-color: #f0f4fa;
+    border: 1.5px dashed var(--cinza-borda);
+    border-radius: var(--raio);
+    padding: 16px 20px;
+    color: var(--cinza-suave);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+/* Título "Dias salvos esta semana:" */
+.painel-titulo-lista {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--azul-escuro);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+}
+
+/* Card de cada dia salvo */
+.painel-dia {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    background-color: var(--branco);
+    border: 1.5px solid var(--cinza-borda);
+    border-left: 4px solid var(--verde-ok); /* barra verde na esquerda */
+    border-radius: var(--raio);
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    box-shadow: var(--sombra);
+}
+
+/* Coluna de informações do dia */
+.painel-dia-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.88rem;
+}
+
+.painel-dia-data {
+    font-weight: 700;
+    color: var(--azul-escuro);
+    font-size: 0.95rem;
+}
+
+.painel-dia-rota {
+    color: var(--cinza-texto);
+}
+
+.painel-dia-km {
+    color: var(--cinza-suave);
+    font-size: 0.83rem;
+}
+
+.painel-dia-agencias {
+    color: var(--azul-medio);
+    font-size: 0.83rem;
+}
+
+/* Botão de excluir o dia */
+.btn-excluir-dia {
+    background-color: transparent;
+    color: var(--cinza-suave);
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio-pequeno);
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: color var(--transicao), border-color var(--transicao),
+                background-color var(--transicao);
+}
+
+.btn-excluir-dia:hover {
+    color: var(--vermelho-erro);
+    border-color: var(--vermelho-erro);
+    background-color: #fdf0f0;
+}
+
+/* Botão Salvar dia — verde para destacar */
+#btn-salvar-dia {
+    background: linear-gradient(135deg, #27ae60, var(--verde-ok));
+    color: var(--branco);
+    border: none;
+    border-radius: var(--raio-pequeno);
+    padding: 12px 22px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity var(--transicao), transform var(--transicao);
+}
+
+#btn-salvar-dia:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
+}
+
+/* Container que agrupa o botão Salvar + Continuar à direita */
+.acoes-direita {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+@media (max-width: 600px) {
+    .painel-dia {
+        flex-direction: column;
+    }
+
+    .btn-excluir-dia {
+        width: 100%;
+        text-align: center;
+    }
+
+    .acoes-direita {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    #btn-salvar-dia {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+
+/* ========== AJUSTES DE PESO DA INTER ==========
+   A Inter tem pesos específicos que deixam
+   cada elemento com a aparência certa.
+   ================================================ */
+
+/* Título principal no cabeçalho — Inter Bold */
+.titulo-principal {
+    font-weight: 700;
+    letter-spacing: -0.3px; /* Inter fica melhor com tracking levemente negativo */
+}
+
+/* Títulos de cada etapa — Inter SemiBold */
+.etapa-titulo {
+    font-weight: 600;
+    letter-spacing: -0.2px;
+}
+
+/* Labels dos campos — Inter Medium */
+.campo label {
+    font-weight: 500;
+    letter-spacing: 0.2px;
+}
+
+/* Legends dos blocos (Agência 1, Despesa 1) — Inter SemiBold */
+fieldset.bloco-trajeto legend,
+fieldset.bloco-despesa legend,
+fieldset.bloco-agencia-comercial legend,
+fieldset.bloco-agencia-termometro legend {
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* Textos dos inputs e textareas — Inter Regular */
+.campo input,
+.campo select,
+.campo textarea {
+    font-weight: 400;
+    letter-spacing: 0.1px;
+}
+
+/* Botões — Inter SemiBold */
+.btn-proximo,
+.btn-voltar,
+#btn-enviar,
+#btn-salvar-dia,
+.acoes-adicionar button,
+.btn-add-agencia-linha {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+
+/* Textos de instrução — Inter Light */
+.instrucoes ul li {
+    font-weight: 300;
+    font-size: 0.92rem;
+}
+
+/* Progresso — Inter Medium */
+.progresso-texto {
+    font-weight: 500;
+}
+
+.progresso-numero {
+    font-weight: 700;
+}
+
+
+/* ========== CATIVÃO NO CABEÇALHO ==========
+   Imagem do Cativão no lado direito do header.
+   margin-left: auto empurra ele para a direita
+   usando o flexbox do .cabecalho.
+   ============================================ */
+.cativao {
+    height: 90px;           /* altura do Cativão no header */
+    width: auto;
+    margin-left: auto;      /* empurra para o lado direito */
+    align-self: flex-end;   /* encosta na borda inferior do header */
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.15));
+}
+
+/* Ajuste da logo — agora que o fundo é branco
+   a logo original já fica perfeita */
+.logo {
+    height: 52px;
+    width: auto;
+}
+
+/* Responsivo — Cativão menor no celular */
+@media (max-width: 600px) {
+    .cativao {
+        height: 60px;
+    }
+}
+
+
+/* ================================================
+   SPLASH DE CARREGAMENTO
+   Camada que aparece por cima de tudo quando
+   a página carrega ou o executivo der F5.
+   O JS remove ela depois que tudo estiver pronto.
+   ================================================ */
+
+/* ========== OVERLAY ==========
+   position: fixed faz ele cobrir a tela inteira
+   independente do scroll.
+   z-index: 9999 garante que fica na frente de tudo.
+   =============================== */
+#splash-overlay {
+    position: fixed;        /* cobre a tela inteira */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #003366; /* azul escuro da Cativa */
+    z-index: 9999;             /* na frente de todos os outros elementos */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    /* Transição de saída — quando o JS adicionar a classe
+       "splash-saindo", o overlay some suavemente */
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+/* Classe adicionada pelo JS para esconder o overlay */
+#splash-overlay.splash-saindo {
+    opacity: 0;
+    visibility: hidden; /* remove da acessibilidade depois de invisível */
+}
+
+/* ========== CONTAINER CENTRAL ========== */
+.splash-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    animation: splashSurgir 0.8s ease forwards; /* animação de entrada */
+}
+
+@keyframes splashSurgir {
+    from {
+        opacity: 0;
+        transform: translateY(20px); /* começa 20px abaixo */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========== LOGO ========== */
+.splash-logo {
+    width: 200px;
+    height: auto;
+    filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.35));
+}
+
+/* ========== LINHA AMARELA ========== */
+.splash-linha {
+    width: 60px;
+    height: 3px;
+    background-color: #f0a500;
+    border-radius: 2px;
+    animation: splashCrescer 0.6s ease 0.5s forwards;
+    transform: scaleX(0);  /* começa com largura zero */
+    transform-origin: left;
+    opacity: 0;
+}
+
+@keyframes splashCrescer {
+    from {
+        transform: scaleX(0);
+        opacity: 0;
+    }
+    to {
+        transform: scaleX(1);
+        opacity: 1;
+    }
+}
+
+/* ========== TÍTULO ========== */
+.splash-titulo {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-align: center;
+    animation: splashAparecer 0.6s ease 0.7s forwards;
+    opacity: 0;
+}
+
+/* ========== BARRA DE CARREGAMENTO ========== */
+.splash-barra-fundo {
+    width: 180px;
+    height: 3px;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 2px;
+    overflow: hidden;
+    animation: splashAparecer 0.4s ease 1s forwards;
+    opacity: 0;
+}
+
+/* A barra é animada pelo JS para refletir
+   o carregamento real das APIs */
+.splash-barra-progresso {
+    height: 100%;
+    width: 0%;
+    background-color: #f0a500;
+    border-radius: 2px;
+    transition: width 0.4s ease; /* transição suave ao atualizar via JS */
+}
+
+/* ========== TEXTO DE STATUS ========== */
+/* Exibe mensagens como "Carregando cidades..." */
+.splash-status {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 0.5px;
+    text-align: center;
+    animation: splashAparecer 0.4s ease 1s forwards;
+    opacity: 0;
+    min-height: 18px; /* evita o layout pular quando o texto muda */
+}
+
+/* ========== RODAPÉ DA SPLASH ========== */
+.splash-rodape {
+    position: fixed;
+    bottom: 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.25);
+    letter-spacing: 0.5px;
+    animation: splashAparecer 0.4s ease 1s forwards;
+    opacity: 0;
+}
+
+/* Animação genérica de aparecer — usada em vários elementos */
+@keyframes splashAparecer {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* ========== RESPONSIVO ========== */
+@media (max-width: 600px) {
+    .splash-logo {
+        width: 160px;
+    }
+    .splash-titulo {
+        font-size: 0.75rem;
+        letter-spacing: 2px;
+    }
+}
+
+
+/* ========== RESUMO DO DIA (ETAPA 6) ========== */
+
+/* Container geral do resumo */
+.resumo-dia {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+/* Grid de totais no topo do resumo */
+.resumo-totais {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+/* Cada card de total */
+.resumo-total-item {
+    background-color: var(--branco);
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio);
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    box-shadow: var(--sombra);
+}
+
+.resumo-total-label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--cinza-suave);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.resumo-total-valor {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--azul-escuro);
+}
+
+/* Card de desconto — cartão corporativo */
+.resumo-total-desconto .resumo-total-valor {
+    color: var(--vermelho-erro);
+}
+
+/* Card de destaque — total final a pagar */
+.resumo-total-destaque {
+    border-color: var(--amarelo);
+    background-color: #fffbf0;
+}
+
+.resumo-total-destaque .resumo-total-valor {
+    color: var(--amarelo);
+    font-size: 1.25rem;
+}
+
+/* Linha divisória entre itens do resumo */
+.resumo-divisor {
+    border: none;
+    border-top: 1px dashed var(--cinza-borda);
+    margin: 10px 0;
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+    .resumo-totais {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .resumo-total-destaque {
+        grid-column: 1 / -1; /* ocupa a linha inteira */
+    }
+}
+
+/* Linha de contadores no painel de dias salvos */
+.painel-dia-contadores {
+    font-size: 0.78rem;
+    color: var(--cinza-suave);
+    margin-top: 2px;
+}
+
+
+/* ========== RESUMO — SEÇÕES E CARDS ==========
+   Estrutura visual do resumo na etapa 6.
+   Cada seção tem um título com ícone e
+   os dados dentro de cards brancos.
+   =============================================== */
+
+/* Seção — agrupa cards do mesmo tipo */
+.resumo-secao {
+    margin-bottom: 24px;
+}
+
+/* Título da seção ex: "🚗 Logística da Viagem" */
+.resumo-secao-titulo {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--azul-medio);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 2px solid var(--amarelo);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+}
+
+/* Card branco de cada registro */
+.resumo-card {
+    background-color: var(--branco);
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio);
+    margin-bottom: 10px;
+    overflow: hidden;
+    box-shadow: var(--sombra);
+}
+
+/* Cabeçalho do card ex: "Agência 1 — Viagens Boa" */
+.resumo-card-header {
+    background-color: var(--azul-escuro);
+    color: var(--branco);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 10px 16px;
+    letter-spacing: 0.3px;
+}
+
+/* Cabeçalho dos dias salvos — com botão excluir */
+.resumo-card-header-salvo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Corpo do card com as linhas de dados */
+.resumo-card-corpo {
+    padding: 12px 16px;
+}
+
+/* Card dos dias salvos — borda verde */
+.resumo-card-salvo {
+    border-left: 4px solid var(--verde-ok);
+}
+
+/* ── Cards de totais ── */
+.resumo-dia {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+.resumo-totais {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.resumo-total-item {
+    background-color: var(--branco);
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio);
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    box-shadow: var(--sombra);
+}
+
+.resumo-total-label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--cinza-suave);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.resumo-total-valor {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--azul-escuro);
+}
+
+.resumo-total-desconto .resumo-total-valor {
+    color: var(--vermelho-erro);
+}
+
+.resumo-total-destaque {
+    border-color: var(--amarelo);
+    background-color: #fffbf0;
+}
+
+.resumo-total-destaque .resumo-total-valor {
+    color: #c47e00;
+    font-size: 1.25rem;
+}
+
+/* Contadores de registros */
+.painel-dia-contadores {
+    font-size: 0.78rem;
+    color: var(--cinza-suave);
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--cinza-borda);
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+    .resumo-totais {
+        grid-template-columns: 1fr 1fr;
+    }
+    .resumo-total-destaque {
+        grid-column: 1 / -1;
+    }
+    .resumo-card-header-salvo {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* ================================================
+   RESUMO — ETAPA 6
+   Cards organizados por seção com título,
+   header azul e linhas chave/valor.
+   ================================================ */
+
+.resumo-dia {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+/* Grid de cards de totais */
+.resumo-totais {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.resumo-total-item {
+    background: var(--branco);
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio);
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    box-shadow: var(--sombra);
+}
+
+.resumo-total-label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--cinza-suave);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.resumo-total-valor {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--azul-escuro);
+}
+
+/* Cartão — valor em vermelho */
+.resumo-total-desconto .resumo-total-valor {
+    color: var(--vermelho-erro);
+}
+
+/* Total final — destaque amarelo */
+.resumo-total-destaque {
+    border-color: var(--amarelo);
+    background-color: #fffbf0;
+}
+
+.resumo-total-destaque .resumo-total-valor {
+    color: #c47e00;
+    font-size: 1.25rem;
+}
+
+/* Seção — ex: "🚗 Logística da Viagem" */
+.resumo-secao {
+    margin-bottom: 20px;
+}
+
+.resumo-secao-titulo {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--azul-medio);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 2px solid var(--amarelo);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+}
+
+/* Card de cada registro */
+.resumo-card {
+    background: var(--branco);
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio);
+    margin-bottom: 10px;
+    overflow: hidden;
+    box-shadow: var(--sombra);
+}
+
+/* Header do card — fundo azul escuro */
+.resumo-card-header {
+    background-color: var(--azul-escuro);
+    color: var(--branco);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 10px 16px;
+    letter-spacing: 0.3px;
+}
+
+/* Header dos dias salvos — com botão excluir */
+.resumo-card-header-salvo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Corpo do card */
+.resumo-card-corpo {
+    padding: 12px 16px;
+}
+
+/* Card dos dias salvos — borda verde */
+.resumo-card-salvo {
+    border-left: 4px solid var(--verde-ok);
+}
+
+/* Linha chave/valor dentro do card */
+.resumo-linha {
+    display: flex;
+    gap: 8px;
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+    align-items: flex-start;
+}
+
+.resumo-chave {
+    font-weight: 600;
+    color: var(--azul-escuro);
+    min-width: 160px;
+    flex-shrink: 0;
+}
+
+.resumo-valor {
+    color: var(--cinza-texto);
+    line-height: 1.4;
+}
+
+/* Contadores no painel de dias salvos */
+.painel-dia-contadores {
+    font-size: 0.78rem;
+    color: var(--cinza-suave);
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--cinza-borda);
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+    .resumo-totais {
+        grid-template-columns: 1fr 1fr;
+    }
+    .resumo-total-destaque {
+        grid-column: 1 / -1;
+    }
+    .resumo-card-header-salvo {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .resumo-chave {
+        min-width: 120px;
+    }
+    .resumo-linha {
+        flex-direction: column;
+        gap: 2px;
+    }
+}
+
+
+/* ========================================================
+   NÍVEL DE ESTRESSE POR SETOR (Etapa 3)
+   Botões de nível, pop-up explicativo e cards de registro.
+   ======================================================== */
+
+.estresse-niveis {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.btn-nivel-estresse {
+    padding: 10px 18px;
+    border: 2px solid var(--cinza-borda);
+    border-radius: 20px;
+    background-color: var(--branco);
+    color: var(--cinza-texto);
+    font-family: var(--fonte-corpo);
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+/* Cada nível já nasce com a cor de borda correspondente */
+.btn-nivel-estresse[data-nivel="Baixo"]   { border-color: var(--verde-ok);       color: #1f8a4d; }
+.btn-nivel-estresse[data-nivel="Médio"]   { border-color: var(--amarelo);        color: #8a6c00; }
+.btn-nivel-estresse[data-nivel="Alto"]    { border-color: var(--laranja-alerta); color: #b06600; }
+.btn-nivel-estresse[data-nivel="Crítico"] { border-color: var(--vermelho-erro);  color: var(--vermelho-erro); }
+
+.btn-nivel-estresse[data-nivel="Baixo"]:hover   { background-color: rgba(46, 204, 113, 0.10); }
+.btn-nivel-estresse[data-nivel="Médio"]:hover   { background-color: rgba(255, 205, 40, 0.15); }
+.btn-nivel-estresse[data-nivel="Alto"]:hover    { background-color: rgba(243, 156, 18, 0.10); }
+.btn-nivel-estresse[data-nivel="Crítico"]:hover { background-color: rgba(231, 76, 60, 0.10); }
+
+/* Botão clicado fica preenchido com a cor de referência do nível,
+   para o usuário saber qual opção selecionou. */
+.btn-nivel-estresse.selecionado[data-nivel="Baixo"]   { background-color: var(--verde-ok);       color: var(--branco); }
+.btn-nivel-estresse.selecionado[data-nivel="Médio"]   { background-color: var(--amarelo);        color: #553f00; }
+.btn-nivel-estresse.selecionado[data-nivel="Alto"]    { background-color: var(--laranja-alerta); color: var(--branco); }
+.btn-nivel-estresse.selecionado[data-nivel="Crítico"] { background-color: var(--vermelho-erro);  color: var(--branco); }
+
+.estresse-painel-setores {
+    margin-top: 14px;
+    padding: 16px;
+    border: 1.5px dashed var(--cinza-borda);
+    border-radius: var(--raio);
+    background-color: var(--cinza-fundo);
+}
+
+.estresse-nivel-ativo {
+    margin: 0 0 10px;
+    font-size: 0.85rem;
+    color: var(--cinza-suave);
+}
+
+.estresse-nivel-ativo-texto {
+    color: var(--azul-escuro);
+}
+
+.estresse-descricao-wrap textarea {
+    width: 100%;
+}
+
+.btn-adicionar-registro-estresse {
+    margin-top: 12px;
+    padding: 9px 16px;
+    border: none;
+    border-radius: var(--raio-pequeno);
+    background-color: var(--azul-medio);
+    color: var(--branco);
+    font-family: var(--fonte-corpo);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+.btn-adicionar-registro-estresse:hover {
+    background-color: var(--azul-escuro);
+}
+
+.estresse-registros-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.estresse-registro-card {
+    padding: 12px 14px;
+    border: 1px solid var(--cinza-borda);
+    border-radius: var(--raio-pequeno);
+    background-color: var(--branco);
+    box-shadow: var(--sombra);
+}
+
+.estresse-registro-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.estresse-registro-nivel {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--branco);
+    background-color: var(--azul-medio);
+}
+
+.estresse-registro-nivel[data-nivel="Baixo"]   { background-color: var(--verde-ok); }
+.estresse-registro-nivel[data-nivel="Médio"]   { background-color: var(--amarelo); color: #553f00; }
+.estresse-registro-nivel[data-nivel="Alto"]    { background-color: var(--laranja-alerta); }
+.estresse-registro-nivel[data-nivel="Crítico"] { background-color: var(--vermelho-erro); }
+
+.btn-remover-registro-estresse {
+    border: none;
+    background: none;
+    color: var(--cinza-suave);
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 4px;
+}
+
+.btn-remover-registro-estresse:hover {
+    color: var(--vermelho-erro);
+}
+
+.estresse-registro-setores {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: var(--cinza-texto);
+}
+
+.estresse-registro-descricao {
+    margin: 6px 0 0;
+    font-size: 0.82rem;
+    color: var(--cinza-suave);
+}
+
+/* Pop-up explicativo do nível de estresse */
+.popup-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 30, 60, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 1000;
+}
+
+.popup-caixa {
+    max-width: 460px;
+    width: 100%;
+    background-color: var(--branco);
+    border-radius: var(--raio);
+    box-shadow: var(--sombra-forte);
+    padding: 28px;
+    animation: popup-entrada 0.25s ease;
+}
+
+@keyframes popup-entrada {
+    from { opacity: 0; transform: translateY(12px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.popup-titulo {
+    margin: 0 0 12px;
+    color: var(--azul-escuro);
+}
+
+.popup-titulo[data-nivel="Baixo"]   { color: var(--verde-ok); }
+.popup-titulo[data-nivel="Médio"]   { color: #997700; }
+.popup-titulo[data-nivel="Alto"]    { color: var(--laranja-alerta); }
+.popup-titulo[data-nivel="Crítico"] { color: var(--vermelho-erro); }
+
+.popup-texto {
+    color: var(--cinza-texto);
+    line-height: 1.5;
+    margin: 0 0 20px;
+}
+
+.popup-overlay .btn-fechar-popup {
+    width: 100%;
+    padding: 11px;
+    border: none;
+    border-radius: var(--raio-pequeno);
+    background-color: var(--azul-medio);
+    color: var(--branco);
+    font-family: var(--fonte-corpo);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+.popup-overlay .btn-fechar-popup:hover {
+    background-color: var(--azul-escuro);
+}
+
+@media (max-width: 600px) {
+    .btn-nivel-estresse {
+        flex: 1 1 calc(50% - 8px);
+        text-align: center;
+    }
+    .popup-caixa {
+        padding: 20px;
+    }
+}
+
+
+/* ========================================================
+   SCROLL REVEAL — revela campos e cards aos poucos
+   conforme o usuário rola a tela.
+   ======================================================== */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.reveal-visivel {
+    opacity: 1;
+    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+
+/* ========================================================
+   SELETOR DE DATA — pop-up com 3 listas (Dia / Mês / Ano).
+   ======================================================== */
+
+.data-campo {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+}
+
+.data-campo-texto {
+    flex: 1;
+    width: auto;
+    cursor: pointer;
+    background-color: var(--branco);
+}
+
+.btn-abrir-data {
+    flex-shrink: 0;
+    width: 46px;
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio-pequeno);
+    background-color: var(--cinza-fundo);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+.btn-abrir-data:hover {
+    border-color: var(--azul-claro);
+    background-color: var(--branco);
+}
+
+.popup-caixa-data {
+    max-width: 360px;
+}
+
+.data-colunas {
+    display: flex;
+    gap: 10px;
+    margin: 16px 0;
+}
+
+.data-coluna {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.data-coluna-rotulo {
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--cinza-suave);
+    margin-bottom: 6px;
+}
+
+.data-coluna-lista {
+    list-style: none;
+    margin: 0;
+    padding: 4px;
+    height: 220px;
+    overflow-y: auto;
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio-pequeno);
+    background-color: var(--cinza-fundo);
+    scroll-behavior: smooth;
+}
+
+.data-coluna-item {
+    padding: 9px 4px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--cinza-texto);
+    border-radius: var(--raio-pequeno);
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.data-coluna-item:hover {
+    background-color: rgba(0, 75, 138, 0.08);
+}
+
+.data-coluna-item.selecionado {
+    background-color: var(--azul-medio);
+    color: var(--branco);
+    font-weight: 700;
+}
+
+.data-popup-acoes {
+    display: flex;
+    gap: 10px;
+}
+
+.data-popup-acoes .btn-cancelar-data {
+    flex: 1;
+    padding: 11px;
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio-pequeno);
+    background-color: var(--branco);
+    color: var(--cinza-suave);
+    font-family: var(--fonte-corpo);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+.data-popup-acoes .btn-cancelar-data:hover {
+    border-color: var(--vermelho-erro);
+    color: var(--vermelho-erro);
+}
+
+.data-popup-acoes .btn-confirmar-data {
+    flex: 1;
+    padding: 11px;
+    border: none;
+    border-radius: var(--raio-pequeno);
+    background-color: var(--azul-medio);
+    color: var(--branco);
+    font-family: var(--fonte-corpo);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+.data-popup-acoes .btn-confirmar-data:hover {
+    background-color: var(--azul-escuro);
+}
+
+@media (max-width: 600px) {
+    .popup-caixa-data {
+        max-width: 100%;
+    }
+    .data-coluna-lista {
+        height: 180px;
+    }
+    .data-coluna-item {
+        font-size: 0.8rem;
+        padding: 8px 2px;
+    }
+}
+
+
+/* ========================================================
+   ESCOLHA DO RELATÓRIO (etapa Identificação)
+   Dois botões grandes e delicados, em vez do antigo "Avançar".
+   ======================================================== */
+
+.escolha-fluxo-texto {
+    margin: 28px 0 12px;
+    font-weight: 600;
+    color: var(--azul-escuro);
+}
+
+.escolha-fluxo {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.btn-fluxo {
+    flex: 1;
+    min-width: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 22px 18px;
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio);
+    background-color: var(--branco);
+    cursor: pointer;
+    transition: var(--transicao);
+    box-shadow: var(--sombra);
+}
+
+.btn-fluxo:hover {
+    border-color: var(--azul-claro);
+    transform: translateY(-2px);
+    box-shadow: var(--sombra-forte);
+}
+
+.btn-fluxo-icone {
+    font-size: 1.8rem;
+}
+
+.btn-fluxo-texto {
+    font-family: var(--fonte-corpo);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.4px;
+    color: var(--azul-escuro);
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .escolha-fluxo {
+        flex-direction: column;
+    }
+    .btn-fluxo {
+        min-width: 0;
+    }
+}
+
+
+/* ========================================================
+   SUBTÍTULO DE ETAPA (ex: Termômetro de Satisfação)
+   ======================================================== */
+
+.etapa-subtitulo {
+    margin: -8px 0 24px;
+    font-size: 0.85rem;
+    color: var(--cinza-suave);
+}
+
+.agencia-termometro-nome {
+    margin: 0 0 16px;
+    font-weight: 700;
+    color: var(--azul-escuro);
+    font-size: 0.95rem;
+}
+
+
+/* ========================================================
+   SELECT ESTILIZADO (ex: Faturamento Anual da Agência)
+   ======================================================== */
+
+.select-bonito {
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, var(--azul-medio) 50%),
+                       linear-gradient(135deg, var(--azul-medio) 50%, transparent 50%);
+    background-position: calc(100% - 20px) calc(1em + 2px), calc(100% - 15px) calc(1em + 2px);
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+    padding-right: 36px;
+}
+
+
+/* ========================================================
+   MULTISELECT — botão que abre uma lista de checkboxes
+   ("Produto que a agência mais vende", "Atendente de Preferência")
+   ======================================================== */
+
+.multiselect {
+    position: relative;
+}
+
+.multiselect-botao {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 10px 14px;
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio-pequeno);
+    background-color: var(--branco);
+    font-family: var(--fonte-corpo);
+    font-size: 0.9rem;
+    color: var(--cinza-texto);
+    cursor: pointer;
+    text-align: left;
+    transition: var(--transicao);
+}
+
+.multiselect-botao:hover {
+    border-color: var(--azul-claro);
+}
+
+.multiselect-botao-texto {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.multiselect-seta {
+    flex-shrink: 0;
+    color: var(--azul-medio);
+    font-size: 0.75rem;
+}
+
+/* Fica dentro do fluxo normal (não "position: absolute") de propósito:
+   assim, ao abrir, ela empurra os campos seguintes para baixo em vez
+   de flutuar por cima deles. */
+.multiselect-lista {
+    position: relative;
+    margin-top: 8px;
+    max-height: 240px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px;
+    background-color: var(--branco);
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio-pequeno);
+    box-shadow: var(--sombra);
+}
+
+/* Seletor composto (mais específico que ".oculto" sozinho) para
+   garantir que a lista comece escondida e só abra ao clicar no botão. */
+.multiselect-lista.oculto {
+    display: none;
+}
+
+.multiselect-lista .opcao-checkbox {
+    padding: 8px 10px;
+}
+
+
+/* ========================================================
+   RESUMO — adicionar o outro relatório ao mesmo dia
+   ======================================================== */
+
+.resumo-trocar-fluxo {
+    margin-bottom: 20px;
+}
+
+.resumo-trocar-fluxo-texto {
+    margin: 0 0 10px;
+    font-size: 0.88rem;
+    color: var(--cinza-suave);
+}
+
+.btn-adicionar-fluxo {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    margin: 0 8px 8px 0;
+    border: 1.5px dashed var(--azul-claro);
+    border-radius: 20px;
+    background-color: var(--branco);
+    color: var(--azul-medio);
+    font-family: var(--fonte-corpo);
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+.btn-adicionar-fluxo:hover {
+    background-color: rgba(0, 119, 204, 0.08);
+    border-style: solid;
+}
+
+.resumo-fluxos-completos {
+    margin: 0;
+    padding: 12px 16px;
+    border-radius: var(--raio-pequeno);
+    background-color: rgba(46, 204, 113, 0.10);
+    color: #1f8a4d;
+    font-size: 0.88rem;
+    font-weight: 600;
+}

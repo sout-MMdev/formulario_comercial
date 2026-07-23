@@ -1,0 +1,189 @@
+/* ========== VARIÁVEIS ==========
+   Cores da Cativa usadas na splash.
+   Separadas aqui para não depender do style.css.
+   ================================ */
+:root {
+    --splash-azul:    #004b8a;
+    --splash-amarelo: #ffcd28;
+    --splash-branco:  #ffffff;
+}
+
+
+/* ========== OVERLAY ==========
+   Cobre a tela inteira por cima de tudo.
+   position: fixed → fica fixo mesmo com scroll.
+   z-index: 9999   → na frente de todos os elementos.
+   ================================ */
+#splash-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--splash-branco);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+#splash-overlay.splash-saindo {
+    opacity: 0;
+    visibility: hidden;
+}
+
+
+/* ========== CONTAINER CENTRAL ==========
+   Agrupa logo, linha, título e loader.
+   Animação de entrada: sobe 20px e aparece.
+   ========================================= */
+.splash-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    animation: splashSurgir 0.8s ease forwards;
+}
+
+@keyframes splashSurgir {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ========== LOGO ========== */
+.splash-logo {
+    width: 200px;
+    height: auto;
+    filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.3));
+}
+
+
+/* ========== LINHA DECORATIVA ==========
+   Cresce da esquerda para a direita.
+   ==================================== */
+.splash-linha {
+    width: 60px;
+    height: 3px;
+    background-color: var(--splash-azul);
+    border-radius: 2px;
+    animation: splashCrescer 0.6s ease 0.5s forwards;
+    transform: scaleX(0);
+    transform-origin: left;
+    opacity: 0;
+}
+
+@keyframes splashCrescer {
+    from { transform: scaleX(0); opacity: 0; }
+    to   { transform: scaleX(1); opacity: 1; }
+}
+
+
+/* ========== TÍTULO ========== */
+.splash-titulo {
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: rgba(0, 75, 138, 0.88);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-align: center;
+    animation: splashAparecer 0.6s ease 0.7s forwards;
+    opacity: 0;
+}
+
+
+/* ========== LOADER CIRCULAR ==========
+   8 pontos dispostos em círculo.
+   O grupo inteiro gira lentamente enquanto
+   cada ponto pulsa em cascata (delay escalonado).
+   ========================================= */
+.splash-loader {
+    animation: splashAparecer 0.4s ease 1s forwards;
+    opacity: 0;
+}
+
+.splash-dots {
+    animation: splashDotsRotacao 3s linear infinite;
+    transform-origin: center;
+}
+
+.splash-dots circle {
+    fill: var(--splash-azul);
+    animation: splashDotsPulso 1.4s ease-in-out infinite;
+}
+
+.splash-dots circle:nth-child(2) { animation-delay: 0.12s; }
+.splash-dots circle:nth-child(3) { animation-delay: 0.24s; }
+.splash-dots circle:nth-child(4) { animation-delay: 0.36s; }
+.splash-dots circle:nth-child(5) { animation-delay: 0.48s; }
+.splash-dots circle:nth-child(6) { animation-delay: 0.60s; }
+.splash-dots circle:nth-child(7) { animation-delay: 0.72s; }
+.splash-dots circle:nth-child(8) { animation-delay: 0.84s; }
+
+@keyframes splashDotsRotacao {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes splashDotsPulso {
+    0%, 100% { opacity: 0.15; r: 3; }
+    40%      { opacity: 1;    r: 5; }
+}
+
+
+/* ========== TEXTO DE STATUS ==========
+   Exibe mensagens como "Carregando agências..."
+   Atualizado pelo splash.js.
+   ======================================= */
+.splash-status {
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 300;
+    color: rgba(0, 75, 138, 0.89);
+    letter-spacing: 0.5px;
+    text-align: center;
+    animation: splashAparecer 0.4s ease 1s forwards;
+    opacity: 0;
+    min-height: 18px;
+}
+
+
+/* ========== RODAPÉ ========== */
+.splash-rodape {
+    position: fixed;
+    bottom: 20px;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    font-size: 0.7rem;
+    color: rgba(0, 75, 138, 0.88);
+    letter-spacing: 0.5px;
+    animation: splashAparecer 0.4s ease 1s forwards;
+    opacity: 0;
+}
+
+
+/* ========== ANIMAÇÃO GENÉRICA ========== */
+@keyframes splashAparecer {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+
+/* ========== RESPONSIVO ========== */
+@media (max-width: 600px) {
+    .splash-logo {
+        width: 160px;
+    }
+    .splash-titulo {
+        font-size: 0.75rem;
+        letter-spacing: 2px;
+    }
+}
