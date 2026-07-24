@@ -1,0 +1,62 @@
+/* ========================================================
+   ESCOLHA DO RELATÓRIO (etapa Identificação)
+   Dois botões grandes e delicados, em vez do antigo "Avançar".
+   ======================================================== */
+
+.escolha-fluxo-texto {
+    margin: 28px 0 12px;
+    font-weight: 600;
+    color: var(--azul-escuro);
+}
+
+.escolha-fluxo {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.btn-fluxo {
+    flex: 1;
+    min-width: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 22px 18px;
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio);
+    background-color: var(--branco);
+    cursor: pointer;
+    transition: var(--transicao);
+    box-shadow: var(--sombra);
+}
+
+.btn-fluxo:hover {
+    border-color: var(--azul-claro);
+    transform: translateY(-2px);
+    box-shadow: var(--sombra-forte);
+}
+
+.btn-fluxo-icone {
+    font-size: 1.8rem;
+}
+
+.btn-fluxo-texto {
+    font-family: var(--fonte-corpo);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.4px;
+    color: var(--azul-escuro);
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .escolha-fluxo {
+        flex-direction: column;
+    }
+    .btn-fluxo {
+        min-width: 0;
+    }
+}
+
+

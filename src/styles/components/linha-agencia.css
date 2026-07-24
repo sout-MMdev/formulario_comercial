@@ -1,0 +1,95 @@
+/* ========== LINHAS DE AGÊNCIA (ETAPA 2) ==========
+   Cada linha tem um input de texto e um botão
+   de remover lado a lado.
+   =================================================== */
+
+/* Container das linhas de agência dentro de um dia */
+.container-agencias-dia {
+    display: flex;
+    flex-direction: column; /* linhas empilhadas */
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+/* Cada linha: input + botão remover lado a lado */
+.linha-agencia {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* O input ocupa todo o espaço disponível */
+.linha-agencia input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio-pequeno);
+    font-family: var(--fonte-corpo);
+    font-size: 0.95rem;
+    color: var(--cinza-texto);
+    background-color: var(--branco);
+    outline: none;
+    transition: border-color var(--transicao), box-shadow var(--transicao);
+}
+
+.linha-agencia input:focus {
+    border-color: var(--azul-claro);
+    box-shadow: 0 0 0 3px rgba(0, 119, 204, 0.15);
+}
+
+.linha-agencia input::placeholder {
+    color: var(--cinza-suave);
+}
+
+/* Botão de remover a linha — pequeno e discreto */
+.btn-remover-agencia {
+    background-color: transparent;
+    color: var(--cinza-suave);
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio-pequeno);
+    width: 34px;
+    height: 34px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    flex-shrink: 0; /* não encolhe */
+    transition: color var(--transicao), border-color var(--transicao),
+                background-color var(--transicao);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-remover-agencia:hover {
+    color: var(--vermelho-erro);
+    border-color: var(--vermelho-erro);
+    background-color: #fdf0f0;
+}
+
+/* Botão "+ Adicionar agência" dentro do campo */
+.btn-add-agencia-linha {
+    background-color: transparent;
+    color: var(--azul-claro);
+    border: 1.5px dashed var(--azul-claro);
+    border-radius: var(--raio-pequeno);
+    padding: 7px 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 4px;
+    transition: background-color var(--transicao), color var(--transicao);
+}
+
+.btn-add-agencia-linha:hover {
+    background-color: var(--azul-claro);
+    color: var(--branco);
+}
+
+@media (max-width: 600px) {
+    .btn-add-agencia-linha {
+        font-size: 0.82rem;
+        padding: 8px 12px;
+    }
+}
+
+

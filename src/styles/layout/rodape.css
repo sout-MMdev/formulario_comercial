@@ -1,0 +1,16 @@
+/* ========== RODAPÉ ==========
+   Faixa azul escura no final da página.
+   margin-top: auto empurra o rodapé
+   para o final mesmo quando o conteúdo
+   é pequeno.
+   ============================== */
+.rodape {
+    background-color: var(--azul-escuro);
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    padding: 16px;
+    font-size: 0.8rem;
+    margin-top: auto;
+}
+
+

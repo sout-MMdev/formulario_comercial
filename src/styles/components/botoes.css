@@ -1,0 +1,119 @@
+/* ========== BOTÃO ADICIONAR ==========
+   Botão tracejado para adicionar mais
+   blocos (agência, NF ou cartão).
+   ======================================= */
+.acoes-adicionar {
+    margin-bottom: 28px;
+    text-align: center;
+}
+
+.acoes-adicionar button {
+    background-color: transparent;
+    color: var(--azul-claro);
+    border: 2px dashed var(--azul-claro);
+    border-radius: var(--raio);
+    padding: 10px 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color var(--transicao), color var(--transicao);
+}
+
+/* Ao passar o mouse, preenche o botão */
+.acoes-adicionar button:hover {
+    background-color: var(--azul-claro);
+    color: var(--branco);
+}
+
+
+/* ========== AÇÕES (VOLTAR / PRÓXIMO / ENVIAR) ==========
+   Ficam no rodapé de cada etapa.
+   Usamos space-between para empurrar
+   Voltar para a esquerda e Próximo para a direita.
+   ========================================================= */
+.acoes {
+    display: flex;
+    justify-content: space-between; /* um botão em cada extremo */
+    align-items: center;
+    gap: 12px;
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid var(--cinza-borda);
+}
+
+/* Botão Próximo */
+.btn-proximo {
+    background: linear-gradient(135deg, var(--azul-medio), var(--azul-claro));
+    color: var(--branco);
+    border: none;
+    border-radius: var(--raio-pequeno);
+    padding: 12px 28px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity var(--transicao), transform var(--transicao);
+    letter-spacing: 0.3px;
+}
+
+.btn-proximo:hover {
+    opacity: 0.88;
+    transform: translateY(-1px); /* sobe 1px ao passar o mouse */
+}
+
+/* Botão Finalizar — similar ao Próximo mas com ênfase */
+.btn-finalizar {
+    background: linear-gradient(135deg, var(--amarelo), var(--amarelo-claro));
+    color: var(--azul-escuro);
+    border: none;
+    border-radius: var(--raio-pequeno);
+    padding: 12px 28px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity var(--transicao), transform var(--transicao);
+    letter-spacing: 0.3px;
+}
+
+/* Botão Enviar — amarelo para chamar atenção */
+#btn-enviar {
+    background: linear-gradient(135deg, var(--amarelo), var(--amarelo-claro));
+    color: var(--azul-escuro);
+    border: none;
+    border-radius: var(--raio-pequeno);
+    padding: 12px 28px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity var(--transicao), transform var(--transicao);
+    letter-spacing: 0.3px;
+}
+
+#btn-enviar:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
+}
+
+/* Botão Voltar — discreto, só contorno */
+.btn-voltar {
+    background-color: transparent;
+    color: var(--cinza-suave);
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio-pequeno);
+    padding: 11px 22px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: color var(--transicao), border-color var(--transicao);
+}
+
+.btn-voltar:hover {
+    color: var(--azul-escuro);
+    border-color: var(--azul-escuro);
+}
+
+/* Quando só existe um botão na linha (sem Voltar),
+   empurra ele para a direita */
+.acoes:has(> :only-child) {
+    justify-content: flex-end;
+}
+
+

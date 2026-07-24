@@ -1,0 +1,146 @@
+/* ========================================================
+   SELETOR DE DATA — pop-up com 3 listas (Dia / Mês / Ano).
+   ======================================================== */
+
+.data-campo {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+}
+
+.data-campo-texto {
+    flex: 1;
+    width: auto;
+    cursor: pointer;
+    background-color: var(--branco);
+}
+
+.btn-abrir-data {
+    flex-shrink: 0;
+    width: 46px;
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio-pequeno);
+    background-color: var(--cinza-fundo);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+.btn-abrir-data:hover {
+    border-color: var(--azul-claro);
+    background-color: var(--branco);
+}
+
+.popup-caixa-data {
+    max-width: 360px;
+}
+
+.data-colunas {
+    display: flex;
+    gap: 10px;
+    margin: 16px 0;
+}
+
+.data-coluna {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.data-coluna-rotulo {
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--cinza-suave);
+    margin-bottom: 6px;
+}
+
+.data-coluna-lista {
+    list-style: none;
+    margin: 0;
+    padding: 4px;
+    height: 220px;
+    overflow-y: auto;
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio-pequeno);
+    background-color: var(--cinza-fundo);
+    scroll-behavior: smooth;
+}
+
+.data-coluna-item {
+    padding: 9px 4px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--cinza-texto);
+    border-radius: var(--raio-pequeno);
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.data-coluna-item:hover {
+    background-color: rgba(0, 75, 138, 0.08);
+}
+
+.data-coluna-item.selecionado {
+    background-color: var(--azul-medio);
+    color: var(--branco);
+    font-weight: 700;
+}
+
+.data-popup-acoes {
+    display: flex;
+    gap: 10px;
+}
+
+.data-popup-acoes .btn-cancelar-data {
+    flex: 1;
+    padding: 11px;
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio-pequeno);
+    background-color: var(--branco);
+    color: var(--cinza-suave);
+    font-family: var(--fonte-corpo);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+.data-popup-acoes .btn-cancelar-data:hover {
+    border-color: var(--vermelho-erro);
+    color: var(--vermelho-erro);
+}
+
+.data-popup-acoes .btn-confirmar-data {
+    flex: 1;
+    padding: 11px;
+    border: none;
+    border-radius: var(--raio-pequeno);
+    background-color: var(--azul-medio);
+    color: var(--branco);
+    font-family: var(--fonte-corpo);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+.data-popup-acoes .btn-confirmar-data:hover {
+    background-color: var(--azul-escuro);
+}
+
+@media (max-width: 600px) {
+    .popup-caixa-data {
+        max-width: 100%;
+    }
+    .data-coluna-lista {
+        height: 180px;
+    }
+    .data-coluna-item {
+        font-size: 0.8rem;
+        padding: 8px 2px;
+    }
+}
+
+

@@ -1,0 +1,27 @@
+/* ========== INSTRUÇÕES ==========
+   Caixa azul clara com as instruções
+   da etapa 1 para o usuário.
+   ================================== */
+.instrucoes {
+    background-color: #e8f0fb;
+    border-left: 4px solid var(--azul-claro); /* barra azul na esquerda */
+    border-radius: var(--raio-pequeno);
+    padding: 14px 18px;
+    margin-bottom: 24px;
+}
+
+.instrucoes ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Adiciona a seta antes de cada item da lista */
+.instrucoes ul li::before {
+    content: '→ ';
+    color: var(--azul-claro);
+    font-weight: bold;
+}
+
+

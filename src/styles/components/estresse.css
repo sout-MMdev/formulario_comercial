@@ -1,0 +1,217 @@
+/* ========================================================
+   NÍVEL DE ESTRESSE POR SETOR (Etapa 3)
+   Botões de nível, pop-up explicativo e cards de registro.
+   ======================================================== */
+
+.estresse-niveis {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.btn-nivel-estresse {
+    padding: 10px 18px;
+    border: 2px solid var(--cinza-borda);
+    border-radius: 20px;
+    background-color: var(--branco);
+    color: var(--cinza-texto);
+    font-family: var(--fonte-corpo);
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+/* Cada nível já nasce com a cor de borda correspondente */
+.btn-nivel-estresse[data-nivel="Baixo"]   { border-color: var(--verde-ok);       color: #1f8a4d; }
+.btn-nivel-estresse[data-nivel="Médio"]   { border-color: var(--amarelo);        color: #8a6c00; }
+.btn-nivel-estresse[data-nivel="Alto"]    { border-color: var(--laranja-alerta); color: #b06600; }
+.btn-nivel-estresse[data-nivel="Crítico"] { border-color: var(--vermelho-erro);  color: var(--vermelho-erro); }
+
+.btn-nivel-estresse[data-nivel="Baixo"]:hover   { background-color: rgba(46, 204, 113, 0.10); }
+.btn-nivel-estresse[data-nivel="Médio"]:hover   { background-color: rgba(255, 205, 40, 0.15); }
+.btn-nivel-estresse[data-nivel="Alto"]:hover    { background-color: rgba(243, 156, 18, 0.10); }
+.btn-nivel-estresse[data-nivel="Crítico"]:hover { background-color: rgba(231, 76, 60, 0.10); }
+
+/* Botão clicado fica preenchido com a cor de referência do nível,
+   para o usuário saber qual opção selecionou. */
+.btn-nivel-estresse.selecionado[data-nivel="Baixo"]   { background-color: var(--verde-ok);       color: var(--branco); }
+.btn-nivel-estresse.selecionado[data-nivel="Médio"]   { background-color: var(--amarelo);        color: #553f00; }
+.btn-nivel-estresse.selecionado[data-nivel="Alto"]    { background-color: var(--laranja-alerta); color: var(--branco); }
+.btn-nivel-estresse.selecionado[data-nivel="Crítico"] { background-color: var(--vermelho-erro);  color: var(--branco); }
+
+.estresse-painel-setores {
+    margin-top: 14px;
+    padding: 16px;
+    border: 1.5px dashed var(--cinza-borda);
+    border-radius: var(--raio);
+    background-color: var(--cinza-fundo);
+}
+
+.estresse-nivel-ativo {
+    margin: 0 0 10px;
+    font-size: 0.85rem;
+    color: var(--cinza-suave);
+}
+
+.estresse-nivel-ativo-texto {
+    color: var(--azul-escuro);
+}
+
+.estresse-descricao-wrap textarea {
+    width: 100%;
+}
+
+.btn-adicionar-registro-estresse {
+    margin-top: 12px;
+    padding: 9px 16px;
+    border: none;
+    border-radius: var(--raio-pequeno);
+    background-color: var(--azul-medio);
+    color: var(--branco);
+    font-family: var(--fonte-corpo);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+.btn-adicionar-registro-estresse:hover {
+    background-color: var(--azul-escuro);
+}
+
+.estresse-registros-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.estresse-registro-card {
+    padding: 12px 14px;
+    border: 1px solid var(--cinza-borda);
+    border-radius: var(--raio-pequeno);
+    background-color: var(--branco);
+    box-shadow: var(--sombra);
+}
+
+.estresse-registro-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.estresse-registro-nivel {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--branco);
+    background-color: var(--azul-medio);
+}
+
+.estresse-registro-nivel[data-nivel="Baixo"]   { background-color: var(--verde-ok); }
+.estresse-registro-nivel[data-nivel="Médio"]   { background-color: var(--amarelo); color: #553f00; }
+.estresse-registro-nivel[data-nivel="Alto"]    { background-color: var(--laranja-alerta); }
+.estresse-registro-nivel[data-nivel="Crítico"] { background-color: var(--vermelho-erro); }
+
+.btn-remover-registro-estresse {
+    border: none;
+    background: none;
+    color: var(--cinza-suave);
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 4px;
+}
+
+.btn-remover-registro-estresse:hover {
+    color: var(--vermelho-erro);
+}
+
+.estresse-registro-setores {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: var(--cinza-texto);
+}
+
+.estresse-registro-descricao {
+    margin: 6px 0 0;
+    font-size: 0.82rem;
+    color: var(--cinza-suave);
+}
+
+/* Pop-up explicativo do nível de estresse */
+.popup-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 30, 60, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 1000;
+}
+
+.popup-caixa {
+    max-width: 460px;
+    width: 100%;
+    background-color: var(--branco);
+    border-radius: var(--raio);
+    box-shadow: var(--sombra-forte);
+    padding: 28px;
+    animation: popup-entrada 0.25s ease;
+}
+
+@keyframes popup-entrada {
+    from { opacity: 0; transform: translateY(12px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.popup-titulo {
+    margin: 0 0 12px;
+    color: var(--azul-escuro);
+}
+
+.popup-titulo[data-nivel="Baixo"]   { color: var(--verde-ok); }
+.popup-titulo[data-nivel="Médio"]   { color: #997700; }
+.popup-titulo[data-nivel="Alto"]    { color: var(--laranja-alerta); }
+.popup-titulo[data-nivel="Crítico"] { color: var(--vermelho-erro); }
+
+.popup-texto {
+    color: var(--cinza-texto);
+    line-height: 1.5;
+    margin: 0 0 20px;
+}
+
+.popup-overlay .btn-fechar-popup {
+    width: 100%;
+    padding: 11px;
+    border: none;
+    border-radius: var(--raio-pequeno);
+    background-color: var(--azul-medio);
+    color: var(--branco);
+    font-family: var(--fonte-corpo);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+.popup-overlay .btn-fechar-popup:hover {
+    background-color: var(--azul-escuro);
+}
+
+@media (max-width: 600px) {
+    .btn-nivel-estresse {
+        flex: 1 1 calc(50% - 8px);
+        text-align: center;
+    }
+    .popup-caixa {
+        padding: 20px;
+    }
+}
+
+

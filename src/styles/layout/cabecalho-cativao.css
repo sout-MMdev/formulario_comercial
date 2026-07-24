@@ -1,0 +1,28 @@
+/* ========== CATIVÃO NO CABEÇALHO ==========
+   Imagem do Cativão no lado direito do header.
+   margin-left: auto empurra ele para a direita
+   usando o flexbox do .cabecalho.
+   ============================================ */
+.cativao {
+    height: 90px;           /* altura do Cativão no header */
+    width: auto;
+    margin-left: auto;      /* empurra para o lado direito */
+    align-self: flex-end;   /* encosta na borda inferior do header */
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.15));
+}
+
+/* Ajuste da logo — agora que o fundo é branco
+   a logo original já fica perfeita */
+.logo {
+    height: 52px;
+    width: auto;
+}
+
+/* Responsivo — Cativão menor no celular */
+@media (max-width: 600px) {
+    .cativao {
+        height: 60px;
+    }
+}
+
+

@@ -1,0 +1,31 @@
+/* ========== CABEÇALHO ==========
+   O <header> fica no topo com fundo azul gradiente.
+   Usamos flexbox para colocar logo e título
+   lado a lado na mesma linha.
+   ================================= */
+.cabecalho {
+    
+    background: var(--branco);
+    border-bottom: 3px solid var(--amarelo); /* linha amarela embaixo igual ao site */
+    padding: 20px 32px;     /* espaço interno: 20px em cima/baixo, 32px nas laterais */
+    display: flex;          /* logo e título ficam lado a lado */
+    align-items: center;    /* alinha verticalmente ao centro */
+    justify-content: center;
+    gap: 320px;              /* espaço entre a logo e o título */
+    box-shadow: var(--sombra-forte);
+}
+
+.logo {
+    height: 52px;  /* altura fixa — a largura ajusta sozinha */
+    width: auto;
+}
+
+.titulo-principal {
+    font-family: var(--fonte-corpo);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--azul-escuro); /* azul escuro — fundo agora é branco */
+    letter-spacing: -0.3px;
+}
+
+

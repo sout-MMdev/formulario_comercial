@@ -1,0 +1,26 @@
+/* ========== CAMPOS CONDICIONAIS (estresse detalhe) ========== */
+.campo-condicional {
+    margin-top: 12px;
+    padding: 16px;
+    background-color: rgba(0, 75, 138, 0.03);
+    border-left: 3px solid var(--azul-medio);
+    border-radius: 0 var(--raio-borda) var(--raio-borda) 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+
+.campo-condicional label {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--azul-escuro);
+}
+
+.campo-condicional.oculto,
+.textarea-acao.oculto {
+    display: none;
+}
+
+
+

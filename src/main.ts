@@ -1,3 +1,4 @@
+import "./styles/index.css";
 import { inicializarSplash } from "./modules/splash";
 import {
   buscarAgencias,

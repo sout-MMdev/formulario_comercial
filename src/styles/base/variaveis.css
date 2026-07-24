@@ -1,0 +1,43 @@
+/* ========== VARIÁVEIS ==========
+   Variáveis são "apelidos" para valores que usamos
+   muito. Se precisar mudar uma cor, muda só aqui
+   e o site inteiro atualiza automaticamente.
+   Para usar uma variável escrevemos: var(--nome)
+   ================================ */
+:root {
+    /* Cores principais da Cativa */
+    --azul-escuro:   #004b8a;   /* azul escuro do logo — cabeçalho, textos */
+    --azul-medio:    #005baa;   /* azul médio — gradientes, legends */
+    --azul-claro:    #0077cc;   /* azul claro — foco dos campos */
+    --amarelo:       #ffcd28;   /* amarelo do logo — destaque, botão enviar */
+    --amarelo-claro: #ffd166;   /* amarelo mais suave — gradiente do botão */
+
+    /* Cores neutras */
+    --branco:        #ffffff;
+    --cinza-fundo:   #f4f6f9;   /* fundo geral da página */
+    --cinza-borda:   #d0d7e2;   /* bordas dos campos */
+    --cinza-texto:   #444444;   /* texto padrão */
+    --cinza-suave:   #7a8a99;   /* textos secundários, placeholder */
+
+    /* Cores de feedback */
+    --verde-ok:      #2ecc71;   /* etapa concluída no progresso */
+    --laranja-alerta: #f39c12;  /* nível de estresse "Alto" */
+    --vermelho-erro: #e74c3c;   /* campo inválido, nível "Crítico" */
+
+    /* Sombras — dão profundidade aos cartões */
+    --sombra:        0 2px 12px rgba(0, 51, 102, 0.10);
+    --sombra-forte:  0 4px 20px rgba(0, 51, 102, 0.18);
+
+    /* Bordas arredondadas */
+    --raio:          10px;      /* usado nos cartões */
+    --raio-pequeno:  6px;       /* usado nos campos e botões */
+
+    /* Fontes */
+    --fonte-titulo:  'Inter', sans-serif;       /* títulos */
+    --fonte-corpo:   'Inter', sans-serif;       /* textos gerais */
+
+    /* Velocidade das animações */
+    --transicao:     0.25s ease;
+}
+
+

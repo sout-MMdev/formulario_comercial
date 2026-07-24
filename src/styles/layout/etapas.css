@@ -1,0 +1,37 @@
+/* ========== ETAPAS ==========
+   Cada etapa é uma <section>.
+   A classe "oculto" esconde a seção.
+   O JS remove e adiciona "oculto" para
+   mostrar a etapa correta.
+   ============================== */
+.etapa {
+    animation: entrar 0.3s ease; /* animação ao aparecer */
+}
+
+.oculto {
+    display: none; /* esconde completamente o elemento */
+}
+
+/* Animação de entrada da etapa */
+@keyframes entrar {
+    from {
+        opacity: 0;
+        transform: translateY(12px); /* começa 12px abaixo */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);    /* sobe para a posição normal */
+    }
+}
+
+/* Título de cada etapa (ex: "Logística da Viagem") */
+.etapa-titulo {
+    font-family: var(--fonte-titulo);
+    font-size: 1.3rem;
+    color: var(--azul-escuro);
+    margin-bottom: 24px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--amarelo); /* linha amarela embaixo do título */
+}
+
+

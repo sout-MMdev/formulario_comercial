@@ -1,0 +1,81 @@
+/* ================================================================
+   ÍNDICE DE ESTILOS — Formulário Comercial Cativa
+   ----------------------------------------------------------------
+   Este arquivo apenas IMPORTA os demais, na MESMA ORDEM em que as
+   regras apareciam no antigo style.css. A ordem é importante: no
+   CSS, quando duas regras têm a mesma força, vence a que vem por
+   último. Mantê-la preserva a aparência exatamente igual.
+
+   Para editar um estilo, procure a pasta/arquivo correspondente:
+     base/        → variáveis, reset, tipografia e responsivo global
+     layout/      → estrutura da página (cabeçalho, rodapé, etapas…)
+     components/  → peças reutilizáveis (campos, botões, popups…)
+     pages/       → telas específicas (resumo do dia)
+   ================================================================ */
+
+/* Fonte Inter (precisa vir antes de qualquer outra regra) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ── Base ───────────────────────────────────────────────────── */
+@import "./base/variaveis.css";
+@import "./base/base.css";
+
+/* ── Layout ─────────────────────────────────────────────────── */
+@import "./layout/cabecalho.css";
+@import "./layout/progresso.css";
+@import "./layout/conteudo.css";
+@import "./layout/etapas.css";
+
+/* ── Componentes ────────────────────────────────────────────── */
+@import "./components/instrucoes.css";
+@import "./components/campos.css";
+@import "./components/fieldsets.css";
+@import "./components/botoes.css";
+
+/* ── Página: resumo (parte 1) ───────────────────────────────── */
+@import "./pages/resumo.css";
+
+/* ── Layout: rodapé ─────────────────────────────────────────── */
+@import "./layout/rodape.css";
+
+/* ── Componentes ────────────────────────────────────────────── */
+@import "./components/opcoes.css";
+@import "./components/condicionais.css";
+@import "./components/acao-acordada.css";
+
+/* ── Base: responsivo global ────────────────────────────────── */
+@import "./base/responsivo.css";
+
+/* ── Componentes ────────────────────────────────────────────── */
+@import "./components/autocomplete-cidades.css";
+@import "./components/linha-agencia.css";
+@import "./components/email-auto.css";
+@import "./components/dias-salvos.css";
+
+/* ── Base: ajustes de peso da fonte ─────────────────────────── */
+@import "./base/tipografia.css";
+
+/* ── Layout: cativão no cabeçalho ───────────────────────────── */
+@import "./layout/cabecalho-cativao.css";
+
+/* ── Componentes ────────────────────────────────────────────── */
+@import "./components/splash.css";
+
+/* ── Página: resumo (cards) ─────────────────────────────────── */
+@import "./pages/resumo-cards.css";
+
+/* ── Componentes ────────────────────────────────────────────── */
+@import "./components/estresse.css";
+@import "./components/scroll-reveal.css";
+@import "./components/data-picker.css";
+@import "./components/escolha-fluxo.css";
+
+/* ── Layout: subtítulo de etapa ─────────────────────────────── */
+@import "./layout/etapas-subtitulo.css";
+
+/* ── Componentes ────────────────────────────────────────────── */
+@import "./components/select-bonito.css";
+@import "./components/multiselect.css";
+
+/* ── Página: resumo (trocar fluxo) ──────────────────────────── */
+@import "./pages/resumo-trocar-fluxo.css";

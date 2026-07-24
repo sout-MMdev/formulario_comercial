@@ -1,0 +1,18 @@
+/* ========================================================
+   SUBTÍTULO DE ETAPA (ex: Termômetro de Satisfação)
+   ======================================================== */
+
+.etapa-subtitulo {
+    margin: -8px 0 24px;
+    font-size: 0.85rem;
+    color: var(--cinza-suave);
+}
+
+.agencia-termometro-nome {
+    margin: 0 0 16px;
+    font-weight: 700;
+    color: var(--azul-escuro);
+    font-size: 0.95rem;
+}
+
+

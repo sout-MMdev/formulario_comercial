@@ -49,13 +49,19 @@ index.html            Página única com todas as etapas do formulário
 public/               Arquivos estáticos servidos direto
   agencias.json         Base de agências usada no autocomplete
   splash.html           Markup da tela de carregamento
-  assets/css/           Estilos (style.css e splash.css)
+  assets/css/splash.css Estilos da tela de splash
   assets/img/           Imagens (logo)
 src/
   main.ts             Ponto de entrada — inicializa e liga todos os módulos
   config/dados.ts     Constantes e regras (executivos, tarifas, listas, etapas)
   types/index.ts      Interfaces TypeScript de todos os dados
   utils/formatadores.ts  Funções puras (data, moeda, acentos, HTML)
+  styles/             Estilos, importados por main.ts (empacotados pelo Vite)
+    index.css           Índice — importa os demais na ordem correta
+    base/               Variáveis, reset, tipografia e responsivo global
+    layout/             Estrutura da página (cabeçalho, rodapé, etapas…)
+    components/         Peças reutilizáveis (campos, botões, popups…)
+    pages/              Telas específicas (resumo do dia)
   modules/
     splash.ts           Tela de carregamento inicial
     fluxo.ts            Navegação entre etapas e barra de progresso

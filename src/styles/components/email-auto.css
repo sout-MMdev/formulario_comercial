@@ -1,0 +1,11 @@
+/* ========== E-MAIL PREENCHIDO AUTOMATICAMENTE ==========
+   Quando o JS preenche o campo de e-mail,
+   adicionamos a classe "preenchido-auto" para
+   dar um feedback visual sutil ao executivo. */
+#email_executivo.preenchido-auto {
+    background-color: #f0f7ff;
+    border-color: var(--azul-claro);
+    color: var(--azul-escuro);
+}
+
+

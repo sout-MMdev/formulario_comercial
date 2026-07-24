@@ -1,0 +1,72 @@
+/* ========== FIELDSETS (BLOCOS) ==========
+   Cada agência e despesa fica dentro de um <fieldset>.
+   O <legend> é o título do bloco
+   (ex: "Agência 1", "Despesa 2").
+   ========================================= */
+fieldset.bloco-trajeto,
+fieldset.bloco-despesa,
+fieldset.bloco-agencia-comercial,
+fieldset.bloco-agencia-termometro {
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: var(--raio);
+    padding: 24px;
+    margin-bottom: 24px;
+    background-color: var(--branco);
+    box-shadow: var(--sombra); /* sombra suave para parecer um cartão */
+}
+
+/* Estilo específico para bloco de termômetro (diferenciação visual) */
+fieldset.bloco-agencia-termometro {
+    background-color: rgba(100, 150, 200, 0.03); /* fundo levemente azulado */
+}
+
+/* Título do bloco (ex: "AGÊNCIA 1") */
+fieldset.bloco-trajeto legend,
+fieldset.bloco-despesa legend,
+fieldset.bloco-agencia-comercial legend,
+fieldset.bloco-agencia-termometro legend {
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: var(--branco);
+    background-color: var(--azul-medio);
+    padding: 4px 14px;
+    border-radius: 20px;    /* pílula arredondada */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Linha divisória dentro do bloco de agência
+   (separa logística da análise comercial) */
+.divisor {
+    border: none;
+    border-top: 1px dashed var(--cinza-borda);
+    margin: 20px 0;
+}
+
+/* Separador de seção dentro de um bloco
+   (separa dados comerciais do termômetro) */
+.separador-secao {
+    border: none;
+    border-top: 1px solid var(--cinza-borda);
+    margin: 24px 0;
+}
+
+/* Subtítulo do termômetro */
+.subtitulo-termometro {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--azul-escuro);
+    margin-bottom: 8px;
+    margin-top: 0;
+}
+
+/* Instruções do termômetro */
+.instrucoes-termometro {
+    font-size: 0.85rem;
+    color: var(--cinza-suave);
+    font-style: italic;
+    margin: 6px 0 14px 0;
+    padding: 0;
+}
+
+
