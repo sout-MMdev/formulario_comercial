@@ -1,0 +1,12 @@
+# Segredos — nunca versionar
+.env
+.env.local
+.env.*.local
+
+# Supabase CLI
+.branches
+.temp
+
+# Dados de importação (planilhas da operação — não versionar)
+importacao/*.csv
+importacao/*.xlsx

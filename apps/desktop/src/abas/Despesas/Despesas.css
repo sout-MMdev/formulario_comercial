@@ -1,0 +1,127 @@
+/* ================================================================
+   ABA — DESPESAS
+   ================================================================ */
+
+/* ── Seção (Trajetos / Despesas) ─────────────────────────────── */
+.secao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+}
+
+.secao + .secao {
+  padding-top: var(--esp-6);
+  border-top: 1px solid var(--cor-borda);
+}
+
+.secao__cabecalho {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+}
+
+.secao__icone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  color: var(--cor-marca-800);
+  background-color: var(--cor-marca-100);
+  border-radius: var(--raio-sm);
+}
+
+.secao__textos {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  flex: 1;
+}
+
+.secao__titulo {
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  color: var(--cor-marca-900);
+}
+
+.secao__descricao {
+  font-size: var(--texto-xs);
+  color: var(--cor-texto-fraco);
+}
+
+/* ── Prévia do total no cabeçalho do painel ──────────────────── */
+.previa-total {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+  padding: var(--esp-2) var(--esp-4);
+  background-color: var(--cor-marca-50);
+  border: 1px solid var(--cor-marca-100);
+  border-radius: var(--raio-sm);
+  white-space: nowrap;
+}
+
+.previa-total__rotulo {
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-semi);
+  letter-spacing: var(--letra-etiqueta);
+  text-transform: uppercase;
+  color: var(--cor-marca-600);
+}
+
+.previa-total__valor {
+  font-size: var(--texto-md);
+  font-weight: var(--peso-forte);
+  color: var(--cor-marca-900);
+}
+
+/* ── Memória do cálculo de KM ────────────────────────────────── */
+.calculo {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  padding: var(--esp-2) var(--esp-3);
+  font-size: var(--texto-xs);
+  color: var(--cor-marca-800);
+  background-color: var(--cor-marca-50);
+  border-radius: var(--raio-xs);
+}
+
+.calculo svg {
+  color: var(--cor-marca-600);
+}
+
+/* ── Como a despesa entra na conta ───────────────────────────── */
+.situacao {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  padding: var(--esp-3) var(--esp-4);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+  border-radius: var(--raio-xs);
+}
+
+.situacao--soma {
+  color: var(--cor-sucesso-600);
+  background-color: var(--cor-sucesso-100);
+}
+
+.situacao--desconto {
+  color: var(--cor-atencao-600);
+  background-color: var(--cor-atencao-100);
+}
+
+.situacao--neutro {
+  color: var(--cor-texto-suave);
+  background-color: var(--cor-neutro-50);
+}
+
+@media (max-width: 720px) {
+  .previa-total {
+    align-items: flex-start;
+  }
+}

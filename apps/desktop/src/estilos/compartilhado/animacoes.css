@@ -1,0 +1,88 @@
+/* ================================================================
+   COMPARTILHADO — ANIMAÇÕES
+   Keyframes e classes de entrada usados em qualquer lugar.
+   ================================================================ */
+
+@keyframes surgir {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes subir {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ampliar {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulsar {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ── Classes utilitárias de entrada ──────────────────────────── */
+.anim-surgir {
+  animation: surgir var(--transicao-lenta) both;
+}
+
+.anim-subir {
+  animation: subir var(--transicao-lenta) both;
+}
+
+.anim-ampliar {
+  animation: ampliar var(--transicao) both;
+}
+
+/* Escalona a entrada de itens em lista (1º, 2º, 3º...) */
+.anim-cascata > * {
+  animation: subir 0.45s both;
+}
+
+.anim-cascata > *:nth-child(1) {
+  animation-delay: 0.02s;
+}
+.anim-cascata > *:nth-child(2) {
+  animation-delay: 0.06s;
+}
+.anim-cascata > *:nth-child(3) {
+  animation-delay: 0.1s;
+}
+.anim-cascata > *:nth-child(4) {
+  animation-delay: 0.14s;
+}
+.anim-cascata > *:nth-child(5) {
+  animation-delay: 0.18s;
+}
+.anim-cascata > *:nth-child(n + 6) {
+  animation-delay: 0.22s;
+}

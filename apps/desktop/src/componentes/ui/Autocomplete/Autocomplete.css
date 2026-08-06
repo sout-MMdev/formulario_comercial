@@ -1,0 +1,95 @@
+/* ================================================================
+   COMPONENTE — AUTOCOMPLETE
+   ================================================================ */
+
+.autocomplete {
+  position: relative;
+  width: 100%;
+}
+
+.autocomplete__campo {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.autocomplete__icone {
+  position: absolute;
+  left: var(--esp-3); /* um pouco mais à esquerda, longe do texto */
+  display: flex;
+  color: var(--cor-neutro-400);
+  pointer-events: none;
+  transition: color var(--transicao-rapida);
+}
+
+.autocomplete__campo:focus-within .autocomplete__icone {
+  color: var(--cor-marca-600);
+}
+
+/* Especificidade maior que .controle para o texto sempre começar
+   depois do ícone (senão o padding do .controle sobrescreve). */
+.autocomplete__campo .autocomplete__entrada--com-icone {
+  padding-left: var(--esp-10);
+}
+
+/* ── Lista suspensa ──────────────────────────────────────────── */
+.autocomplete__lista {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: var(--camada-suspensa);
+  max-height: 260px;
+  padding: var(--esp-1);
+  overflow-y: auto;
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-sm);
+  box-shadow: var(--sombra-md);
+  animation: subir 0.18s both;
+}
+
+.autocomplete__item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  padding: var(--esp-2) var(--esp-3);
+  text-align: left;
+  border-radius: var(--raio-xs);
+  cursor: pointer;
+  transition: background-color var(--transicao-rapida);
+}
+
+.autocomplete__item--destacado {
+  background-color: var(--cor-marca-50);
+}
+
+.autocomplete__item-rotulo {
+  font-size: var(--texto-sm);
+  color: var(--cor-texto);
+}
+
+.autocomplete__item--destacado .autocomplete__item-rotulo {
+  color: var(--cor-marca-800);
+  font-weight: var(--peso-medio);
+}
+
+.autocomplete__item-detalhe {
+  font-size: var(--texto-xs);
+  color: var(--cor-texto-fraco);
+}
+
+.autocomplete__aviso {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  padding: var(--esp-3);
+  font-size: var(--texto-xs);
+  color: var(--cor-texto-fraco);
+}
+
+.autocomplete__girando {
+  display: inline-flex;
+  animation: girar 1.1s linear infinite;
+}

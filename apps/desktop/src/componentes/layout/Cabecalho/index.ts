@@ -1,0 +1,1 @@
+export { Cabecalho } from "./Cabecalho";

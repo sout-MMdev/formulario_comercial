@@ -1,0 +1,1 @@
+export { Painel } from "./Painel";

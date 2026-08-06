@@ -1,0 +1,182 @@
+/* ================================================================
+   ABA — RESUMO
+   ================================================================ */
+
+/* ── Cartões de totais ───────────────────────────────────────── */
+.totais {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--esp-3);
+}
+
+.totais__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-1);
+  padding: var(--esp-4);
+  background-color: var(--cor-neutro-25);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+}
+
+.totais__item--destaque {
+  color: var(--cor-branco);
+  background: linear-gradient(
+    135deg,
+    var(--cor-marca-800),
+    var(--cor-marca-600)
+  );
+  border-color: transparent;
+  box-shadow: var(--sombra-md);
+}
+
+.totais__rotulo {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-semi);
+  letter-spacing: var(--letra-etiqueta);
+  text-transform: uppercase;
+  color: var(--cor-texto-fraco);
+}
+
+.totais__item--destaque .totais__rotulo {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.totais__valor {
+  font-size: var(--texto-md);
+  font-weight: var(--peso-forte);
+  color: var(--cor-texto);
+}
+
+.totais__valor--soma {
+  color: var(--cor-sucesso-600);
+}
+
+.totais__valor--desconto {
+  color: var(--cor-atencao-600);
+}
+
+.totais__valor--forte {
+  font-size: var(--texto-2xl);
+  color: var(--cor-branco);
+  letter-spacing: var(--letra-titulo);
+}
+
+.totais__nota {
+  font-size: var(--texto-2xs);
+  color: var(--cor-texto-fraco);
+}
+
+/* ── Seções ──────────────────────────────────────────────────── */
+.resumo-secao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-3);
+}
+
+.resumo-secao__cabecalho {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  padding-top: var(--esp-5);
+  border-top: 1px solid var(--cor-borda);
+}
+
+.resumo-secao__icone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  color: var(--cor-marca-800);
+  background-color: var(--cor-marca-100);
+  border-radius: var(--raio-xs);
+}
+
+.resumo-secao__titulo {
+  flex: 1;
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  color: var(--cor-marca-900);
+}
+
+.resumo-secao__corpo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-3);
+}
+
+/* ── Blocos internos do cartão de agência ────────────────────── */
+.resumo-bloco {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+  margin-top: var(--esp-2);
+  padding-top: var(--esp-3);
+  border-top: 1px dashed var(--cor-borda);
+}
+
+.resumo-bloco__titulo {
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-forte);
+  letter-spacing: var(--letra-etiqueta);
+  text-transform: uppercase;
+  color: var(--cor-texto-fraco);
+}
+
+.resumo-estresse {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--esp-3);
+}
+
+.resumo-estresse__texto {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  font-size: var(--texto-xs);
+  color: var(--cor-texto-suave);
+}
+
+.resumo-estresse__texto p {
+  color: var(--cor-texto-fraco);
+  line-height: var(--linha-normal);
+}
+
+/* ── Adicionar o outro relatório ─────────────────────────────── */
+.trocar-fluxo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--esp-3);
+  padding: var(--esp-5);
+  background-color: var(--cor-neutro-25);
+  border: 1px dashed var(--cor-borda-campo);
+  border-radius: var(--raio-md);
+}
+
+.trocar-fluxo__texto {
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-medio);
+  color: var(--cor-texto-suave);
+}
+
+.trocar-fluxo .aviso {
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .totais {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .totais {
+    grid-template-columns: 1fr;
+  }
+}

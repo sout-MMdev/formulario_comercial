@@ -1,0 +1,79 @@
+/* ================================================================
+   COMPONENTE — MULTISSELEÇÃO (mobile)
+   ================================================================ */
+
+.multi-gatilho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-3);
+  width: 100%;
+  min-height: var(--altura-campo);
+  padding: 0 var(--esp-4);
+  font-size: var(--texto-campo);
+  text-align: left;
+  color: var(--cor-texto-fraco);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda-campo);
+  border-radius: var(--raio-md);
+}
+
+.multi-gatilho:active {
+  background-color: var(--cor-marca-50);
+}
+
+.multi-gatilho--preenchido {
+  color: var(--cor-marca-800);
+  font-weight: var(--peso-medio);
+  border-color: var(--cor-marca-100);
+}
+
+.multi-gatilho__texto {
+  flex: 1;
+}
+
+.multi-escolhidos {
+  margin-top: var(--esp-2);
+}
+
+.multi-escolhido {
+  min-height: 32px;
+}
+
+.multi-escolhido:active {
+  color: var(--cor-erro-600);
+  background-color: var(--cor-erro-100);
+}
+
+/* ── Busca dentro da folha ───────────────────────────────────── */
+.multi-busca {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  min-height: var(--altura-campo);
+  padding: 0 var(--esp-4);
+  color: var(--cor-neutro-400);
+  background-color: var(--cor-neutro-50);
+  border-radius: var(--raio-md);
+}
+
+.multi-busca__entrada {
+  flex: 1;
+  min-width: 0;
+  /* 16px: impede o zoom automático do iOS ao focar */
+  font-size: var(--texto-campo);
+  color: var(--cor-texto);
+  background: none;
+  border: none;
+  outline: none;
+}
+
+.multi-busca__limpar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: var(--cor-neutro-500);
+  border-radius: var(--raio-total);
+}

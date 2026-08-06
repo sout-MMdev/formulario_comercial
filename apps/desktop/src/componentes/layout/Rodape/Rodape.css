@@ -1,0 +1,48 @@
+/* ================================================================
+   LAYOUT — RODAPÉ
+   ================================================================ */
+
+.rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-4);
+  max-width: var(--largura-app);
+  margin: 0 auto;
+  padding: var(--esp-8) var(--esp-6) var(--esp-10);
+  border-top: 1px solid var(--cor-borda);
+}
+
+.rodape__texto,
+.rodape__credito {
+  font-size: var(--texto-xs);
+  color: var(--cor-texto-fraco);
+}
+
+.rodape__credito {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+}
+
+.rodape__credito strong {
+  font-weight: var(--peso-semi);
+  color: var(--cor-texto-suave);
+}
+
+.rodape__separador {
+  color: var(--cor-neutro-300);
+}
+
+.rodape__versao {
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 560px) {
+  .rodape {
+    flex-direction: column;
+    gap: var(--esp-2);
+    text-align: center;
+    padding: var(--esp-6) var(--esp-4);
+  }
+}

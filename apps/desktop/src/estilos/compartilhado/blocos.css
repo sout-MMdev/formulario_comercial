@@ -1,0 +1,293 @@
+/* ================================================================
+   COMPARTILHADO — BLOCOS E CARTÕES
+   Superfícies que agrupam conteúdo: o painel de uma aba, um bloco
+   repetível (trajeto, despesa, agência) e cartões de leitura.
+   ================================================================ */
+
+/* ── Painel — a folha branca onde a aba vive ─────────────────── */
+.painel {
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+  box-shadow: var(--sombra-sm);
+}
+
+.painel__cabecalho {
+  padding: var(--esp-6) var(--esp-8);
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.painel__etiqueta {
+  display: block;
+  margin-bottom: var(--esp-2);
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-forte);
+  letter-spacing: var(--letra-ampla);
+  text-transform: uppercase;
+  color: var(--cor-marca-600);
+}
+
+.painel__titulo {
+  font-size: var(--texto-lg);
+  color: var(--cor-marca-900);
+}
+
+.painel__descricao {
+  margin-top: var(--esp-2);
+  font-size: var(--texto-sm);
+  color: var(--cor-texto-fraco);
+  max-width: 58ch;
+}
+
+.painel__corpo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-6);
+  padding: var(--esp-8);
+}
+
+.painel__rodape {
+  padding: 0 var(--esp-8) var(--esp-8);
+}
+
+@media (max-width: 720px) {
+  .painel {
+    border-radius: var(--raio-md);
+  }
+
+  .painel__cabecalho {
+    padding: var(--esp-5);
+  }
+
+  .painel__corpo {
+    padding: var(--esp-5);
+    gap: var(--esp-5);
+  }
+
+  .painel__rodape {
+    padding: 0 var(--esp-5) var(--esp-5);
+  }
+}
+
+/* ── Bloco repetível — "Trajeto 1", "Despesa 2", uma agência ─── */
+.bloco {
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  overflow: hidden;
+  transition:
+    border-color var(--transicao),
+    box-shadow var(--transicao);
+}
+
+.bloco:hover {
+  border-color: var(--cor-neutro-300);
+  box-shadow: var(--sombra-xs);
+}
+
+.bloco--realce {
+  border-color: var(--cor-marca-100);
+  background-color: var(--cor-marca-50);
+}
+
+.bloco__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-3);
+  padding: var(--esp-3) var(--esp-3) var(--esp-3) var(--esp-5);
+  background-color: var(--cor-neutro-50);
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.bloco__identificacao {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  min-width: 0;
+}
+
+.bloco__ordem {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-forte);
+  color: var(--cor-branco);
+  background-color: var(--cor-marca-800);
+  border-radius: var(--raio-total);
+}
+
+.bloco__titulo {
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  color: var(--cor-marca-900);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bloco__legenda {
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-normal);
+  color: var(--cor-texto-fraco);
+}
+
+.bloco__corpo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-5);
+  padding: var(--esp-5);
+}
+
+.bloco__secao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+  padding-top: var(--esp-5);
+  border-top: 1px dashed var(--cor-borda);
+}
+
+.bloco__secao-titulo {
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-forte);
+  letter-spacing: var(--letra-etiqueta);
+  text-transform: uppercase;
+  color: var(--cor-texto-fraco);
+}
+
+/* ── Lista de blocos ─────────────────────────────────────────── */
+.lista-blocos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+}
+
+/* ── Cartão de leitura (resumo) ──────────────────────────────── */
+.cartao {
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  overflow: hidden;
+}
+
+.cartao__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-3);
+  padding: var(--esp-3) var(--esp-5);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  color: var(--cor-marca-900);
+  background-color: var(--cor-neutro-50);
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.cartao__corpo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+  padding: var(--esp-4) var(--esp-5);
+}
+
+/* Linha "Rótulo ......... Valor" */
+.linha-dado {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--esp-4);
+  font-size: var(--texto-sm);
+}
+
+.linha-dado + .linha-dado {
+  padding-top: var(--esp-2);
+  border-top: 1px dashed var(--cor-neutro-100);
+}
+
+.linha-dado__chave {
+  flex-shrink: 0;
+  color: var(--cor-texto-fraco);
+}
+
+.linha-dado__valor {
+  text-align: right;
+  font-weight: var(--peso-medio);
+  color: var(--cor-texto);
+  word-break: break-word;
+}
+
+/* ── Estado vazio ────────────────────────────────────────────── */
+.estado-vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--esp-3);
+  padding: var(--esp-10) var(--esp-6);
+  text-align: center;
+  color: var(--cor-texto-fraco);
+  background-color: var(--cor-neutro-25);
+  border: 1px dashed var(--cor-borda-campo);
+  border-radius: var(--raio-md);
+}
+
+.estado-vazio__titulo {
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  color: var(--cor-texto-suave);
+}
+
+.estado-vazio__texto {
+  font-size: var(--texto-xs);
+  max-width: 42ch;
+}
+
+/* ── Aviso / instruções ──────────────────────────────────────── */
+.aviso {
+  display: flex;
+  gap: var(--esp-3);
+  padding: var(--esp-4) var(--esp-5);
+  font-size: var(--texto-sm);
+  color: var(--cor-marca-800);
+  background-color: var(--cor-marca-50);
+  border: 1px solid var(--cor-marca-100);
+  border-radius: var(--raio-sm);
+  border-left-width: 3px;
+  border-left-color: var(--cor-marca-600);
+}
+
+.aviso__icone {
+  flex-shrink: 0;
+  color: var(--cor-marca-600);
+}
+
+.aviso__conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-1);
+}
+
+.aviso--atencao {
+  color: var(--cor-atencao-600);
+  background-color: var(--cor-atencao-100);
+  border-color: var(--cor-destaque-300);
+  border-left-color: var(--cor-atencao-500);
+}
+
+.aviso--atencao .aviso__icone {
+  color: var(--cor-atencao-500);
+}
+
+.aviso--sucesso {
+  color: var(--cor-sucesso-600);
+  background-color: var(--cor-sucesso-100);
+  border-color: var(--cor-sucesso-500);
+  border-left-color: var(--cor-sucesso-500);
+}
+
+.aviso--sucesso .aviso__icone {
+  color: var(--cor-sucesso-600);
+}

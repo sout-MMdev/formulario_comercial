@@ -1,0 +1,118 @@
+/* ================================================================
+   COMPARTILHADO — UTILITÁRIOS
+   Classes de uma responsabilidade só. Use com parcimônia: se algo
+   se repete demais, vira componente.
+   ================================================================ */
+
+/* ── Visibilidade ────────────────────────────────────────────── */
+.oculto {
+  display: none !important;
+}
+
+/* Some da tela mas continua legível para leitores de tela */
+.apenas-leitor-tela {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Empilhamento ────────────────────────────────────────────── */
+.pilha {
+  display: flex;
+  flex-direction: column;
+}
+
+.pilha-2 {
+  gap: var(--esp-2);
+}
+.pilha-3 {
+  gap: var(--esp-3);
+}
+.pilha-4 {
+  gap: var(--esp-4);
+}
+.pilha-5 {
+  gap: var(--esp-5);
+}
+.pilha-6 {
+  gap: var(--esp-6);
+}
+
+/* ── Linha horizontal ────────────────────────────────────────── */
+.linha {
+  display: flex;
+  align-items: center;
+}
+
+.linha-2 {
+  gap: var(--esp-2);
+}
+.linha-3 {
+  gap: var(--esp-3);
+}
+.linha-4 {
+  gap: var(--esp-4);
+}
+
+.linha--entre {
+  justify-content: space-between;
+}
+
+.linha--fim {
+  justify-content: flex-end;
+}
+
+.linha--quebra {
+  flex-wrap: wrap;
+}
+
+/* ── Texto ───────────────────────────────────────────────────── */
+.texto-fraco {
+  color: var(--cor-texto-fraco);
+}
+
+.texto-suave {
+  color: var(--cor-texto-suave);
+}
+
+.texto-marca {
+  color: var(--cor-marca-800);
+}
+
+.texto-pequeno {
+  font-size: var(--texto-xs);
+}
+
+.texto-forte {
+  font-weight: var(--peso-semi);
+}
+
+.texto-centro {
+  text-align: center;
+}
+
+.texto-etiqueta {
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-forte);
+  letter-spacing: var(--letra-etiqueta);
+  text-transform: uppercase;
+}
+
+/* ── Divisor ─────────────────────────────────────────────────── */
+.divisor {
+  height: 1px;
+  background-color: var(--cor-borda);
+  border: none;
+}
+
+.divisor--tracejado {
+  height: 0;
+  border-top: 1px dashed var(--cor-borda);
+  background: none;
+}

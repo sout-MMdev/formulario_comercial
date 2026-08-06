@@ -1,0 +1,157 @@
+/* ================================================================
+   ABA — IDENTIFICAÇÃO
+   Estilo exclusivo desta aba. O que for reaproveitado por outra
+   deve ser promovido para estilos/compartilhado/.
+   ================================================================ */
+
+.escolha {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+  padding-top: var(--esp-5);
+  border-top: 1px solid var(--cor-borda);
+}
+
+.escolha__cabecalho {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-1);
+}
+
+.escolha__titulo {
+  font-size: var(--texto-md);
+  color: var(--cor-marca-900);
+}
+
+.escolha__ajuda {
+  font-size: var(--texto-sm);
+  color: var(--cor-texto-fraco);
+}
+
+/* ── Cartões de relatório ────────────────────────────────────── */
+.escolha__cartoes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--esp-4);
+}
+
+.escolha__cartao {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--esp-4);
+  padding: var(--esp-5);
+  text-align: left;
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  cursor: pointer;
+  transition:
+    border-color var(--transicao),
+    box-shadow var(--transicao),
+    transform var(--transicao),
+    background-color var(--transicao);
+}
+
+.escolha__cartao:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: var(--cor-marca-600);
+  background-color: var(--cor-marca-50);
+  box-shadow: var(--sombra-md);
+}
+
+.escolha__cartao:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.escolha__icone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  color: var(--cor-marca-800);
+  background-color: var(--cor-marca-100);
+  border-radius: var(--raio-sm);
+  transition:
+    color var(--transicao),
+    background-color var(--transicao);
+}
+
+.escolha__cartao:hover:not(:disabled) .escolha__icone {
+  color: var(--cor-branco);
+  background-color: var(--cor-marca-800);
+}
+
+.escolha__conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-1);
+  min-width: 0;
+  flex: 1;
+}
+
+.escolha__nome {
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  color: var(--cor-marca-900);
+}
+
+.escolha__descricao {
+  font-size: var(--texto-xs);
+  color: var(--cor-texto-fraco);
+  line-height: var(--linha-normal);
+}
+
+.escolha__itens {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: var(--esp-2);
+}
+
+.escolha__item {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  font-size: var(--texto-2xs);
+  color: var(--cor-texto-suave);
+}
+
+.escolha__item svg {
+  color: var(--cor-sucesso-500);
+}
+
+.escolha__seta {
+  display: flex;
+  align-self: center;
+  color: var(--cor-neutro-400);
+  transition:
+    color var(--transicao),
+    transform var(--transicao);
+}
+
+.escolha__cartao:hover:not(:disabled) .escolha__seta {
+  color: var(--cor-marca-600);
+  transform: translateX(3px);
+}
+
+/* ── Aviso de bloqueio ───────────────────────────────────────── */
+.escolha__bloqueio {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  font-size: var(--texto-xs);
+  color: var(--cor-texto-fraco);
+}
+
+.escolha__bloqueio svg {
+  color: var(--cor-marca-600);
+}
+
+@media (max-width: 720px) {
+  .escolha__cartoes {
+    grid-template-columns: 1fr;
+  }
+}

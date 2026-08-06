@@ -1,0 +1,89 @@
+/* ================================================================
+   ROOT — CORES
+   Fonte única de verdade da paleta. Nenhum arquivo de componente
+   ou de aba deve escrever um HEX direto: sempre var(--cor-...).
+
+   A ordem abaixo é a ordem oficial da marca Cativa:
+     1. Azul escuro   2. Azul médio   3. Azul claro
+     4. Amarelo       5. Amarelo claro
+   Depois vêm os neutros e, por último, as cores de feedback.
+   ================================================================ */
+
+:root {
+  /* ── 1. Marca — azuis ──────────────────────────────────────── */
+  --cor-marca-900: #003462; /* azul mais profundo — texto sobre claro   */
+  --cor-marca-800: #004b8a; /* AZUL ESCURO do logo — cor institucional  */
+  --cor-marca-700: #005baa; /* azul médio — gradientes, títulos         */
+  --cor-marca-600: #0077cc; /* azul claro — foco, links, ações          */
+  --cor-marca-500: #2e93e0; /* azul suave — ícones, bordas ativas       */
+  --cor-marca-100: #dceaf7; /* azul lavado — fundos de destaque         */
+  --cor-marca-50: #f0f6fc; /* azul quase branco — hover de listas      */
+
+  /* ── 2. Marca — amarelos ───────────────────────────────────── */
+  --cor-destaque-600: #e0a800; /* amarelo escuro — hover do CTA         */
+  --cor-destaque-500: #ffcd28; /* AMARELO do logo — CTA principal       */
+  --cor-destaque-300: #ffd166; /* amarelo suave — gradiente do CTA      */
+  --cor-destaque-100: #fff4d1; /* amarelo lavado — fundos de aviso      */
+
+  /* ── 3. Neutros ────────────────────────────────────────────── */
+  --cor-branco: #ffffff;
+  --cor-neutro-25: #fafbfd; /* fundo geral da página                   */
+  --cor-neutro-50: #f4f6f9; /* fundo de blocos secundários             */
+  --cor-neutro-100: #eef1f6; /* divisores suaves, faixas               */
+  --cor-neutro-200: #e2e7ef; /* bordas de card                          */
+  --cor-neutro-300: #d0d7e2; /* bordas de campo                         */
+  --cor-neutro-400: #aab5c4; /* ícones inativos                         */
+  --cor-neutro-500: #7a8a99; /* texto secundário, placeholder           */
+  --cor-neutro-700: #4a5768; /* texto de apoio                          */
+  --cor-neutro-900: #1f2a37; /* texto principal                         */
+
+  /* ── 4. Feedback ───────────────────────────────────────────── */
+  --cor-sucesso-600: #1e9e57;
+  --cor-sucesso-500: #2ecc71;
+  --cor-sucesso-100: #e3f8ec;
+
+  --cor-atencao-600: #d98200;
+  --cor-atencao-500: #f39c12;
+  --cor-atencao-100: #fdf0dc;
+
+  --cor-erro-600: #c0392b;
+  --cor-erro-500: #e74c3c;
+  --cor-erro-100: #fdeceb;
+
+  /* ── 5. Papéis semânticos ──────────────────────────────────────
+     Os componentes consomem ESTES nomes, não os da paleta acima.
+     Trocar o tema = reapontar estas linhas.                       */
+  --cor-fundo: var(--cor-neutro-25);
+  --cor-superficie: var(--cor-branco);
+  --cor-superficie-suave: var(--cor-neutro-50);
+  --cor-superficie-ativa: var(--cor-marca-50);
+
+  --cor-borda: var(--cor-neutro-200);
+  --cor-borda-campo: var(--cor-neutro-300);
+  --cor-borda-forte: var(--cor-neutro-400);
+
+  --cor-texto: var(--cor-neutro-900);
+  --cor-texto-suave: var(--cor-neutro-700);
+  --cor-texto-fraco: var(--cor-neutro-500);
+  --cor-texto-invertido: var(--cor-branco);
+
+  --cor-acao: var(--cor-marca-800);
+  --cor-acao-hover: var(--cor-marca-700);
+  --cor-foco: var(--cor-marca-600);
+  --cor-foco-anel: rgba(0, 119, 204, 0.18);
+
+  --cor-cta: var(--cor-destaque-500);
+  --cor-cta-hover: var(--cor-destaque-600);
+  --cor-cta-texto: var(--cor-marca-900);
+
+  /* ── 6. Níveis do termômetro de estresse ───────────────────────
+     Escala fixa: quanto maior o risco de churn, mais quente.      */
+  --cor-nivel-baixo: var(--cor-sucesso-500);
+  --cor-nivel-baixo-fundo: var(--cor-sucesso-100);
+  --cor-nivel-medio: var(--cor-destaque-500);
+  --cor-nivel-medio-fundo: var(--cor-destaque-100);
+  --cor-nivel-alto: var(--cor-atencao-500);
+  --cor-nivel-alto-fundo: var(--cor-atencao-100);
+  --cor-nivel-critico: var(--cor-erro-500);
+  --cor-nivel-critico-fundo: var(--cor-erro-100);
+}

@@ -1,0 +1,33 @@
+/* ================================================================
+   ROOT — EFEITOS
+   Raios, sombras, transições e camadas (z-index).
+   ================================================================ */
+
+:root {
+  /* ── Raio de borda ─────────────────────────────────────────── */
+  --raio-xs: 6px;
+  --raio-sm: 8px;
+  --raio-md: 12px;
+  --raio-lg: 16px;
+  --raio-xl: 22px;
+  --raio-total: 999px;
+
+  /* ── Sombras — sempre com tom azulado, nunca cinza puro ────── */
+  --sombra-xs: 0 1px 2px rgba(16, 40, 72, 0.06);
+  --sombra-sm: 0 2px 6px rgba(16, 40, 72, 0.07);
+  --sombra-md: 0 6px 18px rgba(16, 40, 72, 0.09);
+  --sombra-lg: 0 16px 40px rgba(16, 40, 72, 0.14);
+  --sombra-foco: 0 0 0 3px var(--cor-foco-anel);
+
+  /* ── Transições ────────────────────────────────────────────── */
+  --transicao-rapida: 0.15s ease;
+  --transicao: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  --transicao-lenta: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── Camadas ───────────────────────────────────────────────── */
+  --camada-base: 1;
+  --camada-suspensa: 100; /* listas de autocomplete, multiselect */
+  --camada-fixa: 500; /* cabeçalho                           */
+  --camada-modal: 1000; /* pop-ups                             */
+  --camada-splash: 9999; /* tela de carregamento                */
+}

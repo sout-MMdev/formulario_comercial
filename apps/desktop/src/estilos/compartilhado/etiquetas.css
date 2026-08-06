@@ -1,0 +1,79 @@
+/* ================================================================
+   COMPARTILHADO — ETIQUETAS (chips / tags / selos)
+   Pequenos rótulos coloridos reaproveitados em várias abas.
+   ================================================================ */
+
+.etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-1);
+  padding: 3px var(--esp-3);
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-semi);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  border-radius: var(--raio-total);
+  border: 1px solid transparent;
+}
+
+.etiqueta--neutra {
+  color: var(--cor-texto-suave);
+  background-color: var(--cor-neutro-100);
+  border-color: var(--cor-neutro-200);
+}
+
+.etiqueta--marca {
+  color: var(--cor-marca-800);
+  background-color: var(--cor-marca-100);
+  border-color: var(--cor-marca-100);
+}
+
+.etiqueta--sucesso {
+  color: var(--cor-sucesso-600);
+  background-color: var(--cor-sucesso-100);
+  border-color: var(--cor-sucesso-500);
+}
+
+.etiqueta--atencao {
+  color: var(--cor-atencao-600);
+  background-color: var(--cor-atencao-100);
+  border-color: var(--cor-destaque-300);
+}
+
+.etiqueta--erro {
+  color: var(--cor-erro-600);
+  background-color: var(--cor-erro-100);
+  border-color: var(--cor-erro-500);
+}
+
+/* ── Etiquetas por nível do termômetro ───────────────────────── */
+.etiqueta[data-nivel="Baixo"] {
+  color: var(--cor-sucesso-600);
+  background-color: var(--cor-nivel-baixo-fundo);
+  border-color: var(--cor-nivel-baixo);
+}
+
+.etiqueta[data-nivel="Médio"] {
+  color: var(--cor-destaque-600);
+  background-color: var(--cor-nivel-medio-fundo);
+  border-color: var(--cor-nivel-medio);
+}
+
+.etiqueta[data-nivel="Alto"] {
+  color: var(--cor-atencao-600);
+  background-color: var(--cor-nivel-alto-fundo);
+  border-color: var(--cor-nivel-alto);
+}
+
+.etiqueta[data-nivel="Crítico"] {
+  color: var(--cor-erro-600);
+  background-color: var(--cor-nivel-critico-fundo);
+  border-color: var(--cor-nivel-critico);
+}
+
+/* ── Lista de etiquetas ──────────────────────────────────────── */
+.etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-2);
+}

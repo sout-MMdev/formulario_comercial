@@ -1,0 +1,1 @@
+export { Resumo } from "./Resumo";

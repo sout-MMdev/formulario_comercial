@@ -1,0 +1,155 @@
+/* ================================================================
+   COMPONENTE — MULTISSELEÇÃO
+   ================================================================ */
+
+.multi {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+}
+
+/* ── Botão que abre ──────────────────────────────────────────── */
+.multi__botao {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-3);
+  width: 100%;
+  min-height: var(--altura-campo);
+  padding: 0 var(--esp-4);
+  text-align: left;
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda-campo);
+  border-radius: var(--raio-sm);
+  transition:
+    border-color var(--transicao-rapida),
+    box-shadow var(--transicao-rapida);
+}
+
+.multi__botao:hover {
+  border-color: var(--cor-borda-forte);
+}
+
+.multi__botao--aberto {
+  border-color: var(--cor-foco);
+  box-shadow: var(--sombra-foco);
+}
+
+.multi__placeholder {
+  font-size: var(--texto-base);
+  color: var(--cor-texto-fraco);
+}
+
+.multi__resumo {
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  color: var(--cor-marca-800);
+}
+
+.multi__seta {
+  color: var(--cor-neutro-500);
+  transition: transform var(--transicao);
+}
+
+.multi__botao--aberto .multi__seta {
+  transform: rotate(180deg);
+}
+
+/* ── Etiquetas do que foi escolhido ──────────────────────────── */
+.multi__escolhido {
+  cursor: pointer;
+  transition:
+    background-color var(--transicao-rapida),
+    color var(--transicao-rapida);
+}
+
+.multi__escolhido:hover {
+  color: var(--cor-erro-600);
+  background-color: var(--cor-erro-100);
+  border-color: var(--cor-erro-500);
+}
+
+/* ── Painel suspenso ─────────────────────────────────────────── */
+.multi__painel {
+  position: absolute;
+  top: calc(var(--altura-campo) + 4px);
+  left: 0;
+  right: 0;
+  z-index: var(--camada-suspensa);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-sm);
+  box-shadow: var(--sombra-md);
+  overflow: hidden;
+  animation: subir 0.18s both;
+}
+
+.multi__busca {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  padding: var(--esp-3) var(--esp-4);
+  color: var(--cor-neutro-400);
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.multi__busca-entrada {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--texto-sm);
+  color: var(--cor-texto);
+  background: none;
+  border: none;
+  outline: none;
+}
+
+.multi__lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-1);
+  max-height: 240px;
+  padding: var(--esp-2);
+  overflow-y: auto;
+}
+
+.multi__vazio {
+  padding: var(--esp-4);
+  font-size: var(--texto-xs);
+  text-align: center;
+  color: var(--cor-texto-fraco);
+}
+
+.multi__rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--esp-2) var(--esp-3);
+  background-color: var(--cor-neutro-25);
+  border-top: 1px solid var(--cor-borda);
+}
+
+.multi__acao {
+  padding: var(--esp-1) var(--esp-3);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-semi);
+  color: var(--cor-texto-fraco);
+  border-radius: var(--raio-xs);
+  transition:
+    color var(--transicao-rapida),
+    background-color var(--transicao-rapida);
+}
+
+.multi__acao:hover:not(:disabled) {
+  color: var(--cor-marca-800);
+  background-color: var(--cor-marca-50);
+}
+
+.multi__acao:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.multi__acao--forte {
+  color: var(--cor-marca-800);
+}

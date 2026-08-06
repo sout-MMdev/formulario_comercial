@@ -1,0 +1,97 @@
+/* ================================================================
+   ABA — IDENTIFICAÇÃO / PAINEL DE DIAS SALVOS
+   ================================================================ */
+
+.dias {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-3);
+}
+
+.dias__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-3);
+  padding: var(--esp-4) var(--esp-5);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  transition:
+    border-color var(--transicao-rapida),
+    box-shadow var(--transicao-rapida);
+}
+
+.dias__item:hover {
+  border-color: var(--cor-neutro-300);
+  box-shadow: var(--sombra-xs);
+}
+
+.dias__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-3);
+}
+
+.dias__data {
+  display: flex;
+  align-items: baseline;
+  gap: var(--esp-2);
+  min-width: 0;
+  font-size: var(--texto-sm);
+  color: var(--cor-marca-900);
+}
+
+.dias__data svg {
+  align-self: center;
+  color: var(--cor-marca-600);
+}
+
+.dias__salvo-em {
+  font-size: var(--texto-2xs);
+  color: var(--cor-texto-fraco);
+  white-space: nowrap;
+}
+
+.dias__corpo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--esp-4);
+  padding-top: var(--esp-3);
+  border-top: 1px dashed var(--cor-neutro-100);
+}
+
+.dias__info {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  font-size: var(--texto-xs);
+  color: var(--cor-texto-suave);
+}
+
+.dias__info svg {
+  color: var(--cor-neutro-400);
+}
+
+.dias__total {
+  margin-left: auto;
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-forte);
+  color: var(--cor-marca-800);
+}
+
+.dias__agencias {
+  font-size: var(--texto-xs);
+  color: var(--cor-texto-fraco);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 560px) {
+  .dias__total {
+    margin-left: 0;
+    width: 100%;
+  }
+}

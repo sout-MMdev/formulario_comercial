@@ -1,14 +1,27 @@
 {
-  "name": "crm",
-  "version": "1.0.0",
+  "name": "cativa-relatorio-comercial",
+  "version": "3.0.0",
   "private": true,
   "type": "module",
+  "description": "Relatório comercial da Cativa Operadora — núcleo compartilhado + app desktop + app mobile",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "dev": "npm run dev --workspace @cativa/desktop",
+    "dev:desktop": "npm run dev --workspace @cativa/desktop",
+    "dev:mobile": "npm run dev --workspace @cativa/mobile",
+    "build": "npm run build --workspaces --if-present",
+    "build:desktop": "npm run build --workspace @cativa/desktop",
+    "build:mobile": "npm run build --workspace @cativa/mobile",
+    "preview:desktop": "npm run preview --workspace @cativa/desktop",
+    "preview:mobile": "npm run preview --workspace @cativa/mobile",
+    "typecheck": "tsc -b",
+    "test": "npm run test --workspace @cativa/nucleo"
   },
   "devDependencies": {
+    "@types/node": "^26.1.2",
     "typescript": "^5.8.3",
     "vite": "^6.3.5"
   }

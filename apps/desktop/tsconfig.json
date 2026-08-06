@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* "@/..."         → src/ deste app
+       "@cativa/nucleo" → código-fonte do pacote compartilhado.
+       Apontar para o SOURCE (e não para um build) faz o hot reload
+       funcionar quando uma regra do núcleo é alterada.            */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@cativa/nucleo": ["../../packages/nucleo/src/index.ts"],
+      "@cativa/nucleo/*": ["../../packages/nucleo/src/*"],
+      "@cativa/tema/*": ["../../packages/tema/*"]
+    },
+
+    "types": ["node", "vite/client"],
+
+    /* O pacote @cativa/nucleo importa os próprios módulos com a
+       extensão .ts explícita — é o que permite rodá-lo direto no
+       Node (testes, futuro backend). Só é aceito porque aqui não
+       emitimos JavaScript: quem gera o bundle é o Vite.          */
+    "allowImportingTsExtensions": true,
+
+    "noEmit": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/desktop.tsbuildinfo"
+  },
+  "include": ["src", "vite.config.ts"]
+}

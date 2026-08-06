@@ -1,0 +1,57 @@
+/* ================================================================
+   PASSO — EXECUTIVO
+   ================================================================ */
+
+.email-confirmado {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  padding: var(--esp-4);
+  background-color: var(--cor-marca-50);
+  border: 1px solid var(--cor-marca-100);
+  border-radius: var(--raio-md);
+}
+
+.email-confirmado__icone {
+  display: flex;
+  flex-shrink: 0;
+  color: var(--cor-marca-600);
+}
+
+.email-confirmado__texto {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+  min-width: 0;
+}
+
+.email-confirmado__rotulo {
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-semi);
+  letter-spacing: var(--letra-etiqueta);
+  text-transform: uppercase;
+  color: var(--cor-marca-600);
+}
+
+.email-confirmado__valor {
+  font-size: var(--texto-sm);
+  color: var(--cor-marca-900);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.email-confirmado__editar {
+  flex-shrink: 0;
+  min-height: var(--toque-minimo);
+  padding: 0 var(--esp-3);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  color: var(--cor-marca-800);
+  border-radius: var(--raio-sm);
+}
+
+.email-confirmado__editar:active {
+  background-color: var(--cor-marca-100);
+}

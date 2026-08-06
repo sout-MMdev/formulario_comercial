@@ -1,0 +1,119 @@
+/* ================================================================
+   LAYOUT — CABEÇALHO
+   ================================================================ */
+
+.cabecalho {
+  position: sticky;
+  top: 0;
+  z-index: var(--camada-fixa);
+  background-color: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.cabecalho__interno {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-4);
+  height: var(--altura-cabecalho);
+  max-width: var(--largura-app);
+  margin: 0 auto;
+  padding: 0 var(--esp-6);
+}
+
+/* ── Marca ───────────────────────────────────────────────────── */
+.cabecalho__marca {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-4);
+  min-width: 0;
+}
+
+.cabecalho__logo {
+  height: 30px;
+  width: auto;
+  object-fit: contain;
+}
+
+.cabecalho__divisor {
+  width: 1px;
+  height: 22px;
+  background-color: var(--cor-borda);
+}
+
+.cabecalho__titulo {
+  font-family: var(--fonte-titulo);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-forte);
+  letter-spacing: var(--letra-ampla);
+  text-transform: uppercase;
+  color: var(--cor-marca-800);
+  white-space: nowrap;
+}
+
+/* ── Executivo ───────────────────────────────────────────────── */
+.cabecalho__executivo {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  min-width: 0;
+  padding: var(--esp-1) var(--esp-3) var(--esp-1) var(--esp-1);
+  background-color: var(--cor-neutro-50);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-total);
+}
+
+.cabecalho__avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  color: var(--cor-branco);
+  background-color: var(--cor-marca-800);
+  border-radius: var(--raio-total);
+}
+
+.cabecalho__dados {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.25;
+}
+
+.cabecalho__nome {
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-semi);
+  color: var(--cor-marca-900);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 24ch;
+}
+
+.cabecalho__email {
+  font-size: var(--texto-2xs);
+  color: var(--cor-texto-fraco);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 24ch;
+}
+
+@media (max-width: 720px) {
+  .cabecalho__interno {
+    padding: 0 var(--esp-4);
+  }
+
+  .cabecalho__divisor,
+  .cabecalho__titulo,
+  .cabecalho__dados {
+    display: none;
+  }
+
+  .cabecalho__executivo {
+    padding: var(--esp-1);
+  }
+}

@@ -1,0 +1,74 @@
+/* ================================================================
+   COMPONENTE — CAMPO DE ARQUIVO (mobile)
+   ================================================================ */
+
+.anexo-acoes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--esp-3);
+}
+
+.anexo-acoes--invalido .anexo-acao {
+  border-color: var(--cor-erro-500);
+}
+
+.anexo-acao {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-2);
+  min-height: 92px;
+  padding: var(--esp-4);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-medio);
+  color: var(--cor-marca-800);
+  background-color: var(--cor-marca-50);
+  border: 1px dashed var(--cor-marca-100);
+  border-radius: var(--raio-md);
+}
+
+.anexo-acao:active {
+  background-color: var(--cor-marca-100);
+  transform: scale(0.98);
+}
+
+.anexo-acao__entrada {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+/* ── Já anexado ──────────────────────────────────────────────── */
+.anexo {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  min-height: 68px;
+  padding: var(--esp-3) var(--esp-3) var(--esp-3) var(--esp-4);
+  border-radius: var(--raio-md);
+}
+
+.anexo--pronto {
+  color: var(--cor-sucesso-600);
+  background-color: var(--cor-sucesso-100);
+  border: 1px solid var(--cor-sucesso-500);
+}
+
+.anexo__icone {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.anexo__nome {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-medio);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

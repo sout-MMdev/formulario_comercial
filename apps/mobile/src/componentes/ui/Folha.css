@@ -1,0 +1,92 @@
+/* ================================================================
+   COMPONENTE — FOLHA (bottom sheet)
+   ================================================================ */
+
+.folha-fundo {
+  position: fixed;
+  inset: 0;
+  z-index: var(--camada-modal);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background-color: rgba(11, 28, 48, 0.5);
+  animation: surgir 0.2s both;
+}
+
+.folha {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--largura-maxima);
+  max-height: 88dvh;
+  background-color: var(--cor-superficie);
+  border-radius: var(--raio-xl) var(--raio-xl) 0 0;
+  box-shadow: var(--sombra-lg);
+  animation: subir-folha 0.28s cubic-bezier(0.2, 0, 0.2, 1) both;
+
+  /* Respeita a barra de gestos do iPhone */
+  padding-bottom: var(--seguro-baixo);
+}
+
+.folha--alta {
+  height: 92dvh;
+}
+
+/* Alça: sinaliza que dá para arrastar/fechar */
+.folha__alca {
+  width: 40px;
+  height: 4px;
+  margin: var(--esp-3) auto var(--esp-1);
+  background-color: var(--cor-neutro-300);
+  border-radius: var(--raio-total);
+}
+
+.folha__cabecalho {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--esp-3);
+  padding: var(--esp-4) var(--esp-4) var(--esp-3);
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.folha__titulos {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.folha__etiqueta {
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-forte);
+  letter-spacing: var(--letra-ampla);
+  text-transform: uppercase;
+  color: var(--cor-marca-600);
+}
+
+.folha__titulo {
+  font-size: var(--texto-md);
+  color: var(--cor-marca-900);
+}
+
+.folha__corpo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+  flex: 1;
+  padding: var(--esp-4);
+  overflow-y: auto;
+}
+
+.folha__rodape {
+  display: flex;
+  gap: var(--esp-3);
+  padding: var(--esp-3) var(--esp-4) var(--esp-4);
+  background-color: var(--cor-neutro-25);
+  border-top: 1px solid var(--cor-borda);
+}
+
+.folha__rodape .btn {
+  flex: 1;
+}

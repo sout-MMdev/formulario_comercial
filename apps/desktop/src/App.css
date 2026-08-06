@@ -1,0 +1,41 @@
+/* ================================================================
+   APP — esqueleto da página
+   Desktop: trilha de etapas à esquerda, conteúdo à direita.
+   Celular: trilha vira faixa horizontal acima do conteúdo.
+   ================================================================ */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app__conteudo {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--esp-10);
+  width: 100%;
+  max-width: var(--largura-app);
+  margin: 0 auto;
+  padding: var(--esp-8) var(--esp-6);
+  flex: 1;
+}
+
+.app__aba {
+  flex: 1;
+  min-width: 0;
+  max-width: var(--largura-conteudo);
+}
+
+@media (max-width: 960px) {
+  .app__conteudo {
+    flex-direction: column;
+    gap: var(--esp-5);
+    padding: var(--esp-5) var(--esp-4);
+  }
+
+  .app__aba {
+    width: 100%;
+    max-width: none;
+  }
+}

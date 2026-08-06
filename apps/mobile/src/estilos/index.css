@@ -1,0 +1,17 @@
+/* ================================================================
+   ESTILOS — APP MOBILE
+   Importado uma única vez em src/main.tsx.
+
+     1. @cativa/tema    identidade compartilhada com o desktop
+     2. root/           dimensões de toque DESTE app (campo 56px)
+     3. base/           documento + correções de toque
+     4. compartilhado/  classes usadas por várias telas daqui
+
+   Estilo de tela fica ao lado da tela (src/passos/<Passo>.css).
+   ================================================================ */
+
+@import "@cativa/tema/index.css";
+
+@import "./root/index.css";
+@import "./base/index.css";
+@import "./compartilhado/index.css";

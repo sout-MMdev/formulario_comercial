@@ -1,0 +1,77 @@
+/* ================================================================
+   COMPARTILHADO — ETIQUETAS (mobile)
+   Mesmas cores do desktop, um pouco maiores para leitura em tela
+   pequena e ao sol.
+   ================================================================ */
+
+.etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-1);
+  padding: 4px var(--esp-3);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-semi);
+  white-space: nowrap;
+  border: 1px solid transparent;
+  border-radius: var(--raio-total);
+}
+
+.etiqueta--neutra {
+  color: var(--cor-texto-suave);
+  background-color: var(--cor-neutro-100);
+  border-color: var(--cor-neutro-200);
+}
+
+.etiqueta--marca {
+  color: var(--cor-marca-800);
+  background-color: var(--cor-marca-100);
+}
+
+.etiqueta--sucesso {
+  color: var(--cor-sucesso-600);
+  background-color: var(--cor-sucesso-100);
+  border-color: var(--cor-sucesso-500);
+}
+
+.etiqueta--atencao {
+  color: var(--cor-atencao-600);
+  background-color: var(--cor-atencao-100);
+  border-color: var(--cor-destaque-300);
+}
+
+.etiqueta--erro {
+  color: var(--cor-erro-600);
+  background-color: var(--cor-erro-100);
+  border-color: var(--cor-erro-500);
+}
+
+/* Níveis do termômetro — mesma escala de cor do desktop */
+.etiqueta[data-nivel="Baixo"] {
+  color: var(--cor-sucesso-600);
+  background-color: var(--cor-nivel-baixo-fundo);
+  border-color: var(--cor-nivel-baixo);
+}
+
+.etiqueta[data-nivel="Médio"] {
+  color: var(--cor-destaque-600);
+  background-color: var(--cor-nivel-medio-fundo);
+  border-color: var(--cor-nivel-medio);
+}
+
+.etiqueta[data-nivel="Alto"] {
+  color: var(--cor-atencao-600);
+  background-color: var(--cor-nivel-alto-fundo);
+  border-color: var(--cor-nivel-alto);
+}
+
+.etiqueta[data-nivel="Crítico"] {
+  color: var(--cor-erro-600);
+  background-color: var(--cor-nivel-critico-fundo);
+  border-color: var(--cor-nivel-critico);
+}
+
+.etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-2);
+}

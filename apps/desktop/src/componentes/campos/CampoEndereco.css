@@ -1,0 +1,15 @@
+/* Bloco de endereço — empilha o CEP e as grades de sub-campos */
+.campo-endereco {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.campo-endereco__cep {
+  max-width: 200px;
+}
+
+.campo-endereco__uf {
+  max-width: 90px;
+  text-transform: uppercase;
+}

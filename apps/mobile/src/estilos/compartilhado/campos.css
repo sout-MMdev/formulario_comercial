@@ -1,0 +1,206 @@
+/* ================================================================
+   COMPARTILHADO — CAMPOS (mobile)
+   Tudo dimensionado para o toque: 56px de altura, fonte 16px,
+   e um campo por linha (nada de grade de duas colunas).
+   ================================================================ */
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+}
+
+.campo__rotulo {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  color: var(--cor-texto-suave);
+}
+
+.campo__obrigatorio {
+  color: var(--cor-erro-500);
+}
+
+.campo__ajuda {
+  font-size: var(--texto-xs);
+  line-height: var(--linha-normal);
+  color: var(--cor-texto-fraco);
+}
+
+.campo__erro {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+  color: var(--cor-erro-600);
+}
+
+/* ── Controle base ───────────────────────────────────────────── */
+.controle {
+  width: 100%;
+  min-height: var(--altura-campo);
+  padding: 0 var(--esp-4);
+
+  /* 16px: abaixo disso o iOS amplia a tela ao focar o campo */
+  font-size: var(--texto-campo);
+
+  color: var(--cor-texto);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda-campo);
+  border-radius: var(--raio-md);
+  transition:
+    border-color var(--transicao-rapida),
+    box-shadow var(--transicao-rapida);
+}
+
+.controle:focus {
+  outline: none;
+  border-color: var(--cor-foco);
+  box-shadow: var(--sombra-foco);
+}
+
+.controle:disabled,
+.controle[readonly] {
+  background-color: var(--cor-neutro-50);
+  color: var(--cor-texto-suave);
+}
+
+.controle--invalido {
+  border-color: var(--cor-erro-500);
+}
+
+.controle--calculado {
+  background-color: var(--cor-marca-50);
+  border-color: var(--cor-marca-100);
+  color: var(--cor-marca-800);
+  font-weight: var(--peso-semi);
+}
+
+textarea.controle {
+  padding: var(--esp-4);
+  min-height: 120px;
+  line-height: var(--linha-normal);
+  resize: none;
+}
+
+select.controle {
+  appearance: none;
+  padding-right: var(--esp-10);
+  background-image: linear-gradient(45deg, transparent 50%, var(--cor-neutro-500) 50%),
+    linear-gradient(135deg, var(--cor-neutro-500) 50%, transparent 50%);
+  background-position:
+    calc(100% - 22px) calc(50% + 2px),
+    calc(100% - 16px) calc(50% + 2px);
+  background-size:
+    7px 7px,
+    7px 7px;
+  background-repeat: no-repeat;
+}
+
+/* ── Campo de valor em reais ─────────────────────────────────── */
+.controle-moeda {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.controle-moeda__prefixo {
+  position: absolute;
+  left: var(--esp-4);
+  font-size: var(--texto-campo);
+  font-weight: var(--peso-semi);
+  color: var(--cor-texto-fraco);
+  pointer-events: none;
+}
+
+.controle-moeda .controle {
+  padding-left: calc(var(--esp-10) + 4px);
+  font-size: var(--texto-lg);
+  font-weight: var(--peso-semi);
+}
+
+/* ── Opção marcável — linha inteira é área de toque ──────────── */
+.opcao {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  min-height: var(--toque-minimo);
+  padding: var(--esp-3) var(--esp-4);
+  font-size: var(--texto-base);
+  color: var(--cor-texto-suave);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  transition:
+    border-color var(--transicao-rapida),
+    background-color var(--transicao-rapida);
+}
+
+.opcao:active {
+  transform: scale(0.99);
+}
+
+.opcao__entrada {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  accent-color: var(--cor-marca-600);
+}
+
+.opcao--marcada {
+  border-color: var(--cor-marca-600);
+  background-color: var(--cor-marca-50);
+  color: var(--cor-marca-800);
+  font-weight: var(--peso-medio);
+}
+
+.opcoes-pilha {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+}
+
+/* ── Anexo de arquivo ────────────────────────────────────────── */
+.campo-arquivo {
+  position: relative;
+}
+
+.campo-arquivo__entrada {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.campo-arquivo__area {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  min-height: 68px;
+  padding: var(--esp-4);
+  font-size: var(--texto-sm);
+  color: var(--cor-texto-fraco);
+  background-color: var(--cor-neutro-25);
+  border: 1px dashed var(--cor-borda-campo);
+  border-radius: var(--raio-md);
+}
+
+.campo-arquivo--preenchido .campo-arquivo__area {
+  border-style: solid;
+  border-color: var(--cor-sucesso-500);
+  background-color: var(--cor-sucesso-100);
+  color: var(--cor-sucesso-600);
+  font-weight: var(--peso-medio);
+}
+
+.campo-arquivo__nome {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

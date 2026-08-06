@@ -1,0 +1,101 @@
+/* ================================================================
+   COMPARTILHADO — BOTÕES (mobile)
+   Altura 56px, largura cheia por padrão, retorno visual por
+   :active (no toque não existe hover).
+   ================================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-2);
+  min-height: var(--altura-botao);
+  padding: 0 var(--esp-6);
+  font-family: var(--fonte-titulo);
+  font-size: var(--texto-md);
+  font-weight: var(--peso-semi);
+  border: 1px solid transparent;
+  border-radius: var(--raio-md);
+  transition:
+    background-color var(--transicao-rapida),
+    transform var(--transicao-rapida),
+    opacity var(--transicao-rapida);
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+}
+
+.btn--primario {
+  color: var(--cor-texto-invertido);
+  background-color: var(--cor-acao);
+}
+
+.btn--destaque {
+  color: var(--cor-cta-texto);
+  background-color: var(--cor-cta);
+}
+
+.btn--contorno {
+  color: var(--cor-texto-suave);
+  background-color: var(--cor-superficie);
+  border-color: var(--cor-borda-campo);
+}
+
+.btn--discreto {
+  color: var(--cor-marca-800);
+  background-color: transparent;
+}
+
+.btn--adicionar {
+  width: 100%;
+  color: var(--cor-marca-700);
+  background-color: transparent;
+  border: 1px dashed var(--cor-borda-campo);
+}
+
+.btn--adicionar:active:not(:disabled) {
+  background-color: var(--cor-marca-50);
+}
+
+.btn--menor {
+  min-height: var(--altura-botao-menor);
+  padding: 0 var(--esp-4);
+  font-size: var(--texto-sm);
+}
+
+.btn--largo {
+  width: 100%;
+}
+
+/* ── Botão só de ícone — nunca abaixo de 44px ────────────────── */
+.btn-icone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--toque-minimo);
+  height: var(--toque-minimo);
+  color: var(--cor-texto-fraco);
+  border-radius: var(--raio-sm);
+  transition:
+    color var(--transicao-rapida),
+    background-color var(--transicao-rapida);
+}
+
+.btn-icone:active:not(:disabled) {
+  background-color: var(--cor-neutro-100);
+}
+
+.btn-icone--perigo:active:not(:disabled) {
+  color: var(--cor-erro-600);
+  background-color: var(--cor-erro-100);
+}
+
+.btn-icone:disabled {
+  opacity: 0.3;
+}

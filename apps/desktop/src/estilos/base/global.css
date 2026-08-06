@@ -1,0 +1,87 @@
+/* ================================================================
+   BASE — GLOBAL
+   Aparência padrão do documento e da tipografia.
+   ================================================================ */
+
+body {
+  font-family: var(--fonte-corpo);
+  font-size: var(--texto-base);
+  line-height: var(--linha-normal);
+  color: var(--cor-texto);
+  background-color: var(--cor-fundo);
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--fonte-titulo);
+  font-weight: var(--peso-semi);
+  line-height: var(--linha-apertada);
+  letter-spacing: var(--letra-titulo);
+  color: var(--cor-marca-900);
+}
+
+h1 {
+  font-size: var(--texto-xl);
+}
+h2 {
+  font-size: var(--texto-lg);
+}
+h3 {
+  font-size: var(--texto-md);
+}
+
+p {
+  line-height: var(--linha-normal);
+}
+
+strong {
+  font-weight: var(--peso-semi);
+}
+
+::placeholder {
+  color: var(--cor-texto-fraco);
+  opacity: 1;
+}
+
+::selection {
+  background-color: var(--cor-marca-100);
+  color: var(--cor-marca-900);
+}
+
+/* Foco visível por teclado em qualquer elemento interativo */
+:focus-visible {
+  outline: 2px solid var(--cor-foco);
+  outline-offset: 2px;
+}
+
+/* Trava a rolagem do fundo enquanto um pop-up está aberto */
+body.com-modal-aberto {
+  overflow: hidden;
+}
+
+/* Barra de rolagem discreta nas listas internas */
+.rolagem-fina {
+  scrollbar-width: thin;
+  scrollbar-color: var(--cor-neutro-300) transparent;
+}
+
+.rolagem-fina::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.rolagem-fina::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.rolagem-fina::-webkit-scrollbar-thumb {
+  background-color: var(--cor-neutro-300);
+  border-radius: var(--raio-total);
+}
+
+.rolagem-fina::-webkit-scrollbar-thumb:hover {
+  background-color: var(--cor-neutro-400);
+}

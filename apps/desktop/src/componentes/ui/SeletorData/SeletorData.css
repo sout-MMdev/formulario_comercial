@@ -1,0 +1,178 @@
+/* ================================================================
+   COMPONENTE — SELETOR DE DATA
+   ================================================================ */
+
+/* ── O campo fechado ─────────────────────────────────────────── */
+.seletor-data {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  width: 100%;
+  min-height: var(--altura-campo);
+  padding: 0 var(--esp-4);
+  font-size: var(--texto-base);
+  text-align: left;
+  color: var(--cor-texto-fraco);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda-campo);
+  border-radius: var(--raio-sm);
+  transition:
+    border-color var(--transicao-rapida),
+    box-shadow var(--transicao-rapida),
+    color var(--transicao-rapida);
+}
+
+.seletor-data:hover {
+  border-color: var(--cor-borda-forte);
+}
+
+.seletor-data:focus-visible {
+  border-color: var(--cor-foco);
+  box-shadow: var(--sombra-foco);
+}
+
+.seletor-data--preenchido {
+  color: var(--cor-texto);
+  font-weight: var(--peso-medio);
+}
+
+.seletor-data--invalido {
+  border-color: var(--cor-erro-500);
+}
+
+.seletor-data__icone {
+  color: var(--cor-neutro-400);
+}
+
+.seletor-data--preenchido .seletor-data__icone {
+  color: var(--cor-marca-600);
+}
+
+/* ── O calendário dentro do modal ────────────────────────────── */
+.modal--calendario {
+  max-width: 380px;
+}
+
+.calendario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+}
+
+.calendario__navegacao {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-2);
+}
+
+.calendario__passo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  color: var(--cor-texto-suave);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-xs);
+  transition:
+    color var(--transicao-rapida),
+    border-color var(--transicao-rapida),
+    background-color var(--transicao-rapida);
+}
+
+.calendario__passo:hover {
+  color: var(--cor-marca-800);
+  border-color: var(--cor-marca-500);
+  background-color: var(--cor-marca-50);
+}
+
+.calendario__seletores {
+  display: flex;
+  gap: var(--esp-2);
+}
+
+.calendario__select {
+  appearance: none;
+  padding: var(--esp-2) var(--esp-3);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  color: var(--cor-marca-900);
+  background-color: var(--cor-neutro-50);
+  border: 1px solid transparent;
+  border-radius: var(--raio-xs);
+  cursor: pointer;
+  transition:
+    border-color var(--transicao-rapida),
+    background-color var(--transicao-rapida);
+}
+
+.calendario__select:hover {
+  border-color: var(--cor-borda);
+  background-color: var(--cor-marca-50);
+}
+
+.calendario__select:focus {
+  outline: none;
+  border-color: var(--cor-foco);
+}
+
+/* ── Grade ───────────────────────────────────────────────────── */
+.calendario__semana,
+.calendario__grade {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.calendario__dia-semana {
+  padding-bottom: var(--esp-1);
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-forte);
+  letter-spacing: var(--letra-etiqueta);
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--cor-texto-fraco);
+}
+
+.calendario__vago {
+  aspect-ratio: 1;
+}
+
+.calendario__dia {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  font-size: var(--texto-sm);
+  color: var(--cor-texto-suave);
+  border: 1px solid transparent;
+  border-radius: var(--raio-xs);
+  transition:
+    color var(--transicao-rapida),
+    background-color var(--transicao-rapida),
+    border-color var(--transicao-rapida);
+}
+
+.calendario__dia:hover {
+  color: var(--cor-marca-800);
+  background-color: var(--cor-marca-50);
+}
+
+/* Hoje: apenas contornado — não compete com a seleção */
+.calendario__dia--hoje {
+  border-color: var(--cor-marca-500);
+  font-weight: var(--peso-semi);
+}
+
+.calendario__dia--escolhido {
+  color: var(--cor-branco);
+  background-color: var(--cor-marca-800);
+  border-color: var(--cor-marca-800);
+  font-weight: var(--peso-semi);
+}
+
+.calendario__dia--escolhido:hover {
+  color: var(--cor-branco);
+  background-color: var(--cor-marca-700);
+}
