@@ -1,0 +1,13 @@
+/* ================================================================
+   COMPARTILHADO — índice.
+   Tudo aqui é reutilizado por mais de um bloco/aba. Estilo que
+   serve a uma aba só NÃO entra neste diretório: fica no .css da
+   própria aba (src/abas/<Aba>/<Aba>.css).
+   ================================================================ */
+
+@import "./campos.css";
+@import "./botoes.css";
+@import "./blocos.css";
+@import "./etiquetas.css";
+@import "./animacoes.css";
+@import "./utilitarios.css";

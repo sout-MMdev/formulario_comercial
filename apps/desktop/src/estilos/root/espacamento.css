@@ -1,0 +1,27 @@
+/* ================================================================
+   ROOT — ESPAÇAMENTO E GRADE
+   Escala de 4px. Todo padding, margin e gap sai daqui.
+   ================================================================ */
+
+:root {
+  --esp-1: 0.25rem; /*  4px */
+  --esp-2: 0.5rem; /*  8px */
+  --esp-3: 0.75rem; /* 12px */
+  --esp-4: 1rem; /* 16px */
+  --esp-5: 1.25rem; /* 20px */
+  --esp-6: 1.5rem; /* 24px */
+  --esp-8: 2rem; /* 32px */
+  --esp-10: 2.5rem; /* 40px */
+  --esp-12: 3rem; /* 48px */
+  --esp-16: 4rem; /* 64px */
+
+  /* ── Larguras de contêiner ─────────────────────────────────── */
+  --largura-conteudo: 780px; /* coluna do formulário               */
+  --largura-app: 1240px; /* app inteiro (trilha + conteúdo)    */
+  --largura-trilha: 260px; /* barra lateral de etapas            */
+
+  /* ── Alturas fixas ─────────────────────────────────────────── */
+  --altura-cabecalho: 68px;
+  --altura-campo: 46px;
+  --altura-botao: 44px;
+}

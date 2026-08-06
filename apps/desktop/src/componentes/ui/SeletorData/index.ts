@@ -1,0 +1,1 @@
+export { SeletorData } from "./SeletorData";

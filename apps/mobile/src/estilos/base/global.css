@@ -1,0 +1,80 @@
+/* ================================================================
+   BASE — GLOBAL (mobile)
+   Aparência padrão do documento e correções específicas de toque.
+   O reset vem de @cativa/tema.
+   ================================================================ */
+
+html {
+  /* Impede o "pinch to zoom acidental" virar rolagem horizontal */
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--fonte-corpo);
+  font-size: var(--texto-base);
+  line-height: var(--linha-normal);
+  color: var(--cor-texto);
+  background-color: var(--cor-fundo);
+
+  /* dvh (dynamic viewport height) acompanha a barra de endereço
+     do navegador aparecendo e sumindo. Com 100vh o conteúdo fica
+     cortado atrás dela — é o bug clássico de layout em celular.
+     A linha com vh é o fallback para navegadores antigos.        */
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  overflow-x: hidden;
+
+  /* Remove o flash cinza do Android ao tocar em qualquer coisa;
+     o retorno visual é dado por :active, com controle nosso.     */
+  -webkit-tap-highlight-color: transparent;
+
+  /* Evita que o texto reflua ao girar o aparelho */
+  text-size-adjust: 100%;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--fonte-titulo);
+  font-weight: var(--peso-semi);
+  line-height: var(--linha-apertada);
+  letter-spacing: var(--letra-titulo);
+  color: var(--cor-marca-900);
+}
+
+::placeholder {
+  color: var(--cor-texto-fraco);
+  opacity: 1;
+}
+
+::selection {
+  background-color: var(--cor-marca-100);
+  color: var(--cor-marca-900);
+}
+
+:focus-visible {
+  outline: 2px solid var(--cor-foco);
+  outline-offset: 2px;
+}
+
+/* Trava o fundo quando uma folha inferior está aberta */
+body.com-folha-aberta {
+  overflow: hidden;
+}
+
+/* Rolagem com inércia dentro de listas longas */
+.rolagem-suave {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* ── Estados de toque ────────────────────────────────────────────
+   No celular não existe :hover. Um `a:hover` fica "grudado" depois
+   do toque. Então todo retorno visual daqui vem de :active, e os
+   efeitos de hover só são aplicados onde existe mouse de verdade. */
+@media (hover: hover) and (pointer: fine) {
+  .com-hover:hover {
+    background-color: var(--cor-marca-50);
+  }
+}

@@ -1,0 +1,17 @@
+/* ================================================================
+   TEMA CATIVA — o que é IGUAL nos dois apps.
+
+   Aqui mora a identidade da marca: a paleta, a escala tipográfica,
+   os raios/sombras e o reset. Desktop e mobile importam este mesmo
+   arquivo, então a cor da Cativa é definida em UM lugar só.
+
+   O que NÃO entra aqui: dimensões de toque, alturas de campo e
+   larguras de layout. Isso é decisão de cada app — o desktop usa
+   campo de 46px, o mobile usa 56px — e fica em
+   <app>/src/estilos/root/dimensoes.css.
+   ================================================================ */
+
+@import "./reset.css";
+@import "./cores.css";
+@import "./tipografia.css";
+@import "./efeitos.css";

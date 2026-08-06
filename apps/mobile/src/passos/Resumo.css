@@ -1,0 +1,113 @@
+/* ================================================================
+   PASSO — RESUMO
+   ================================================================ */
+
+/* ── Total do dia ────────────────────────────────────────────── */
+.total-dia {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--esp-1);
+  padding: var(--esp-6) var(--esp-4);
+  color: var(--cor-branco);
+  background: linear-gradient(135deg, var(--cor-marca-800), var(--cor-marca-600));
+  border-radius: var(--raio-lg);
+  box-shadow: var(--sombra-md);
+}
+
+.total-dia__rotulo {
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-semi);
+  letter-spacing: var(--letra-ampla);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.total-dia__valor {
+  font-size: var(--texto-2xl);
+  font-weight: var(--peso-forte);
+  letter-spacing: var(--letra-titulo);
+}
+
+.total-dia__partes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+  width: 100%;
+  margin-top: var(--esp-4);
+  padding-top: var(--esp-4);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.total-dia__parte {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  font-size: var(--texto-sm);
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.total-dia__parte strong {
+  margin-left: auto;
+  font-weight: var(--peso-semi);
+  color: var(--cor-branco);
+}
+
+/* ── Blocos do resumo ────────────────────────────────────────── */
+.bloco-resumo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-3);
+}
+
+.bloco-resumo__titulo {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  color: var(--cor-marca-900);
+}
+
+.bloco-resumo__titulo svg {
+  color: var(--cor-marca-600);
+}
+
+.resumo-estresse {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--esp-3);
+  padding-top: var(--esp-3);
+  border-top: 1px dashed var(--cor-neutro-100);
+}
+
+.resumo-estresse__texto {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  font-size: var(--texto-xs);
+  color: var(--cor-texto-suave);
+}
+
+.resumo-estresse__texto p {
+  line-height: var(--linha-normal);
+  color: var(--cor-texto-fraco);
+}
+
+/* ── Outro relatório ─────────────────────────────────────────── */
+.outro-relatorio {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-3);
+  padding: var(--esp-4);
+  background-color: var(--cor-neutro-25);
+  border: 1px dashed var(--cor-borda-campo);
+  border-radius: var(--raio-md);
+}
+
+.outro-relatorio__texto {
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-medio);
+  color: var(--cor-texto-suave);
+}

@@ -1,0 +1,74 @@
+/* ================================================================
+   COMPARTILHADO — ANIMAÇÕES (mobile)
+   Curtas de propósito: transição longa em celular parece travamento.
+   ================================================================ */
+
+@keyframes surgir {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes entrar-direita {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes entrar-esquerda {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes subir-folha {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulsar {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.anim-surgir {
+  animation: surgir 0.25s both;
+}
+
+/* Direção da animação segue o sentido da navegação: avançar entra
+   pela direita, voltar entra pela esquerda. Dá noção de lugar. */
+.anim-avancar {
+  animation: entrar-direita 0.28s cubic-bezier(0.2, 0, 0.2, 1) both;
+}
+
+.anim-voltar {
+  animation: entrar-esquerda 0.28s cubic-bezier(0.2, 0, 0.2, 1) both;
+}

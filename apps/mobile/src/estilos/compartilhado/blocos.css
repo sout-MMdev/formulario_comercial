@@ -1,0 +1,199 @@
+/* ================================================================
+   COMPARTILHADO — BLOCOS E CARTÕES (mobile)
+   Superfícies de conteúdo. Sem sombra pesada: no celular a tela é
+   pequena e o excesso de profundidade polui.
+   ================================================================ */
+
+.cartao {
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  overflow: hidden;
+}
+
+.cartao__corpo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-3);
+  padding: var(--esp-4);
+}
+
+.cartao__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-3);
+  padding: var(--esp-3) var(--esp-4);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  color: var(--cor-marca-900);
+  background-color: var(--cor-neutro-50);
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+/* ── Item de lista tocável (trajeto, despesa, agência) ───────── */
+.item-lista {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  width: 100%;
+  min-height: 72px;
+  padding: var(--esp-3) var(--esp-4);
+  text-align: left;
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  transition:
+    background-color var(--transicao-rapida),
+    transform var(--transicao-rapida);
+}
+
+.item-lista:active {
+  transform: scale(0.99);
+  background-color: var(--cor-marca-50);
+}
+
+.item-lista__marca {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  color: var(--cor-marca-800);
+  background-color: var(--cor-marca-100);
+  border-radius: var(--raio-sm);
+}
+
+.item-lista__texto {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.item-lista__titulo {
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  color: var(--cor-texto);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-lista__detalhe {
+  font-size: var(--texto-xs);
+  color: var(--cor-texto-fraco);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-lista__valor {
+  flex-shrink: 0;
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  color: var(--cor-marca-800);
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+}
+
+/* ── Aviso ───────────────────────────────────────────────────── */
+.aviso {
+  display: flex;
+  gap: var(--esp-3);
+  padding: var(--esp-4);
+  font-size: var(--texto-sm);
+  line-height: var(--linha-normal);
+  color: var(--cor-marca-800);
+  background-color: var(--cor-marca-50);
+  border-radius: var(--raio-md);
+}
+
+.aviso__icone {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--cor-marca-600);
+}
+
+.aviso--atencao {
+  color: var(--cor-atencao-600);
+  background-color: var(--cor-atencao-100);
+}
+
+.aviso--atencao .aviso__icone {
+  color: var(--cor-atencao-500);
+}
+
+.aviso--sucesso {
+  color: var(--cor-sucesso-600);
+  background-color: var(--cor-sucesso-100);
+}
+
+.aviso--sucesso .aviso__icone {
+  color: var(--cor-sucesso-600);
+}
+
+/* ── Estado vazio ────────────────────────────────────────────── */
+.vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--esp-3);
+  padding: var(--esp-10) var(--esp-5);
+  text-align: center;
+  color: var(--cor-texto-fraco);
+}
+
+.vazio__icone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  color: var(--cor-neutro-400);
+  background-color: var(--cor-neutro-50);
+  border-radius: var(--raio-total);
+}
+
+.vazio__titulo {
+  font-size: var(--texto-md);
+  font-weight: var(--peso-semi);
+  color: var(--cor-texto-suave);
+}
+
+.vazio__texto {
+  font-size: var(--texto-sm);
+  line-height: var(--linha-normal);
+  max-width: 34ch;
+}
+
+/* ── Linha de dado (resumo) ──────────────────────────────────── */
+.linha-dado {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--esp-4);
+  font-size: var(--texto-sm);
+}
+
+.linha-dado + .linha-dado {
+  padding-top: var(--esp-3);
+  border-top: 1px dashed var(--cor-neutro-100);
+}
+
+.linha-dado__chave {
+  flex-shrink: 0;
+  color: var(--cor-texto-fraco);
+}
+
+.linha-dado__valor {
+  text-align: right;
+  font-weight: var(--peso-medio);
+  word-break: break-word;
+}

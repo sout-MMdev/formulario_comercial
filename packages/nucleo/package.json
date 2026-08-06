@@ -1,0 +1,22 @@
+{
+  "name": "@cativa/nucleo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Tipos, configuração, regras de negócio e serviços — compartilhados pelos apps desktop e mobile",
+  "exports": {
+    ".": "./src/index.ts",
+    "./tipos": "./src/tipos/index.ts",
+    "./config": "./src/config/index.ts",
+    "./regras": "./src/regras/index.ts",
+    "./utils": "./src/utils/index.ts",
+    "./estado": "./src/estado/index.ts",
+    "./servicos/*": "./src/servicos/*.ts",
+    "./servicos/armazenamento": "./src/servicos/armazenamento/index.ts",
+    "./servicos/envio": "./src/servicos/envio/index.ts"
+  },
+  "scripts": {
+    "test": "node --test src/regras/*.teste.ts",
+    "typecheck": "tsc -b"
+  }
+}

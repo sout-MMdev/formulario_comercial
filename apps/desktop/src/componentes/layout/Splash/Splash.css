@@ -1,0 +1,131 @@
+/* ================================================================
+   LAYOUT — SPLASH
+   ================================================================ */
+
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: var(--camada-splash);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--cor-branco);
+  transition:
+    opacity 0.6s ease,
+    visibility 0.6s ease;
+}
+
+/* Brilho azul suave atrás do conteúdo */
+.splash::before {
+  content: "";
+  position: absolute;
+  width: 620px;
+  height: 620px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(0, 119, 204, 0.09) 0%,
+    rgba(0, 119, 204, 0) 68%
+  );
+  animation: pulsar 4s ease-in-out infinite;
+}
+
+.splash--saindo {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.splash__conteudo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--esp-6);
+  animation: subir 0.7s ease both;
+}
+
+.splash__logo {
+  width: 210px;
+  height: auto;
+}
+
+.splash__risco {
+  width: 56px;
+  height: 3px;
+  background-color: var(--cor-marca-800);
+  border-radius: var(--raio-total);
+  transform-origin: center;
+  animation: splashCrescer 0.6s ease 0.35s both;
+}
+
+@keyframes splashCrescer {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+.splash__titulo {
+  font-family: var(--fonte-titulo);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+  letter-spacing: var(--letra-ampla);
+  text-transform: uppercase;
+  color: var(--cor-marca-800);
+  animation: surgir 0.6s ease 0.5s both;
+}
+
+/* ── Barra de progresso ──────────────────────────────────────── */
+.splash__barra {
+  width: 232px;
+  height: 4px;
+  overflow: hidden;
+  background-color: var(--cor-neutro-100);
+  border-radius: var(--raio-total);
+  animation: surgir 0.5s ease 0.7s both;
+}
+
+.splash__barra-preenchida {
+  display: block;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--cor-marca-800),
+    var(--cor-marca-600)
+  );
+  border-radius: var(--raio-total);
+  /* Curta e linear: a barra é redesenhada a cada 60ms, então uma
+     transição longa faria ela arrastar atrás do valor real. */
+  transition: width 0.15s linear;
+}
+
+.splash__status {
+  min-height: 18px;
+  font-size: var(--texto-xs);
+  color: var(--cor-texto-fraco);
+  animation: surgir 0.5s ease 0.8s both;
+}
+
+.splash__rodape {
+  position: absolute;
+  bottom: var(--esp-8);
+  font-size: var(--texto-2xs);
+  letter-spacing: 0.04em;
+  color: var(--cor-neutro-400);
+  animation: surgir 0.5s ease 1s both;
+}
+
+@media (max-width: 600px) {
+  .splash__logo {
+    width: 168px;
+  }
+
+  .splash__barra {
+    width: 190px;
+  }
+}

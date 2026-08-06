@@ -1,0 +1,49 @@
+/* ================================================================
+   ABA — VISITA
+   ================================================================ */
+
+.agencias-visita {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+  padding-top: var(--esp-5);
+  border-top: 1px solid var(--cor-borda);
+}
+
+.agencias-visita__cabecalho {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-1);
+}
+
+.agencias-visita__lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-3);
+}
+
+.agencias-visita__linha {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+}
+
+.agencias-visita__ordem {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-forte);
+  color: var(--cor-marca-800);
+  background-color: var(--cor-marca-100);
+  border-radius: var(--raio-total);
+}
+
+@media (max-width: 560px) {
+  .agencias-visita__ordem {
+    display: none;
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* O pacote usa caminhos relativos entre seus próprios módulos:
+       assim ele resolve igual em qualquer app que o consuma.      */
+
+    /* Os testes rodam no Node puro, que exige a extensão .ts no
+       import. Só é permitido porque não emitimos JavaScript.      */
+    "allowImportingTsExtensions": true,
+
+    "noEmit": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/nucleo.tsbuildinfo"
+  },
+  "include": ["src"]
+}

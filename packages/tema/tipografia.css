@@ -1,0 +1,38 @@
+/* ================================================================
+   ROOT — TIPOGRAFIA
+   Escala fechada. Se um tamanho não está aqui, ele não deve ser
+   usado — assim o formulário inteiro respira no mesmo ritmo.
+   ================================================================ */
+
+:root {
+  /* ── Famílias ──────────────────────────────────────────────── */
+  --fonte-titulo: "Inter", "Segoe UI", system-ui, sans-serif;
+  --fonte-corpo: "Inter", "Segoe UI", system-ui, sans-serif;
+  --fonte-mono: "SF Mono", "Consolas", "Roboto Mono", monospace;
+
+  /* ── Escala de tamanho ─────────────────────────────────────── */
+  --texto-2xs: 0.6875rem; /* 11px — etiquetas, contadores           */
+  --texto-xs: 0.75rem; /* 12px — legendas, ajudas                */
+  --texto-sm: 0.8125rem; /* 13px — rótulos de campo                */
+  --texto-base: 0.9375rem; /* 15px — corpo, inputs                   */
+  --texto-md: 1rem; /* 16px — subtítulos                      */
+  --texto-lg: 1.25rem; /* 20px — título de aba                   */
+  --texto-xl: 1.5rem; /* 24px — título de página                */
+  --texto-2xl: 1.875rem; /* 30px — números de destaque             */
+
+  /* ── Peso ──────────────────────────────────────────────────── */
+  --peso-normal: 400;
+  --peso-medio: 500;
+  --peso-semi: 600;
+  --peso-forte: 700;
+
+  /* ── Altura de linha ───────────────────────────────────────── */
+  --linha-apertada: 1.2;
+  --linha-normal: 1.5;
+  --linha-solta: 1.7;
+
+  /* ── Espaçamento entre letras ──────────────────────────────── */
+  --letra-titulo: -0.01em;
+  --letra-etiqueta: 0.06em;
+  --letra-ampla: 0.14em;
+}

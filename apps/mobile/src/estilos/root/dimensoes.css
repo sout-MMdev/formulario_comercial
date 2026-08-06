@@ -1,0 +1,50 @@
+/* ================================================================
+   ROOT — DIMENSÕES DO APP MOBILE
+   Cores, tipografia e efeitos vêm de @cativa/tema (iguais ao
+   desktop). Aqui ficam as medidas pensadas para o POLEGAR.
+
+   Diferença central em relação ao desktop:
+     campo/botão 46-44px  →  56px   (alvo de toque confortável)
+     fonte do campo 15px  →  16px   (abaixo disso o iOS dá zoom)
+   ================================================================ */
+
+:root {
+  /* ── Escala de espaço (mesma do desktop, base 4px) ─────────── */
+  --esp-1: 0.25rem;
+  --esp-2: 0.5rem;
+  --esp-3: 0.75rem;
+  --esp-4: 1rem;
+  --esp-5: 1.25rem;
+  --esp-6: 1.5rem;
+  --esp-8: 2rem;
+  --esp-10: 2.5rem;
+  --esp-12: 3rem;
+
+  /* ── Alvos de toque ─────────────────────────────────────────
+     44px é o mínimo recomendado por Apple e Google. Usamos 56px
+     nos controles principais: quem preenche está em pé, na rua,
+     com uma mão só.                                              */
+  --altura-campo: 56px;
+  --altura-botao: 56px;
+  --altura-botao-menor: 44px;
+  --toque-minimo: 44px;
+
+  /* ── Tipografia dos campos ──────────────────────────────────
+     16px é um LIMITE TÉCNICO, não estético: o Safari do iOS dá
+     zoom automático em qualquer campo com fonte menor que isso.  */
+  --texto-campo: 1rem;
+
+  /* ── Layout ─────────────────────────────────────────────────── */
+  --largura-maxima: 560px; /* trava em tablets/celulares grandes */
+  --altura-topo: 56px;
+
+  /* ── Safe areas (iPhone com notch / barra de gestos) ─────────
+     Em navegador comum resolvem para 0px.                        */
+  --seguro-topo: env(safe-area-inset-top, 0px);
+  --seguro-baixo: env(safe-area-inset-bottom, 0px);
+  --seguro-esq: env(safe-area-inset-left, 0px);
+  --seguro-dir: env(safe-area-inset-right, 0px);
+
+  /* Altura da barra de ação fixa, incluindo a safe area */
+  --altura-barra-acao: calc(var(--altura-botao) + var(--esp-6) + var(--seguro-baixo));
+}

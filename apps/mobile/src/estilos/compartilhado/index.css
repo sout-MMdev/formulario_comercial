@@ -1,0 +1,12 @@
+/* ================================================================
+   COMPARTILHADO — índice (mobile).
+   Tudo aqui é usado por mais de uma tela. Estilo de uma tela só
+   fica em src/passos/<Passo>.css.
+   ================================================================ */
+
+@import "./campos.css";
+@import "./botoes.css";
+@import "./blocos.css";
+@import "./etiquetas.css";
+@import "./animacoes.css";
+@import "./utilitarios.css";

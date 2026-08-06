@@ -1,0 +1,257 @@
+/* ================================================================
+   COMPARTILHADO — CAMPOS
+   Toda entrada de dado do sistema (input, select, textarea, file).
+   Usado por TODAS as abas. Nada aqui pode ser específico de uma.
+   ================================================================ */
+
+/* ── Envelope de um campo: rótulo + controle + ajuda/erro ────── */
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+}
+
+.campo__rotulo {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  color: var(--cor-texto-suave);
+}
+
+.campo__obrigatorio {
+  color: var(--cor-erro-500);
+  font-weight: var(--peso-forte);
+}
+
+.campo__ajuda {
+  font-size: var(--texto-xs);
+  color: var(--cor-texto-fraco);
+  line-height: var(--linha-normal);
+}
+
+.campo__erro {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-1);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+  color: var(--cor-erro-600);
+}
+
+/* ── Controle base — a "caixinha" ────────────────────────────── */
+.controle {
+  width: 100%;
+  min-height: var(--altura-campo);
+  padding: 0 var(--esp-4);
+  font-size: var(--texto-base);
+  color: var(--cor-texto);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda-campo);
+  border-radius: var(--raio-sm);
+  transition:
+    border-color var(--transicao-rapida),
+    box-shadow var(--transicao-rapida),
+    background-color var(--transicao-rapida);
+}
+
+.controle:hover:not(:disabled):not(:read-only) {
+  border-color: var(--cor-borda-forte);
+}
+
+.controle:focus {
+  outline: none;
+  border-color: var(--cor-foco);
+  box-shadow: var(--sombra-foco);
+}
+
+.controle:disabled,
+.controle[readonly] {
+  background-color: var(--cor-neutro-50);
+  color: var(--cor-texto-suave);
+  cursor: not-allowed;
+}
+
+.controle--invalido {
+  border-color: var(--cor-erro-500);
+}
+
+.controle--invalido:focus {
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.16);
+}
+
+/* Textarea: altura livre e respiro vertical */
+textarea.controle {
+  padding: var(--esp-3) var(--esp-4);
+  min-height: 88px;
+  line-height: var(--linha-normal);
+  resize: vertical;
+}
+
+/* Select: seta desenhada em CSS (o triângulo nativo é feio) */
+select.controle {
+  appearance: none;
+  cursor: pointer;
+  padding-right: var(--esp-10);
+  background-image: linear-gradient(45deg, transparent 50%, var(--cor-neutro-500) 50%),
+    linear-gradient(135deg, var(--cor-neutro-500) 50%, transparent 50%);
+  background-position:
+    calc(100% - 20px) calc(50% + 2px),
+    calc(100% - 14px) calc(50% + 2px);
+  background-size:
+    6px 6px,
+    6px 6px;
+  background-repeat: no-repeat;
+}
+
+select.controle:disabled {
+  cursor: not-allowed;
+}
+
+/* Campo de valor em reais — prefixo "R$" colado à esquerda */
+.controle-moeda {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.controle-moeda__prefixo {
+  position: absolute;
+  left: var(--esp-4);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  color: var(--cor-texto-fraco);
+  pointer-events: none;
+}
+
+.controle-moeda .controle {
+  padding-left: var(--esp-10);
+}
+
+/* Campo somente-leitura calculado pelo sistema */
+.controle--calculado {
+  background-color: var(--cor-marca-50);
+  border-color: var(--cor-marca-100);
+  color: var(--cor-marca-800);
+  font-weight: var(--peso-semi);
+}
+
+/* ── Anexo de arquivo ────────────────────────────────────────── */
+.campo-arquivo {
+  position: relative;
+}
+
+.campo-arquivo__entrada {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.campo-arquivo__area {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  min-height: var(--altura-campo);
+  padding: var(--esp-3) var(--esp-4);
+  font-size: var(--texto-sm);
+  color: var(--cor-texto-fraco);
+  background-color: var(--cor-neutro-25);
+  border: 1px dashed var(--cor-borda-campo);
+  border-radius: var(--raio-sm);
+  transition:
+    border-color var(--transicao-rapida),
+    background-color var(--transicao-rapida);
+}
+
+.campo-arquivo__entrada:hover + .campo-arquivo__area,
+.campo-arquivo__entrada:focus + .campo-arquivo__area {
+  border-color: var(--cor-foco);
+  background-color: var(--cor-marca-50);
+}
+
+.campo-arquivo--preenchido .campo-arquivo__area {
+  border-style: solid;
+  border-color: var(--cor-sucesso-500);
+  background-color: var(--cor-sucesso-100);
+  color: var(--cor-sucesso-600);
+  font-weight: var(--peso-medio);
+}
+
+.campo-arquivo__icone {
+  flex-shrink: 0;
+  color: currentColor;
+}
+
+.campo-arquivo__nome {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Grade de campos lado a lado ─────────────────────────────── */
+.grade-campos {
+  display: grid;
+  gap: var(--esp-5);
+}
+
+.grade-campos--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grade-campos--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 720px) {
+  .grade-campos--2,
+  .grade-campos--3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Opções marcáveis (checkbox / radio estilizados) ─────────── */
+.opcao {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  padding: var(--esp-3) var(--esp-4);
+  font-size: var(--texto-sm);
+  color: var(--cor-texto-suave);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-sm);
+  cursor: pointer;
+  transition:
+    border-color var(--transicao-rapida),
+    background-color var(--transicao-rapida),
+    color var(--transicao-rapida);
+}
+
+.opcao:hover {
+  border-color: var(--cor-marca-500);
+  background-color: var(--cor-marca-50);
+}
+
+.opcao__entrada {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--cor-marca-600);
+  cursor: pointer;
+}
+
+.opcao--marcada {
+  border-color: var(--cor-marca-600);
+  background-color: var(--cor-marca-50);
+  color: var(--cor-marca-800);
+  font-weight: var(--peso-medio);
+}
+
+/* Lista de opções em colunas que se ajustam sozinhas */
+.opcoes-grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--esp-2);
+}

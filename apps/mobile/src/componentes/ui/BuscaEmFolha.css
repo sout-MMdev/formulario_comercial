@@ -1,0 +1,202 @@
+/* ================================================================
+   COMPONENTE — BUSCA EM FOLHA (mobile)
+   ================================================================ */
+
+/* ── Campo fechado ───────────────────────────────────────────── */
+.busca-gatilho {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  width: 100%;
+  min-height: var(--altura-campo);
+  padding: 0 var(--esp-4);
+  font-size: var(--texto-campo);
+  text-align: left;
+  color: var(--cor-texto-fraco);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda-campo);
+  border-radius: var(--raio-md);
+}
+
+.busca-gatilho:active {
+  background-color: var(--cor-marca-50);
+}
+
+.busca-gatilho__icone {
+  color: var(--cor-neutro-400);
+}
+
+.busca-gatilho__texto {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.busca-gatilho--preenchido {
+  color: var(--cor-texto);
+  font-weight: var(--peso-medio);
+  border-color: var(--cor-marca-100);
+}
+
+.busca-gatilho--preenchido .busca-gatilho__icone {
+  color: var(--cor-marca-600);
+}
+
+.busca-gatilho--invalido {
+  border-color: var(--cor-erro-500);
+}
+
+/* ── Tela cheia de busca ─────────────────────────────────────── */
+.busca-tela {
+  position: fixed;
+  inset: 0;
+  z-index: var(--camada-modal);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--cor-superficie);
+  animation: surgir 0.16s both;
+}
+
+.busca-topo {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  padding: var(--esp-3);
+  padding-top: calc(var(--esp-3) + var(--seguro-topo));
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.busca-topo__voltar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--toque-minimo);
+  height: var(--toque-minimo);
+  color: var(--cor-texto-suave);
+  border-radius: var(--raio-total);
+}
+
+.busca-topo__voltar:active {
+  background-color: var(--cor-neutro-100);
+}
+
+.busca-topo__campo {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  min-height: var(--toque-minimo);
+  padding: 0 var(--esp-2) 0 var(--esp-4);
+  background-color: var(--cor-neutro-50);
+  border-radius: var(--raio-total);
+}
+
+.busca-topo__entrada {
+  flex: 1;
+  min-width: 0;
+  /* 16px: sem isso o iOS amplia a tela ao focar */
+  font-size: var(--texto-campo);
+  color: var(--cor-texto);
+  background: none;
+  border: none;
+  outline: none;
+}
+
+.busca-topo__limpar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: var(--cor-neutro-500);
+  border-radius: var(--raio-total);
+}
+
+/* ── Resultados ──────────────────────────────────────────────── */
+.busca-corpo {
+  flex: 1;
+  padding: var(--esp-2) var(--esp-3);
+  padding-bottom: calc(var(--esp-8) + var(--seguro-baixo));
+  overflow-y: auto;
+}
+
+.busca-aviso {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-2);
+  padding: var(--esp-6) var(--esp-4);
+  font-size: var(--texto-sm);
+  text-align: center;
+  color: var(--cor-texto-fraco);
+}
+
+.busca-girando {
+  display: inline-flex;
+  animation: girar 1s linear infinite;
+}
+
+.busca-lista {
+  display: flex;
+  flex-direction: column;
+}
+
+.busca-item {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  width: 100%;
+  min-height: 60px;
+  padding: var(--esp-3);
+  text-align: left;
+  border-radius: var(--raio-sm);
+}
+
+.busca-item:active {
+  background-color: var(--cor-marca-50);
+}
+
+.busca-item__icone {
+  color: var(--cor-neutro-400);
+}
+
+.busca-item__texto {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.busca-item__rotulo {
+  font-size: var(--texto-base);
+  color: var(--cor-texto);
+}
+
+.busca-item__detalhe {
+  font-size: var(--texto-xs);
+  color: var(--cor-texto-fraco);
+}
+
+/* ── Aceitar texto livre ─────────────────────────────────────── */
+.busca-livre {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  width: 100%;
+  min-height: 56px;
+  margin-top: var(--esp-3);
+  padding: var(--esp-3) var(--esp-4);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  color: var(--cor-marca-800);
+  background-color: var(--cor-marca-50);
+  border: 1px dashed var(--cor-marca-100);
+  border-radius: var(--raio-md);
+}
+
+.busca-livre:active {
+  background-color: var(--cor-marca-100);
+}

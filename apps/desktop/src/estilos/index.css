@@ -1,0 +1,21 @@
+/* ================================================================
+   ESTILOS — APP DESKTOP
+   Importado uma única vez em src/main.tsx.
+   Ordem: do mais genérico ao mais específico.
+
+     1. @cativa/tema    identidade compartilhada com o mobile
+                        (reset, cores, tipografia, efeitos)
+     2. root/           dimensões deste app (campo 46px, larguras…)
+     3. base/           aparência padrão do documento
+     4. compartilhado/  classes usadas por vários blocos daqui
+
+   Estilo de COMPONENTE fica ao lado do componente
+   (src/componentes/ui/Botao/Botao.css) e o de ABA ao lado da aba
+   (src/abas/Visita/Visita.css) — cada .tsx importa o seu .css.
+   ================================================================ */
+
+@import "@cativa/tema/index.css";
+
+@import "./root/index.css";
+@import "./base/index.css";
+@import "./compartilhado/index.css";

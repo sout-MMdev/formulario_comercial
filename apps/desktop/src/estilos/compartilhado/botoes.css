@@ -1,0 +1,174 @@
+/* ================================================================
+   COMPARTILHADO — BOTÕES
+   Uma classe base (.btn) + variações. Usado por todas as abas.
+   ================================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-2);
+  min-height: var(--altura-botao);
+  padding: 0 var(--esp-6);
+  font-family: var(--fonte-titulo);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  border-radius: var(--raio-sm);
+  cursor: pointer;
+  transition:
+    background-color var(--transicao-rapida),
+    border-color var(--transicao-rapida),
+    color var(--transicao-rapida),
+    box-shadow var(--transicao-rapida),
+    transform var(--transicao-rapida);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Primário — ação que leva o fluxo adiante ────────────────── */
+.btn--primario {
+  color: var(--cor-texto-invertido);
+  background-color: var(--cor-acao);
+  box-shadow: var(--sombra-xs);
+}
+
+.btn--primario:hover:not(:disabled) {
+  background-color: var(--cor-acao-hover);
+  box-shadow: var(--sombra-sm);
+}
+
+/* ── Destaque — o CTA amarelo da marca (finalizar, salvar) ───── */
+.btn--destaque {
+  color: var(--cor-cta-texto);
+  background-color: var(--cor-cta);
+  box-shadow: var(--sombra-xs);
+}
+
+.btn--destaque:hover:not(:disabled) {
+  background-color: var(--cor-cta-hover);
+  box-shadow: var(--sombra-sm);
+}
+
+/* ── Contorno — ação secundária (voltar) ─────────────────────── */
+.btn--contorno {
+  color: var(--cor-texto-suave);
+  background-color: var(--cor-superficie);
+  border-color: var(--cor-borda-campo);
+}
+
+.btn--contorno:hover:not(:disabled) {
+  color: var(--cor-marca-800);
+  border-color: var(--cor-marca-500);
+  background-color: var(--cor-marca-50);
+}
+
+/* ── Discreto — ação terciária, sem peso visual ──────────────── */
+.btn--discreto {
+  color: var(--cor-texto-suave);
+  background-color: transparent;
+}
+
+.btn--discreto:hover:not(:disabled) {
+  color: var(--cor-marca-800);
+  background-color: var(--cor-neutro-100);
+}
+
+/* ── Perigo — excluir ────────────────────────────────────────── */
+.btn--perigo {
+  color: var(--cor-erro-600);
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.btn--perigo:hover:not(:disabled) {
+  background-color: var(--cor-erro-100);
+}
+
+/* ── Tracejado — "adicionar mais um bloco" ───────────────────── */
+.btn--adicionar {
+  width: 100%;
+  color: var(--cor-marca-700);
+  background-color: transparent;
+  border: 1px dashed var(--cor-borda-campo);
+}
+
+.btn--adicionar:hover:not(:disabled) {
+  color: var(--cor-marca-800);
+  border-color: var(--cor-marca-600);
+  border-style: solid;
+  background-color: var(--cor-marca-50);
+}
+
+/* ── Tamanhos ────────────────────────────────────────────────── */
+.btn--pequeno {
+  min-height: 34px;
+  padding: 0 var(--esp-4);
+  font-size: var(--texto-xs);
+}
+
+.btn--largo {
+  width: 100%;
+}
+
+/* ── Botão-ícone quadrado (remover linha, fechar) ────────────── */
+.btn-icone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  color: var(--cor-texto-fraco);
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--raio-sm);
+  cursor: pointer;
+  transition:
+    color var(--transicao-rapida),
+    background-color var(--transicao-rapida);
+}
+
+.btn-icone:hover:not(:disabled) {
+  color: var(--cor-erro-600);
+  background-color: var(--cor-erro-100);
+}
+
+.btn-icone:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ── Barra de ações no rodapé de cada aba ────────────────────── */
+.barra-acoes {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-4);
+  padding-top: var(--esp-6);
+  margin-top: var(--esp-2);
+  border-top: 1px solid var(--cor-borda);
+}
+
+.barra-acoes--fim {
+  justify-content: flex-end;
+}
+
+@media (max-width: 560px) {
+  .barra-acoes {
+    flex-direction: column-reverse;
+  }
+
+  .barra-acoes .btn {
+    width: 100%;
+  }
+}

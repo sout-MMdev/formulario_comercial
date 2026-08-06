@@ -1,0 +1,178 @@
+/* ================================================================
+   LAYOUT — TRILHA DE ETAPAS
+   Desktop: coluna vertical fixa à esquerda.
+   Celular: faixa horizontal rolável acima do conteúdo.
+   ================================================================ */
+
+.trilha {
+  position: sticky;
+  top: calc(var(--altura-cabecalho) + var(--esp-8));
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+  width: var(--largura-trilha);
+  flex-shrink: 0;
+}
+
+.trilha__titulo {
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-forte);
+  letter-spacing: var(--letra-ampla);
+  text-transform: uppercase;
+  color: var(--cor-texto-fraco);
+}
+
+.trilha__lista {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-1);
+}
+
+/* ── Fio de ligação ──────────────────────────────────────────── */
+.trilha__fio {
+  position: absolute;
+  top: 20px;
+  bottom: 20px;
+  left: 15px;
+  width: 2px;
+  background-color: var(--cor-neutro-200);
+  border-radius: var(--raio-total);
+}
+
+.trilha__fio-preenchido {
+  display: block;
+  width: 100%;
+  height: var(--progresso, 0%);
+  background-color: var(--cor-marca-600);
+  border-radius: var(--raio-total);
+  transition: height var(--transicao-lenta);
+}
+
+/* ── Item ────────────────────────────────────────────────────── */
+.trilha__item {
+  position: relative;
+  z-index: 1;
+}
+
+.trilha__botao {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  width: 100%;
+  padding: var(--esp-2);
+  text-align: left;
+  border-radius: var(--raio-sm);
+  transition: background-color var(--transicao-rapida);
+}
+
+.trilha__botao:disabled {
+  cursor: default;
+}
+
+.trilha__item--concluida .trilha__botao:hover {
+  background-color: var(--cor-marca-50);
+}
+
+/* ── Marcador (a bolinha) ────────────────────────────────────── */
+.trilha__marcador {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  color: var(--cor-neutro-400);
+  background-color: var(--cor-superficie);
+  border: 2px solid var(--cor-neutro-200);
+  border-radius: var(--raio-total);
+  transition:
+    color var(--transicao),
+    background-color var(--transicao),
+    border-color var(--transicao),
+    box-shadow var(--transicao);
+}
+
+.trilha__rotulo {
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-medio);
+  color: var(--cor-texto-fraco);
+  transition: color var(--transicao);
+}
+
+/* Concluída */
+.trilha__item--concluida .trilha__marcador {
+  color: var(--cor-branco);
+  background-color: var(--cor-marca-600);
+  border-color: var(--cor-marca-600);
+}
+
+.trilha__item--concluida .trilha__rotulo {
+  color: var(--cor-texto-suave);
+}
+
+/* Atual */
+.trilha__item--atual .trilha__marcador {
+  color: var(--cor-branco);
+  background-color: var(--cor-marca-800);
+  border-color: var(--cor-marca-800);
+  box-shadow: 0 0 0 4px var(--cor-marca-100);
+}
+
+.trilha__item--atual .trilha__rotulo {
+  font-weight: var(--peso-semi);
+  color: var(--cor-marca-900);
+}
+
+/* ── Celular: vira faixa horizontal ──────────────────────────── */
+@media (max-width: 960px) {
+  .trilha {
+    position: static;
+    width: 100%;
+    gap: var(--esp-2);
+  }
+
+  .trilha__titulo {
+    display: none;
+  }
+
+  .trilha__lista {
+    flex-direction: row;
+    gap: var(--esp-1);
+    padding: var(--esp-2);
+    overflow-x: auto;
+    background-color: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-md);
+    scrollbar-width: none;
+  }
+
+  .trilha__lista::-webkit-scrollbar {
+    display: none;
+  }
+
+  .trilha__fio {
+    display: none;
+  }
+
+  .trilha__item {
+    flex: 1;
+    min-width: fit-content;
+  }
+
+  .trilha__botao {
+    flex-direction: column;
+    gap: var(--esp-1);
+    padding: var(--esp-2) var(--esp-3);
+  }
+
+  .trilha__marcador {
+    width: 26px;
+    height: 26px;
+  }
+
+  .trilha__rotulo {
+    font-size: var(--texto-2xs);
+    white-space: nowrap;
+  }
+}

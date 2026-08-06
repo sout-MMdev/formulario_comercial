@@ -1,0 +1,240 @@
+/* ================================================================
+   ABA — AGÊNCIAS
+   Inclui o termômetro de satisfação e as ações acordadas, que só
+   existem nesta aba.
+   ================================================================ */
+
+/* ── Cabeçalho recolhível do cartão ──────────────────────────── */
+.agencia__toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  width: 100%;
+  padding: var(--esp-1) 0;
+  text-align: left;
+}
+
+.agencia__nome {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  color: var(--cor-marca-900);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.agencia__progresso {
+  flex-shrink: 0;
+  padding: 2px var(--esp-3);
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-semi);
+  color: var(--cor-texto-fraco);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-total);
+}
+
+.agencia__seta {
+  flex-shrink: 0;
+  color: var(--cor-neutro-500);
+}
+
+.agencia__secao-topo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.bloco__secao-titulo {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+}
+
+/* ================================================================
+   TERMÔMETRO
+   ================================================================ */
+
+.termometro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+}
+
+/* ── Botões de nível ─────────────────────────────────────────── */
+.termometro__niveis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--esp-2);
+}
+
+.nivel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-2);
+  padding: var(--esp-3) var(--esp-2);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-semi);
+  color: var(--cor-texto-suave);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-sm);
+  cursor: pointer;
+  transition:
+    color var(--transicao-rapida),
+    border-color var(--transicao-rapida),
+    background-color var(--transicao-rapida),
+    transform var(--transicao-rapida);
+}
+
+.nivel:hover {
+  transform: translateY(-1px);
+}
+
+/* A bolinha colorida que identifica o nível */
+.nivel__marca {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: currentColor;
+  transition: transform var(--transicao-rapida);
+}
+
+.nivel--baixo .nivel__marca {
+  color: var(--cor-nivel-baixo);
+}
+.nivel--medio .nivel__marca {
+  color: var(--cor-nivel-medio);
+}
+.nivel--alto .nivel__marca {
+  color: var(--cor-nivel-alto);
+}
+.nivel--critico .nivel__marca {
+  color: var(--cor-nivel-critico);
+}
+
+.nivel--baixo:hover,
+.nivel--baixo.nivel--ativo {
+  color: var(--cor-sucesso-600);
+  border-color: var(--cor-nivel-baixo);
+  background-color: var(--cor-nivel-baixo-fundo);
+}
+
+.nivel--medio:hover,
+.nivel--medio.nivel--ativo {
+  color: var(--cor-destaque-600);
+  border-color: var(--cor-nivel-medio);
+  background-color: var(--cor-nivel-medio-fundo);
+}
+
+.nivel--alto:hover,
+.nivel--alto.nivel--ativo {
+  color: var(--cor-atencao-600);
+  border-color: var(--cor-nivel-alto);
+  background-color: var(--cor-nivel-alto-fundo);
+}
+
+.nivel--critico:hover,
+.nivel--critico.nivel--ativo {
+  color: var(--cor-erro-600);
+  border-color: var(--cor-nivel-critico);
+  background-color: var(--cor-nivel-critico-fundo);
+}
+
+.nivel--ativo .nivel__marca {
+  transform: scale(1.25);
+}
+
+/* ── Painel de detalhamento ──────────────────────────────────── */
+.termometro__painel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+  padding: var(--esp-5);
+  background-color: var(--cor-neutro-25);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-sm);
+}
+
+.termometro__painel-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-3);
+}
+
+.termometro__painel-titulo {
+  font-size: var(--texto-sm);
+  color: var(--cor-texto-suave);
+}
+
+.termometro__painel-titulo strong {
+  color: var(--cor-marca-900);
+}
+
+/* ── Registros salvos ────────────────────────────────────────── */
+.termometro__registros {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+}
+
+.registro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+  padding: var(--esp-3) var(--esp-4);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-sm);
+}
+
+.registro__topo {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+}
+
+.registro__setores {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--texto-xs);
+  color: var(--cor-texto-suave);
+}
+
+.registro__descricao {
+  font-size: var(--texto-xs);
+  line-height: var(--linha-normal);
+  color: var(--cor-texto-fraco);
+  padding-left: var(--esp-3);
+  border-left: 2px solid var(--cor-neutro-200);
+}
+
+/* ================================================================
+   AÇÕES ACORDADAS
+   ================================================================ */
+
+.acoes-acordadas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--esp-3);
+}
+
+.acoes-acordadas__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+}
+
+@media (max-width: 720px) {
+  .termometro__niveis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .acoes-acordadas {
+    grid-template-columns: 1fr;
+  }
+}

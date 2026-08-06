@@ -1,0 +1,1 @@
+export { MultiSelecao } from "./MultiSelecao";

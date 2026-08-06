@@ -1,0 +1,44 @@
+/* ================================================================
+   PASSOS — TRAJETOS E GASTOS
+   As duas telas usam a mesma anatomia: faixa de total + lista de
+   itens + botão de adicionar.
+   ================================================================ */
+
+/* Faixa de total no topo da lista */
+.resumo-faixa {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-3);
+  padding: var(--esp-3) var(--esp-4);
+  background-color: var(--cor-marca-50);
+  border: 1px solid var(--cor-marca-100);
+  border-radius: var(--raio-md);
+}
+
+.resumo-faixa__rotulo {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-medio);
+  color: var(--cor-marca-700);
+}
+
+.resumo-faixa__valor {
+  font-size: var(--texto-lg);
+  font-weight: var(--peso-forte);
+  color: var(--cor-marca-900);
+}
+
+/* Item + botão de remover ao lado */
+.linha-item {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-1);
+}
+
+.linha-item .item-lista {
+  flex: 1;
+  min-width: 0;
+}

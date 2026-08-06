@@ -1,0 +1,148 @@
+/* ================================================================
+   LAYOUT — TELA DE PASSO
+   ================================================================ */
+
+.tela {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+/* ── Progresso (topo, fixo) ──────────────────────────────────── */
+.tela__progresso {
+  position: sticky;
+  top: 0;
+  z-index: var(--camada-fixa);
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  padding: var(--esp-3) var(--esp-4);
+  padding-top: calc(var(--esp-3) + var(--seguro-topo));
+  background-color: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.tela__barra {
+  flex: 1;
+  height: 5px;
+  background-color: var(--cor-neutro-100);
+  border-radius: var(--raio-total);
+  overflow: hidden;
+}
+
+.tela__barra-preenchida {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--cor-marca-800), var(--cor-marca-600));
+  border-radius: var(--raio-total);
+  transition: width var(--transicao-lenta);
+}
+
+.tela__contador {
+  flex-shrink: 0;
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-semi);
+  color: var(--cor-texto-fraco);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Corpo ───────────────────────────────────────────────────── */
+.tela__corpo {
+  flex: 1;
+  width: 100%;
+  max-width: var(--largura-maxima);
+  margin: 0 auto;
+  padding: var(--esp-6) var(--esp-4);
+
+  /* Reserva o espaço da barra de ação fixa para que o último campo
+     não fique embaixo dela ao rolar até o fim. */
+  padding-bottom: calc(var(--altura-barra-acao) + var(--esp-8));
+
+  padding-left: max(var(--esp-4), var(--seguro-esq));
+  padding-right: max(var(--esp-4), var(--seguro-dir));
+}
+
+.tela__cabecalho {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+  margin-bottom: var(--esp-6);
+}
+
+.tela__etiqueta {
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-forte);
+  letter-spacing: var(--letra-ampla);
+  text-transform: uppercase;
+  color: var(--cor-marca-600);
+}
+
+/* Título grande: é a pergunta da tela, tem que dominar */
+.tela__titulo {
+  font-size: var(--texto-xl);
+  font-weight: var(--peso-forte);
+  color: var(--cor-marca-900);
+}
+
+.tela__apoio {
+  font-size: var(--texto-sm);
+  line-height: var(--linha-normal);
+  color: var(--cor-texto-fraco);
+}
+
+.tela__conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-5);
+}
+
+/* ── Barra de ação (base, fixa) ──────────────────────────────── */
+.tela__acoes {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--camada-fixa);
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+  padding: var(--esp-3) var(--esp-4);
+  padding-bottom: calc(var(--esp-3) + var(--seguro-baixo));
+  background-color: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid var(--cor-borda);
+}
+
+.tela__botoes {
+  display: flex;
+  gap: var(--esp-3);
+  width: 100%;
+  max-width: var(--largura-maxima);
+  margin: 0 auto;
+}
+
+/* Voltar é secundário: quadrado, só ícone, sem competir com o CTA */
+.tela__voltar {
+  flex-shrink: 0;
+  width: var(--altura-botao);
+  padding: 0;
+}
+
+.tela__bloqueio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-2);
+  width: 100%;
+  max-width: var(--largura-maxima);
+  margin: 0 auto;
+  font-size: var(--texto-xs);
+  text-align: center;
+  color: var(--cor-texto-fraco);
+}
+
+.tela__bloqueio svg {
+  flex-shrink: 0;
+  color: var(--cor-atencao-500);
+}
