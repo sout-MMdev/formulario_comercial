@@ -122,11 +122,29 @@
   margin: 0 auto;
 }
 
-/* Voltar é secundário: quadrado, só ícone, sem competir com o CTA */
-.tela__voltar {
+/* Voltar é secundário: quadrado, só ícone, sem competir com o CTA.
+   Ganha a tinta azul da marca para sinalizar "isto é navegação": em
+   cinza, a borda ficava a 1,45:1 de contraste contra a barra branca e
+   o botão praticamente desaparecia. Fundo lavado + borda média dão
+   forma visível, e o azul continua abaixo do CTA na hierarquia.
+
+   Duas classes (.btn.tela__voltar) de propósito: este arquivo entra
+   no bundle ANTES de compartilhado/botoes.css, então com uma classe
+   só o .btn--contorno venceria por vir depois na cascata. */
+.btn.tela__voltar {
   flex-shrink: 0;
   width: var(--altura-botao);
   padding: 0;
+  color: var(--cor-marca-800);
+  background-color: var(--cor-marca-100);
+  border-color: var(--cor-marca-500);
+}
+
+/* Retorno ao toque: preenche de azul em vez de apagar a tinta */
+.btn.tela__voltar:active:not(:disabled) {
+  color: var(--cor-texto-invertido);
+  background-color: var(--cor-marca-700);
+  border-color: var(--cor-marca-700);
 }
 
 .tela__bloqueio {

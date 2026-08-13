@@ -155,6 +155,8 @@ select.controle {
   background-color: var(--cor-marca-50);
   color: var(--cor-marca-800);
   font-weight: var(--peso-medio);
+  /* anel interno = borda "dupla": deixa o selecionado bem evidente */
+  box-shadow: inset 0 0 0 1px var(--cor-marca-600);
 }
 
 .opcoes-pilha {

@@ -1,6 +1,6 @@
 /* ================================================================
    ROOT — tokens deste app.
-   Cores, tipografia e efeitos são compartilhados (@cativa/tema).
+   Cores, tipografia e efeitos ficam no tema deste app (estilos/tema/).
    ================================================================ */
 
 @import "./dimensoes.css";
