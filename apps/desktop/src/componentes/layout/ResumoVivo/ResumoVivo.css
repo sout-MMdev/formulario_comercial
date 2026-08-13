@@ -1,0 +1,132 @@
+/* ================================================================
+   LAYOUT — RESUMO AO VIVO (coluna direita, Modelo "Assistente guiado")
+   Fica fixo (sticky) enquanto o formulário rola, com os totais do
+   dia se montando em tempo real. Só desktop; no celular empilha.
+   ================================================================ */
+
+.resumo-vivo {
+  position: sticky;
+  top: calc(var(--altura-cabecalho) + var(--esp-8));
+  flex-shrink: 0;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+  padding: var(--esp-5);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+  box-shadow: var(--sombra-sm);
+}
+
+/* ── Topo ────────────────────────────────────────────────────── */
+.resumo-vivo__topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.resumo-vivo__titulo {
+  font-size: var(--texto-md);
+  font-weight: var(--peso-forte);
+  color: var(--cor-marca-900);
+}
+.resumo-vivo__data {
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-semi);
+  color: var(--cor-marca-800);
+  background-color: var(--cor-marca-50);
+  border: 1px solid var(--cor-marca-100);
+  border-radius: var(--raio-total);
+  padding: 3px 10px;
+}
+
+/* ── Estado vazio ────────────────────────────────────────────── */
+.resumo-vivo__vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--esp-2);
+  text-align: center;
+  padding: var(--esp-4) var(--esp-2);
+  color: var(--cor-texto-fraco);
+  font-size: var(--texto-sm);
+  line-height: var(--linha-normal);
+}
+.resumo-vivo__vazio svg {
+  color: var(--cor-neutro-400);
+}
+
+/* ── Linhas de total ─────────────────────────────────────────── */
+.resumo-vivo__linhas {
+  display: flex;
+  flex-direction: column;
+}
+.resumo-vivo__linha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-3);
+  padding: var(--esp-3) 0;
+  border-bottom: 1px dashed var(--cor-neutro-200);
+}
+.resumo-vivo__linha:last-child {
+  border-bottom: none;
+}
+.resumo-vivo__rot {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-2);
+  font-size: var(--texto-sm);
+  color: var(--cor-texto-suave);
+}
+.resumo-vivo__rot svg {
+  color: var(--cor-marca-500);
+}
+.resumo-vivo__val {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-forte);
+  color: var(--cor-texto);
+  font-variant-numeric: tabular-nums;
+}
+.resumo-vivo__val--soma {
+  color: var(--cor-sucesso-600);
+}
+.resumo-vivo__val--desconto {
+  color: var(--cor-atencao-600);
+}
+.resumo-vivo__nota {
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-medio);
+  color: var(--cor-texto-fraco);
+}
+
+/* ── Total grande (destaque azul da marca) ───────────────────── */
+.resumo-vivo__total {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--esp-4);
+  border-radius: var(--raio-md);
+  color: var(--cor-branco);
+  background: linear-gradient(140deg, var(--cor-marca-800), var(--cor-marca-900));
+}
+.resumo-vivo__total span {
+  font-size: var(--texto-xs);
+  opacity: 0.85;
+}
+.resumo-vivo__total strong {
+  font-size: var(--texto-xl);
+  font-weight: var(--peso-forte);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Celular: deixa de ser coluna fixa e empilha ─────────────── */
+@media (max-width: 960px) {
+  .resumo-vivo {
+    position: static;
+    width: 100%;
+  }
+}

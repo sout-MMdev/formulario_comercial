@@ -1,0 +1,13 @@
+/* ================================================================
+   TEMA — APP DESKTOP (identidade visual DESTE app)
+   Cores, tipografia, efeitos e reset SÓ do desktop. É uma cópia
+   própria: mexer numa cor aqui NÃO afeta o app mobile.
+
+   Não entra aqui: dimensões de campo/layout — isso é decisão do app
+   e fica em estilos/root/ (o desktop usa campo de 46px).
+   ================================================================ */
+
+@import "./reset.css";
+@import "./cores.css";
+@import "./tipografia.css";
+@import "./efeitos.css";

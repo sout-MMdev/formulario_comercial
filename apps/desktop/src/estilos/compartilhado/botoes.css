@@ -33,30 +33,39 @@
 .btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  box-shadow: none; /* botão inativo não "flutua" */
 }
 
 /* ── Primário — ação que leva o fluxo adiante ────────────────── */
 .btn--primario {
   color: var(--cor-texto-invertido);
   background-color: var(--cor-acao);
-  box-shadow: var(--sombra-xs);
+  background-image: linear-gradient(180deg, var(--cor-marca-700), var(--cor-marca-800));
+  box-shadow: var(--sombra-acao);
 }
 
 .btn--primario:hover:not(:disabled) {
-  background-color: var(--cor-acao-hover);
-  box-shadow: var(--sombra-sm);
+  background-image: linear-gradient(180deg, var(--cor-marca-600), var(--cor-marca-700));
+  box-shadow: var(--sombra-md);
 }
 
 /* ── Destaque — o CTA amarelo da marca (finalizar, salvar) ───── */
 .btn--destaque {
   color: var(--cor-cta-texto);
   background-color: var(--cor-cta);
-  box-shadow: var(--sombra-xs);
+  background-image: linear-gradient(180deg, var(--cor-destaque-300), var(--cor-cta));
+  box-shadow: var(--sombra-cta);
 }
 
 .btn--destaque:hover:not(:disabled) {
-  background-color: var(--cor-cta-hover);
-  box-shadow: var(--sombra-sm);
+  background-image: linear-gradient(180deg, var(--cor-cta), var(--cor-cta-hover));
+  box-shadow: var(--sombra-md);
+}
+
+/* Ao apertar, o CTA "afunda" (perde a elevação) */
+.btn--primario:active:not(:disabled),
+.btn--destaque:active:not(:disabled) {
+  box-shadow: var(--sombra-xs);
 }
 
 /* ── Contorno — ação secundária (voltar) ─────────────────────── */

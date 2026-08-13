@@ -16,10 +16,6 @@ export default defineConfig({
       "@cativa/nucleo": fileURLToPath(
         new URL("../../packages/nucleo/src", import.meta.url),
       ),
-      // Tokens visuais compartilhados com o app mobile
-      "@cativa/tema": fileURLToPath(
-        new URL("../../packages/tema", import.meta.url),
-      ),
     },
   },
 

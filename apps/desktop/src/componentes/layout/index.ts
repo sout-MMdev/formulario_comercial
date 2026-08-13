@@ -5,6 +5,7 @@
 
 export { Cabecalho } from "./Cabecalho";
 export { Painel } from "./Painel";
+export { ResumoVivo } from "./ResumoVivo";
 export { Rodape } from "./Rodape";
 export { Splash } from "./Splash";
 export { TrilhaEtapas } from "./TrilhaEtapas";
