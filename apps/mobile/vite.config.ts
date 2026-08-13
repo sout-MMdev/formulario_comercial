@@ -69,9 +69,6 @@ export default defineConfig({
       "@cativa/nucleo": fileURLToPath(
         new URL("../../packages/nucleo/src", import.meta.url),
       ),
-      "@cativa/tema": fileURLToPath(
-        new URL("../../packages/tema", import.meta.url),
-      ),
     },
   },
 

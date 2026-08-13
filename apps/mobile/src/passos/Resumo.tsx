@@ -78,7 +78,7 @@ export function Resumo() {
         aoAvancar={aoSalvar}
         podeAvancar={validacao.valido && !salvando}
         motivoBloqueio={validacao.erro}
-        rotuloAvancar={salvando ? "Salvando..." : "Salvar o dia"}
+        rotuloAvancar={salvando ? "Finalizando..." : "Finalizar relatório"}
         iconeAvancar="salvar"
       >
         {/* ── Total em destaque ────────────────────────────── */}

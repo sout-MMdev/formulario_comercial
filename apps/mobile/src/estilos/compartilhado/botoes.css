@@ -18,6 +18,7 @@
   border-radius: var(--raio-md);
   transition:
     background-color var(--transicao-rapida),
+    box-shadow var(--transicao-rapida),
     transform var(--transicao-rapida),
     opacity var(--transicao-rapida);
 }
@@ -28,16 +29,31 @@
 
 .btn:disabled {
   opacity: 0.45;
+  box-shadow: none; /* botão inativo não "flutua" */
 }
 
+/* Primário: degradê azul + elevação. Ao tocar, "afunda" (perde a sombra). */
 .btn--primario {
   color: var(--cor-texto-invertido);
   background-color: var(--cor-acao);
+  background-image: linear-gradient(180deg, var(--cor-marca-700), var(--cor-marca-800));
+  box-shadow: var(--sombra-acao);
 }
 
+.btn--primario:active:not(:disabled) {
+  box-shadow: var(--sombra-xs);
+}
+
+/* Destaque (CTA amarelo): degradê + elevação amarela */
 .btn--destaque {
   color: var(--cor-cta-texto);
   background-color: var(--cor-cta);
+  background-image: linear-gradient(180deg, var(--cor-destaque-300), var(--cor-destaque-500));
+  box-shadow: var(--sombra-cta);
+}
+
+.btn--destaque:active:not(:disabled) {
+  box-shadow: var(--sombra-xs);
 }
 
 .btn--contorno {
