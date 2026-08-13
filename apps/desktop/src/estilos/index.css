@@ -3,7 +3,7 @@
    Importado uma única vez em src/main.tsx.
    Ordem: do mais genérico ao mais específico.
 
-     1. @cativa/tema    identidade compartilhada com o mobile
+     1. tema/           identidade visual DESTE app — cópia própria
                         (reset, cores, tipografia, efeitos)
      2. root/           dimensões deste app (campo 46px, larguras…)
      3. base/           aparência padrão do documento
@@ -14,7 +14,7 @@
    (src/abas/Visita/Visita.css) — cada .tsx importa o seu .css.
    ================================================================ */
 
-@import "@cativa/tema/index.css";
+@import "./tema/index.css";
 
 @import "./root/index.css";
 @import "./base/index.css";
