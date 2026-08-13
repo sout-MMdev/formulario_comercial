@@ -93,7 +93,7 @@ formulario/
 | Tipos, configuração, regras       | **Sim** — `@cativa/nucleo` |
 | Reducer do estado do dia          | **Sim** — `@cativa/nucleo/estado` |
 | Serviços (IBGE, ViaCEP, storage)  | **Sim** — `@cativa/nucleo/servicos` |
-| Cores, tipografia, ícones         | **Sim** — `@cativa/tema` |
+| Cores, tipografia, ícones         | Não — cada app tem o seu (`src/estilos/tema/` + `ui/Icone`) |
 | Dimensões (altura de campo/botão) | Não — cada app tem a sua |
 | Componentes de interface          | Não — o toque pede outra coisa |
 | Telas                             | Não — abas × passos |
