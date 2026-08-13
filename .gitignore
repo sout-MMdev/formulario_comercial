@@ -4,6 +4,11 @@ node_modules/
 # Build
 dist/
 
+# Variáveis de ambiente (SEGREDOS) — nunca commitar; só o template .env.example
+.env
+.env.*
+!.env.example
+
 # Configurações de editor / ferramentas locais
 .vscode/
 .claude/
