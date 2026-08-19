@@ -16,10 +16,11 @@
     /* "@/..."         → src/ deste app
        "@cativa/nucleo" → código-fonte do pacote compartilhado.
        Apontar para o SOURCE (e não para um build) faz o hot reload
-       funcionar quando uma regra do núcleo é alterada.            */
-    "baseUrl": ".",
+       funcionar quando uma regra do núcleo é alterada.
+       (Sem "baseUrl" — depreciado no TS 6; os paths resolvem
+       relativo a este tsconfig.)                                  */
     "paths": {
-      "@/*": ["src/*"],
+      "@/*": ["./src/*"],
       "@cativa/nucleo": ["../../packages/nucleo/src/index.ts"],
       "@cativa/nucleo/*": ["../../packages/nucleo/src/*"]
     },
