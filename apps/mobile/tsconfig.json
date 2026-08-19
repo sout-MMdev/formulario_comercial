@@ -13,9 +13,9 @@
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
 
-    "baseUrl": ".",
+    /* Sem "baseUrl" (depreciado no TS 6): paths resolvem relativo a este tsconfig. */
     "paths": {
-      "@/*": ["src/*"],
+      "@/*": ["./src/*"],
       "@cativa/nucleo": ["../../packages/nucleo/src/index.ts"],
       "@cativa/nucleo/*": ["../../packages/nucleo/src/*"]
     },
