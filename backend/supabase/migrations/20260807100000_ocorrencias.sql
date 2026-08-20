@@ -82,9 +82,14 @@ values ('ocorrencia-anexos', 'ocorrencia-anexos', false)
 on conflict (id) do nothing;
 
 -- usuário logado lê e envia anexos; só quem vê tudo apaga
+-- (drop antes do create: essas políticas vivem no schema `storage`, então o
+--  "drop schema app cascade" não as remove — o guard deixa re-rodar sem erro)
+drop policy if exists "anexos ocor leitura" on storage.objects;
 create policy "anexos ocor leitura" on storage.objects for select to authenticated
   using (bucket_id = 'ocorrencia-anexos');
+drop policy if exists "anexos ocor upload" on storage.objects;
 create policy "anexos ocor upload" on storage.objects for insert to authenticated
   with check (bucket_id = 'ocorrencia-anexos');
+drop policy if exists "anexos ocor delete" on storage.objects;
 create policy "anexos ocor delete" on storage.objects for delete to authenticated
   using (bucket_id = 'ocorrencia-anexos' and app.ve_tudo());
