@@ -20,7 +20,7 @@ import {
   type AcaoFormulario,
   type EstadoFormulario,
 } from "@cativa/nucleo/estado";
-import { emailsExecutivos } from "@cativa/nucleo/config";
+import { emailDoExecutivo } from "@cativa/nucleo/servicos/executivos";
 import {
   calcularTotaisDia,
   obterFluxosFaltando,
@@ -137,7 +137,7 @@ export function ProvedorFormulario({ children }: { children: ReactNode }) {
   const selecionarExecutivo = useCallback((nome: string) => {
     despachar({
       tipo: "definir-identificacao",
-      dados: { nome, email: emailsExecutivos[nome] ?? "" },
+      dados: { nome, email: emailDoExecutivo(nome) },
     });
   }, []);
 

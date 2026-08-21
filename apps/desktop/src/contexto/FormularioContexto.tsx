@@ -16,7 +16,7 @@ import {
   obterEtapasVisiveis,
   obterFluxosFaltando,
 } from "@cativa/nucleo/regras";
-import { emailsExecutivos } from "@cativa/nucleo/config";
+import { emailDoExecutivo } from "@cativa/nucleo/servicos/executivos";
 import { gerarId } from "@cativa/nucleo/utils";
 import { repositorioDias } from "@cativa/nucleo/servicos/armazenamento";
 import {
@@ -96,7 +96,7 @@ export function ProvedorFormulario({ children }: { children: ReactNode }) {
   const selecionarExecutivo = useCallback((nome: string) => {
     despachar({
       tipo: "definir-identificacao",
-      dados: { nome, email: emailsExecutivos[nome] ?? "" },
+      dados: { nome, email: emailDoExecutivo(nome) },
     });
   }, []);
 
