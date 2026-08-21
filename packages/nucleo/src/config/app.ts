@@ -99,6 +99,11 @@ export const URL_LISTAR_EXECUTIVOS = TEM_BACKEND
   ? `${SUPABASE_URL}/functions/v1/listar-executivos`
   : "";
 
+/** Edge Function que recebe o relatório: grava no CRM + cópia por e-mail. */
+export const URL_RECEBER_FORMULARIO = TEM_BACKEND
+  ? `${SUPABASE_URL}/functions/v1/receber-formulario`
+  : "";
+
 /** Fallback fictício das agências (portfólio/offline). */
 export const URL_AGENCIAS = "/agencias.json";
 
