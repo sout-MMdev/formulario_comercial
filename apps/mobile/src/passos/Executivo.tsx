@@ -9,7 +9,7 @@ import { useState } from "react";
 import { Campo, Entrada, Selecao } from "@/componentes/ui/Campo";
 import { Icone } from "@/componentes/ui/Icone";
 import { TelaPasso } from "@/componentes/layout/TelaPasso";
-import { executivos } from "@cativa/nucleo/config";
+import { listaExecutivos } from "@cativa/nucleo/servicos/executivos";
 import { emailValido, validarIdentificacao } from "@cativa/nucleo/regras";
 import { useFormulario } from "@/contexto/useFormulario";
 import { PASSOS } from "@/navegacao/passos";
@@ -52,7 +52,7 @@ export function Executivo() {
             id={id}
             placeholder="Toque para selecionar"
             value={identificacao.nome}
-            opcoes={executivos.map((executivo) => ({
+            opcoes={listaExecutivos().map((executivo) => ({
               valor: executivo.valor,
               rotulo: executivo.rotulo,
             }))}

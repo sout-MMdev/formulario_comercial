@@ -16,6 +16,7 @@ import {
   TIMEOUT_CIDADES_MS,
 } from "@cativa/nucleo/config";
 import { carregarAgencias } from "@cativa/nucleo/servicos/agencias";
+import { carregarExecutivos } from "@cativa/nucleo/servicos/executivos";
 import { carregarCidades } from "@cativa/nucleo/servicos/ibge";
 import "./Splash.css";
 
@@ -23,6 +24,11 @@ const ETAPAS = [
   {
     mensagem: "Carregando agências...",
     executar: carregarAgencias,
+    limiteMs: TIMEOUT_AGENCIAS_MS,
+  },
+  {
+    mensagem: "Carregando executivos...",
+    executar: carregarExecutivos,
     limiteMs: TIMEOUT_AGENCIAS_MS,
   },
   {

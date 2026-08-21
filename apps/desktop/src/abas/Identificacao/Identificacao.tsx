@@ -10,7 +10,8 @@
 
 import { Campo, Entrada, Icone, Selecao } from "@/componentes/ui";
 import { Painel } from "@/componentes/layout";
-import { executivos, ROTULOS_FLUXO } from "@cativa/nucleo/config";
+import { ROTULOS_FLUXO } from "@cativa/nucleo/config";
+import { listaExecutivos } from "@cativa/nucleo/servicos/executivos";
 import { emailValido } from "@cativa/nucleo/regras";
 import { useFormulario } from "@/contexto/useFormulario";
 import type { NomeFluxo } from "@cativa/nucleo/tipos";
@@ -61,7 +62,7 @@ export function Identificacao() {
                 id={id}
                 placeholder="-- Selecione --"
                 value={identificacao.nome}
-                opcoes={executivos.map((executivo) => ({
+                opcoes={listaExecutivos().map((executivo) => ({
                   valor: executivo.valor,
                   rotulo: executivo.rotulo,
                 }))}

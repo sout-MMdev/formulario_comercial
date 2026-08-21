@@ -94,6 +94,11 @@ export const URL_LISTAR_AGENCIAS = TEM_BACKEND
   ? `${SUPABASE_URL}/functions/v1/listar-agencias`
   : "";
 
+/** Edge Function com os executivos — nome + e-mail (quando há back end). */
+export const URL_LISTAR_EXECUTIVOS = TEM_BACKEND
+  ? `${SUPABASE_URL}/functions/v1/listar-executivos`
+  : "";
+
 /** Fallback fictício das agências (portfólio/offline). */
 export const URL_AGENCIAS = "/agencias.json";
 
