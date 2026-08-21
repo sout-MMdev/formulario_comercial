@@ -70,20 +70,69 @@ async function obterOuCriarExecutivo(
   return novo.id;
 }
 
-async function obterOuCriarAgencia(db: any, nome: string): Promise<number | null> {
-  const nomeLimpo = nome.trim();
-  if (!nomeLimpo) return null;
+/** Retorna "YYYY-MM-DD" se for uma data válida; senão null (sem regex). */
+function ehData(v: unknown): string | null {
+  if (typeof v !== "string" || v.length !== 10) return null;
+  if (v[4] !== "-" || v[7] !== "-") return null;
+  return v;
+}
 
-  const { data: achado } = await db
+/**
+ * Acha a agência pelo nome (ignora maiúsc./minúsc.) e ATUALIZA o perfil
+ * comercial dela com o que veio do formulário — assim a ficha do CRM
+ * preenche sozinha. Se não existir, cria (status Prospecção + responsável
+ * atual). NUNCA mexe no status nem no responsável de uma agência que já existe.
+ */
+async function resolverAgencia(
+  db: any,
+  ag: any,
+  executivoId: number,
+): Promise<number | null> {
+  const nome = (ag?.nome ?? "").trim();
+  if (!nome) return null;
+
+  const endereco = ag?.endereco ?? {};
+  const logradouro =
+    [endereco?.logradouro, endereco?.numero, endereco?.complemento]
+      .filter(Boolean)
+      .join(", ") || null;
+
+  // Perfil comercial vindo do formulário (o que a ficha do CRM mostra).
+  const perfil: Record<string, unknown> = {
+    logradouro,
+    bairro: endereco?.bairro || null,
+    cidade: endereco?.cidade || null,
+    cep: endereco?.cep || null,
+    uf: endereco?.uf || null,
+    faturamento_anual: ag?.faturamentoAnual || null,
+    produtos: ag?.produtos ?? [],
+    atendentes: ag?.atendentes ?? [],
+    data_fundacao: ehData(ag?.dataFundacao),
+  };
+
+  // Procura a agência existente (case-insensitive).
+  const { data } = await db
     .from("agencias")
     .select("id")
-    .eq("nome", nomeLimpo)
-    .maybeSingle();
-  if (achado) return achado.id;
+    .ilike("nome", nome)
+    .limit(1);
+  const achado = (data ?? [])[0];
 
+  if (achado) {
+    // Atualiza SÓ o perfil — mantém status e responsável atuais.
+    await db.from("agencias").update(perfil).eq("id", achado.id);
+    return achado.id;
+  }
+
+  // Agência nova de verdade: perfil + status inicial + responsável atual.
   const { data: nova, error } = await db
     .from("agencias")
-    .insert({ nome: nomeLimpo, status: "Prospecção" })
+    .insert({
+      nome,
+      status: "Prospecção",
+      executivo_id: executivoId,
+      ...perfil,
+    })
     .select("id")
     .single();
   if (error) throw new Error("agencia: " + error.message);
@@ -108,7 +157,7 @@ async function gravarVisita(db: any, dia: any, executivoId: number): Promise<voi
   for (const ag of agencias) {
     const nome = (ag?.nome ?? "").trim();
     if (!nome) continue;
-    const agenciaId = await obterOuCriarAgencia(db, nome);
+    const agenciaId = await resolverAgencia(db, ag, executivoId);
     if (!agenciaId) continue;
 
     // O que foi tratado nesta agência, nesta visita.
