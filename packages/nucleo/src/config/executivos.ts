@@ -1,67 +1,50 @@
 // ================================================================
-// CONFIG — EXECUTIVOS
-// Mapa nome → e-mail. Ao selecionar o nome na aba Identificação,
-// o e-mail é preenchido automaticamente.
-// Para incluir um executivo novo, basta acrescentar uma linha.
+// CONFIG — EXECUTIVOS (FALLBACK FICTÍCIO)
+// Mapa nome → e-mail usado APENAS como fallback quando não há back end
+// configurado (portfólio/desenvolvimento/offline).
+//
+// Em produção, a lista REAL vem do Supabase (Edge Function
+// `listar-executivos`) — nenhum nome/e-mail real fica no repositório
+// (LGPD). Os nomes abaixo são FICTÍCIOS, só pra demonstração.
 // ================================================================
 
 export const emailsExecutivos: Record<string, string> = {
-  "ADRIANA SCHLICHTA": "parana@cativaoperadora.com.br",
-  "AFONSO HENRIQUE DOMINGUES": "riodejaneiro@cativaoperadora.com.br",
-  "ALEX HENRIQUE GODOI DE MORAES": "pernambuco@cativaoperadora.com.br",
-  "ALEXANDRE DIAS": "riodejaneiro02@cativaoperadora.com.br",
-  "ALEXANDRE GOMES VAZ PINTO": "baixadasantista@cativaoperadora.com.br",
-  "CAMILA FERNANDEZ": "norte@cativaoperadora.com.br",
-  "CARLA MEIRA": "bahiasergipe@cativaoperadora.com.br",
-  "CARLOS DONIZETI LEONARDI": "ribeiraoetriangulo@cativaoperadora.com.br",
-  "DANIELA REIS": "parana02@cativaoperadora.com.br",
-  "DENILSON MATEUCCI VICENTE": "goias@cativaoperadora.com.br",
-  "EXECUTIVO INTERNO CATIVA": "suportecomercial1@cativaoperadora.com.br",
-  "FABIO VIANA": "saopaulo03@cativaoperadora.com.br",
-  "LUIZ CLAUDIO MARCIANO BARROS": "minasgerais@cativaoperadora.com.br",
-  "MARCELO SOUZA": "regiaocampinas@cativaoperadora.com.br",
-  "MARCOS TRE": "santacatarina@cativaoperadora.com.br",
-  "NANY LIMA": "brasilia@cativaoperadora.com.br",
-  "PABLO SANTANA": "riograndedosul01@cativaoperadora.com.br",
-  "PRISCILLA BACALHAO": "paraibaern@cativaoperadora.com.br",
-  "RAFAEL ANDRADE": "riograndedosul02@cativaoperadora.com.br",
-  "ROBERTO LASTORIA": "matogrosso@cativaoperadora.com.br",
-  "SAULO GODOY": "regiaopiracicaba@cativaoperadora.com.br",
-  "TIAGO FANTINI": "saopaulo02@cativaoperadora.com.br",
+  "BRUNO ROCHA": "sul01@empresa.exemplo",
+  "DIEGO MARTINS": "sul02@empresa.exemplo",
+  "CARLOS NUNES": "santacatarina@empresa.exemplo",
+  "FERNANDA LIMA": "parana@empresa.exemplo",
+  "RENATA DIAS": "parana02@empresa.exemplo",
+  "PAULO SOUZA": "saopaulo@empresa.exemplo",
+  "MARIANA COSTA": "norte@empresa.exemplo",
+  "RICARDO ALVES": "riodejaneiro@empresa.exemplo",
+  "JULIANA PEREIRA": "bahia@empresa.exemplo",
+  "ANDRE OLIVEIRA": "minasgerais@empresa.exemplo",
+  "CAMILA RIBEIRO": "goias@empresa.exemplo",
+  "GUSTAVO MENDES": "brasilia@empresa.exemplo",
 };
 
 /**
  * Lista para o <select> da aba Identificação.
  * `valor` é a chave usada nas regras (tarifa, e-mail);
- * `rotulo` é o que o executivo lê na tela — por isso alguns
- * aparecem acentuados aqui e sem acento no valor.
+ * `rotulo` é o que aparece na tela.
  */
 export const executivos: { valor: string; rotulo: string }[] = [
-  { valor: "ADRIANA SCHLICHTA", rotulo: "ADRIANA SCHLICHTA" },
-  { valor: "AFONSO HENRIQUE DOMINGUES", rotulo: "AFONSO HENRIQUE DOMINGUES" },
-  { valor: "ALEX HENRIQUE GODOI DE MORAES", rotulo: "ALEX HENRIQUE GODOI DE MORAES" },
-  { valor: "ALEXANDRE DIAS", rotulo: "ALEXANDRE DIAS" },
-  { valor: "ALEXANDRE GOMES VAZ PINTO", rotulo: "ALEXANDRE GOMES VAZ PINTO" },
-  { valor: "CAMILA FERNANDEZ", rotulo: "CAMILA FERNANDEZ" },
-  { valor: "CARLA MEIRA", rotulo: "CARLA MEIRA" },
-  { valor: "CARLOS DONIZETI LEONARDI", rotulo: "CARLOS DONIZETI LEONARDI" },
-  { valor: "DANIELA REIS", rotulo: "DANIELA REIS" },
-  { valor: "DENILSON MATEUCCI VICENTE", rotulo: "DENILSON MATEUCCI VICENTE" },
-  { valor: "FABIO VIANA", rotulo: "FÁBIO VIANA" },
-  { valor: "LUIZ CLAUDIO MARCIANO BARROS", rotulo: "LUIZ CLAUDIO MARCIANO BARROS" },
-  { valor: "MARCELO SOUZA", rotulo: "MARCELO SOUZA" },
-  { valor: "MARCOS TRE", rotulo: "MARCOS TRE" },
-  { valor: "NANY LIMA", rotulo: "NANY LIMA" },
-  { valor: "PABLO SANTANA", rotulo: "PABLO SANTANA" },
-  { valor: "PRISCILLA BACALHAO", rotulo: "PRISCILLA BACALHÁO" },
-  { valor: "RAFAEL ANDRADE", rotulo: "RAFAEL ANDRADE" },
-  { valor: "ROBERTO LASTORIA", rotulo: "ROBERTO LASTORIA" },
-  { valor: "SAULO GODOY", rotulo: "SAULO GODOY" },
-  { valor: "TIAGO FANTINI", rotulo: "TIAGO FANTINI" },
+  { valor: "BRUNO ROCHA", rotulo: "BRUNO ROCHA" },
+  { valor: "DIEGO MARTINS", rotulo: "DIEGO MARTINS" },
+  { valor: "CARLOS NUNES", rotulo: "CARLOS NUNES" },
+  { valor: "FERNANDA LIMA", rotulo: "FERNANDA LIMA" },
+  { valor: "RENATA DIAS", rotulo: "RENATA DIAS" },
+  { valor: "PAULO SOUZA", rotulo: "PAULO SOUZA" },
+  { valor: "MARIANA COSTA", rotulo: "MARIANA COSTA" },
+  { valor: "RICARDO ALVES", rotulo: "RICARDO ALVES" },
+  { valor: "JULIANA PEREIRA", rotulo: "JULIANA PEREIRA" },
+  { valor: "ANDRE OLIVEIRA", rotulo: "ANDRÉ OLIVEIRA" },
+  { valor: "CAMILA RIBEIRO", rotulo: "CAMILA RIBEIRO" },
+  { valor: "GUSTAVO MENDES", rotulo: "GUSTAVO MENDES" },
 ];
 
 /**
  * E-mails da gestão que recebem cópia do relatório semanal.
- * Preencher quando o envio por e-mail for implementado.
+ * Em produção vêm do back end; vazio no fallback fictício.
  */
 export const emailsGestao: string[] = [];

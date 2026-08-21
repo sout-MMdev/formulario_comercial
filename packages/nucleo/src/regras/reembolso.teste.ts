@@ -53,17 +53,17 @@ function despesa(
 
 describe("tarifa por quilômetro", () => {
   it("aplica a tarifa padrão à maioria dos executivos", () => {
-    assert.equal(obterTarifaKm("MARCELO SOUZA"), TARIFA_KM_PADRAO);
-    assert.equal(obterTarifaKm("CARLA MEIRA"), TARIFA_KM_PADRAO);
+    assert.equal(obterTarifaKm("PAULO SOUZA"), TARIFA_KM_PADRAO);
+    assert.equal(obterTarifaKm("MARIANA COSTA"), TARIFA_KM_PADRAO);
   });
 
   it("aplica a tarifa especial a quem tem valor negociado", () => {
-    assert.equal(obterTarifaKm("ADRIANA SCHLICHTA"), TARIFA_KM_ESPECIAL);
-    assert.equal(obterTarifaKm("RAFAEL ANDRADE"), TARIFA_KM_ESPECIAL);
+    assert.equal(obterTarifaKm("FERNANDA LIMA"), TARIFA_KM_ESPECIAL);
+    assert.equal(obterTarifaKm("BRUNO ROCHA"), TARIFA_KM_ESPECIAL);
   });
 
   it("ignora espaços em volta do nome", () => {
-    assert.equal(obterTarifaKm("  MARCOS TRE  "), TARIFA_KM_ESPECIAL);
+    assert.equal(obterTarifaKm("  CARLOS NUNES  "), TARIFA_KM_ESPECIAL);
   });
 
   it("usa a tarifa padrão quando não há executivo escolhido", () => {
@@ -76,22 +76,22 @@ describe("tarifa por quilômetro", () => {
 describe("reembolso de quilometragem", () => {
   it("multiplica os KM pela tarifa do executivo", () => {
     // 45 km × 1,30 = 58,50
-    assert.equal(calcularReembolsoKm(45, "MARCELO SOUZA"), 58.5);
+    assert.equal(calcularReembolsoKm(45, "PAULO SOUZA"), 58.5);
     // 45 km × 1,43 = 64,35
-    assert.equal(calcularReembolsoKm(45, "ADRIANA SCHLICHTA"), 64.35);
+    assert.equal(calcularReembolsoKm(45, "FERNANDA LIMA"), 64.35);
   });
 
   it("arredonda em duas casas decimais", () => {
     // 33 × 1,43 = 47,19 exatos — sem sobra de ponto flutuante
-    assert.equal(calcularReembolsoKm(33, "PABLO SANTANA"), 47.19);
+    assert.equal(calcularReembolsoKm(33, "DIEGO MARTINS"), 47.19);
     // 7 × 1,30 = 9,1
-    assert.equal(calcularReembolsoKm(7, "TIAGO FANTINI"), 9.1);
+    assert.equal(calcularReembolsoKm(7, "RICARDO ALVES"), 9.1);
   });
 
   it("devolve zero para quilometragem ausente, zero ou negativa", () => {
-    assert.equal(calcularReembolsoKm(0, "MARCELO SOUZA"), 0);
-    assert.equal(calcularReembolsoKm(-10, "MARCELO SOUZA"), 0);
-    assert.equal(calcularReembolsoKm(Number.NaN, "MARCELO SOUZA"), 0);
+    assert.equal(calcularReembolsoKm(0, "PAULO SOUZA"), 0);
+    assert.equal(calcularReembolsoKm(-10, "PAULO SOUZA"), 0);
+    assert.equal(calcularReembolsoKm(Number.NaN, "PAULO SOUZA"), 0);
   });
 });
 

@@ -46,8 +46,8 @@ function despesa(dados: Partial<Despesa> = {}): Despesa {
 
 describe("e-mail", () => {
   it("aceita endereços bem formados", () => {
-    assert.ok(emailValido("parana@cativaoperadora.com.br"));
-    assert.ok(emailValido("  norte@cativaoperadora.com.br  "));
+    assert.ok(emailValido("parana@empresa.exemplo"));
+    assert.ok(emailValido("  norte@empresa.exemplo  "));
   });
 
   it("recusa endereços incompletos", () => {
@@ -68,15 +68,15 @@ describe("identificação", () => {
   });
 
   it("exige e-mail válido", () => {
-    const r = validarIdentificacao({ nome: "CARLA MEIRA", email: "quebrado" });
+    const r = validarIdentificacao({ nome: "MARIANA COSTA", email: "quebrado" });
     assert.ok(!r.valido);
     assert.match(r.erro ?? "", /e-mail/i);
   });
 
   it("aprova nome e e-mail corretos", () => {
     const r = validarIdentificacao({
-      nome: "CARLA MEIRA",
-      email: "bahiasergipe@cativaoperadora.com.br",
+      nome: "MARIANA COSTA",
+      email: "bahia@empresa.exemplo",
     });
     assert.ok(r.valido);
     assert.equal(r.erro, null);

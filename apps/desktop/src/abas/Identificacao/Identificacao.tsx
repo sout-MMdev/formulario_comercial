@@ -80,7 +80,7 @@ export function Identificacao() {
               <Entrada
                 id={id}
                 type="email"
-                placeholder="exemplo@cativaoperadora.com.br"
+                placeholder="exemplo@empresa.com.br"
                 value={identificacao.email}
                 invalido={emailPreenchidoEInvalido}
                 onChange={(evento) =>
