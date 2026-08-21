@@ -78,7 +78,23 @@ export const URL_IBGE_MUNICIPIOS =
 
 export const URL_VIACEP = "https://viacep.com.br/ws";
 
-/** Base de agências servida por public/agencias.json. */
+// ── Back end (Supabase) ──────────────────────────────────────────
+// Com VITE_SUPABASE_URL/ANON_KEY definidos, as agências vêm da Edge
+// Function `listar-agencias` (a base real fica no back end, fora do
+// repo). Sem isso, cai no fallback fictício public/agencias.json
+// (bom pra portfólio/offline). Cast pra não exigir os tipos do Vite.
+const metaEnv =
+  (import.meta as unknown as { env?: Record<string, string> }).env ?? {};
+export const SUPABASE_URL = String(metaEnv.VITE_SUPABASE_URL ?? "").trim();
+export const SUPABASE_ANON = String(metaEnv.VITE_SUPABASE_ANON_KEY ?? "").trim();
+export const TEM_BACKEND = Boolean(SUPABASE_URL && SUPABASE_ANON);
+
+/** Edge Function com os nomes das agências (quando há back end). */
+export const URL_LISTAR_AGENCIAS = TEM_BACKEND
+  ? `${SUPABASE_URL}/functions/v1/listar-agencias`
+  : "";
+
+/** Fallback fictício das agências (portfólio/offline). */
 export const URL_AGENCIAS = "/agencias.json";
 
 /** Tempo máximo de espera de cada API antes de liberar a tela. */

@@ -107,7 +107,7 @@ export function Executivo() {
               enterKeyHint="done"
               autoCapitalize="off"
               autoCorrect="off"
-              placeholder="exemplo@empresa.exemplo"
+              placeholder="exemplo@empresa.com.br"
               value={identificacao.email}
               invalido={
                 Boolean(identificacao.email) && !emailValido(identificacao.email)

@@ -68,15 +68,15 @@ describe("identificação", () => {
   });
 
   it("exige e-mail válido", () => {
-    const r = validarIdentificacao({ nome: "MATEUS PINTO", email: "quebrado" });
+    const r = validarIdentificacao({ nome: "MARIANA COSTA", email: "quebrado" });
     assert.ok(!r.valido);
     assert.match(r.erro ?? "", /e-mail/i);
   });
 
   it("aprova nome e e-mail corretos", () => {
     const r = validarIdentificacao({
-      nome: "MATEUS PINTO",
-      email: "bahiasergipe@empresa.exemplo",
+      nome: "MARIANA COSTA",
+      email: "bahia@empresa.exemplo",
     });
     assert.ok(r.valido);
     assert.equal(r.erro, null);
