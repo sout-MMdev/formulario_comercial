@@ -190,6 +190,14 @@ grant select, insert, update, delete on all tables in schema app to authenticate
 alter default privileges in schema app
   grant select, insert, update, delete on tables to authenticated;
 
+-- service_role (usado pelas Edge Functions, ex.: listar-agencias) tambem precisa
+-- acessar o schema `app` — senao a funcao recebe "permission denied for schema app".
+grant usage on schema app to service_role;
+grant select, insert, update, delete on all tables in schema app to service_role;
+grant usage, select on all sequences in schema app to service_role;
+alter default privileges in schema app
+  grant select, insert, update, delete on tables to service_role;
+
 -- --------------------------------------------------------------
 -- Funções de apoio — rodam como dono (bypassam RLS), sem recursão.
 -- --------------------------------------------------------------
