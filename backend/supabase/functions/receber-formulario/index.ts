@@ -198,28 +198,32 @@ async function gravarVisita(db: any, dia: any, executivoId: number): Promise<voi
 }
 
 async function gravarDespesas(db: any, dia: any, executivoId: number): Promise<void> {
-  const linhas: any[] = [];
-
-  // Trajetos (KM) entram como despesa de "Quilometragem".
+  // Trajetos (KM) -> tabela propria app.trajetos (guarda cidade/KM/reembolso).
   const trajetos: any[] = dia?.trajetos ?? [];
+  const linhasTrajeto: any[] = [];
   for (const t of trajetos) {
     const km = Number(t?.km) || 0;
     if (km <= 0) continue;
-    linhas.push({
+    linhasTrajeto.push({
       executivo_id: executivoId,
       data: t?.data || dia?.visita?.data || hoje(),
-      cartao: null,
-      categoria: "Quilometragem",
-      valor: Number(t?.reembolsoKm) || 0,
-      status: "Pendente",
+      partida: t?.partida || null,
+      destino: t?.destino || null,
+      km,
+      reembolso: Number(t?.reembolsoKm) || 0,
     });
   }
+  if (linhasTrajeto.length > 0) {
+    const { error } = await db.from("trajetos").insert(linhasTrajeto);
+    if (error) throw new Error("trajetos: " + error.message);
+  }
 
-  // Despesas de cartão.
+  // Despesas de cartao -> app.despesas.
   const despesas: any[] = dia?.despesas ?? [];
+  const linhasDespesa: any[] = [];
   for (const d of despesas) {
     if (!d?.cartao && !d?.categoria) continue;
-    linhas.push({
+    linhasDespesa.push({
       executivo_id: executivoId,
       data: d?.data || hoje(),
       cartao: d?.cartao || null,
@@ -228,9 +232,8 @@ async function gravarDespesas(db: any, dia: any, executivoId: number): Promise<v
       status: "Pendente",
     });
   }
-
-  if (linhas.length > 0) {
-    const { error } = await db.from("despesas").insert(linhas);
+  if (linhasDespesa.length > 0) {
+    const { error } = await db.from("despesas").insert(linhasDespesa);
     if (error) throw new Error("despesas: " + error.message);
   }
 }
