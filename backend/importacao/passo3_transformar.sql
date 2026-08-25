@@ -1,9 +1,11 @@
 -- ==============================================================
 -- IMPORTAÇÃO — PASSO 3: transformar o staging em dados reais
--- Roda DEPOIS do CSV estar em app.stg_import (count = 17816).
+-- Roda DEPOIS do CSV estar em app.stg_import (count = ~18 mil).
 -- ==============================================================
 
--- 1. Cada promotor distinto vira um executivo (perfil Executivo, sem login).
+-- 1. Cada promotor distinto vira um executivo (perfil Executivo, sem login),
+--    SE ainda não existir. Os que já existem (ex.: os que têm e-mail
+--    cadastrado) são mantidos como estão.
 insert into app.executivos (nome, perfil)
 select distinct trim(s.promotor), 'Executivo'
 from app.stg_import s
@@ -12,12 +14,13 @@ where coalesce(trim(s.promotor), '') <> ''
     select 1 from app.executivos e where e.nome = trim(s.promotor)
   );
 
--- 2. Insere as agências, ligando ao promotor (executivo) e mapeando o status.
---    Sim -> Ativa · qualquer outra coisa -> Inativa.
---    Promotor em branco -> executivo_id nulo (sem dono, você atribui depois).
+-- 2. Insere as agências (com id_infotera + comissão), ligando ao promotor
+--    (executivo) e mapeando o status. Sim -> Ativa · resto -> Inativa.
+--    Promotor em branco -> executivo_id nulo (sem dono; atribui depois).
 insert into app.agencias
-  (nome, uf, cidade, bairro, logradouro, cep, cnpj, comissao, executivo_id, status)
+  (id_infotera, nome, uf, cidade, bairro, logradouro, cep, cnpj, comissao, executivo_id, status)
 select
+  nullif(trim(s.id_infotera), '')::bigint,
   trim(s.nome),
   nullif(trim(s.estado), ''),
   nullif(trim(s.cidade), ''),
