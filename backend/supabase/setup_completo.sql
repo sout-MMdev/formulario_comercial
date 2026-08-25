@@ -449,6 +449,46 @@ alter table app.agencias
 -- Promotores importados são executivos sem login → e-mail opcional.
 alter table app.executivos alter column email drop not null;
 
+-- Agora que cnpj/comissao existem, re-cria a view do CRM incluindo os dois
+-- campos (a definição acima, na linha ~400, roda antes destas colunas).
+create or replace view app.vw_agencias
+with (security_invoker = true) as
+select
+  a.id,
+  a.nome,
+  coalesce(a.uf, '')                                as uf,
+  coalesce(e.nome, '')                             as "executivoResponsavel",
+  a.status,
+  coalesce(v.total, 0)                             as "totalVisitas",
+  coalesce(to_char(v.ultima, 'YYYY-MM-DD'), '')    as "ultimaVisita",
+  coalesce(es.nivel, 'Baixo')                      as "nivelEstresseAtual",
+  coalesce(to_char(a.data_fundacao, 'YYYY-MM-DD'), '') as "dataFundacao",
+  coalesce(a.faturamento_anual, '')                as "faturamentoAnual",
+  coalesce(a.produtos, '[]'::jsonb)                as produtos,
+  coalesce(a.atendentes, '[]'::jsonb)              as atendentes,
+  coalesce(a.logradouro, '')                       as logradouro,
+  coalesce(a.bairro, '')                           as bairro,
+  coalesce(a.cidade, '')                           as cidade,
+  coalesce(a.cep, '')                              as cep,
+  coalesce(a.cnpj, '')                             as cnpj,
+  coalesce(a.comissao, '')                         as comissao
+from app.agencias a
+left join app.executivos e on e.id = a.executivo_id
+left join lateral (
+  select count(*) as total, max(vi.data_visita) as ultima
+  from app.agencia_visita av
+  join app.visitas vi on vi.id = av.visita_id
+  where av.agencia_id = a.id
+) v on true
+left join lateral (
+  select ea.nivel
+  from app.estresse_agencia ea
+  where ea.agencia_id = a.id
+  order by ea.data_registro desc, ea.id desc
+  limit 1
+) es on true;
+grant select on app.vw_agencias to authenticated;
+
 -- ==================== 20260807100000_ocorrencias.sql ====================
 -- ==============================================================
 -- OCORRÊNCIAS — nativas do CRM (abertas na ficha da agência).
