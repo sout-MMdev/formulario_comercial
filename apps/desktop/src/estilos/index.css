@@ -14,8 +14,16 @@
    (src/abas/Visita/Visita.css) — cada .tsx importa o seu .css.
    ================================================================ */
 
-@import "./tema/index.css";
+/* CAMADAS DE CASCATA (@layer) — a ORDEM abaixo manda na precedência,
+   ACIMA da especificidade. Tudo aqui (tema, root, base, compartilhado)
+   entra numa camada. O CSS de COMPONENTE e de ABA fica FORA de camada
+   (cada .tsx importa o seu .css) e, por regra do CSS, uma regra sem
+   camada VENCE qualquer camada — então a ABA sempre ganha do
+   compartilhado, sem depender da ordem de import.
+   (Foi o que corrigiu "classe compartilhada vencendo a específica".) */
+@layer tema, root, base, compartilhado;
 
-@import "./root/index.css";
-@import "./base/index.css";
-@import "./compartilhado/index.css";
+@import "./tema/index.css" layer(tema);
+@import "./root/index.css" layer(root);
+@import "./base/index.css" layer(base);
+@import "./compartilhado/index.css" layer(compartilhado);
