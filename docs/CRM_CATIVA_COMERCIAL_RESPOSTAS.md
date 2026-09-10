@@ -74,20 +74,31 @@ Na prática, o prazo é determinado por uma coisa só: **quando o novo ambiente
 Supabase estiver disponível**, o sistema volta ao ar. Não há desenvolvimento
 pendente para produção além dos Relatórios.
 
-### 1.5. Relação com CRM_CATIVA e DISNEY_EXPERT
+### 1.5. Relação com outros sistemas
 
-🟡 *A definir* — não tenho visibilidade desses dois projetos.
+✅ **RESPONDIDO.** Este projeto é composto por **duas partes, e só elas**:
 
-✅ Do lado deste app: **hoje é independente**. Não lê nem escreve dados de
-nenhum outro sistema Cativa. A única fonte externa é a planilha do Infotera (§4.1).
+1. o **formulário de despesas e visitas** (versão desktop e versão mobile)
+2. o **CRM Comercial**
 
-🔴 **Mas há um histórico relevante aqui.** O projeto Supabase antigo (`Dados_Cativa`)
-**não era exclusivo deste app**: o schema `app` convivia no mesmo banco com um
-*data warehouse* de bloqueios/IATAs no schema `public`. Se a política nova é
-"dados analíticos vivem em outro projeto e são entregues por API", então essa
-convivência é exatamente o que **não** deve se repetir. Só que ela também sugere
-que alguém, em algum momento, quis os dois juntos — vale entender por quê antes de
-separar, para não quebrar um uso que eu desconheça.
+As duas compartilham um único back end — o formulário registra em campo, o CRM
+gerencia. Fora isso, **não há relação com nenhum outro sistema da Cativa**. Não há
+leitura nem escrita de dados de terceiros; a única fonte externa é a planilha do
+Infotera (§4.1).
+
+🔴 **Um ponto que precisa de atenção na criação do ambiente novo.** O projeto
+Supabase antigo (`Dados_Cativa`) **não era exclusivo deste app**: o schema `app`
+convivia no mesmo banco com um *data warehouse* de bloqueios/IATAs no schema
+`public`.
+
+Isso não era uma integração — era só coabitação de banco. Nenhuma tela deste
+sistema lê aquele warehouse; verifiquei o código do front e todas as consultas
+ficam no schema `app`.
+
+✅ A política nova ("dados analíticos vivem em outro projeto") **corrige** essa
+situação, e o próprio README do repositório da organização já registra isso:
+*"Dados analíticos vivem no engenharia-dados/espelho CATIVA."* A separação é
+segura — este app não precisa de dado analítico nenhum.
 
 ---
 
@@ -552,8 +563,32 @@ Não há necessidade de IP fixo nem restrição de rede.
 Ou seja: a base cadastral se remonta, mas **o trabalho de campo do dia não**. Um
 executivo que rodou a região e fechou o relatório não vai refazer as visitas.
 
-Minha leitura: perder 24h seria **transtorno sério, não catastrófico** — mas a
-decisão sobre recuperação ponto-a-ponto (que tem custo) é da Cativa.
+✅ **RESPONDIDO: backup diário basta. Não contratar recuperação ponto-a-ponto.**
+
+O que sustenta essa decisão é um detalhe do formulário que muda o cálculo: **ele
+guarda cada dia salvo no `localStorage` do próprio dispositivo** (chave
+`cativa_dias_salvos`), antes e depois de enviar. Ou seja, o trabalho de campo
+**não existe apenas no banco** — há uma segunda cópia no aparelho de cada
+executivo.
+
+Somando as duas coisas:
+
+| Dado | Segunda cópia |
+|---|---|
+| `agencias` | ✅ planilha do Infotera |
+| visitas, estresse, despesas, trajetos | ✅ `localStorage` do dispositivo |
+| ocorrências, histórico, anexos | 🔴 só no banco |
+
+Perder 24h seria transtorno, não desastre — boa parte se reenvia do aparelho.
+
+🔴 **Uma ressalva honesta:** `localStorage` **não é backup**. Some se o executivo
+limpar o navegador, trocar de aparelho ou usar aba anônima. É mitigação, não
+garantia.
+
+**Recomendação de baixo custo, no lugar do ponto-a-ponto:** um *dump* lógico
+periódico (`pg_dump`) gravado fora do Supabase. Custa quase nada, cobre o que o
+`localStorage` não cobre (ocorrências, histórico e os arquivos do Storage) e dá
+uma cópia que não depende do fornecedor.
 
 ### 7.2. Janela de manutenção
 
@@ -592,24 +627,36 @@ erros de RLS negando acesso indevidamente.
       ✅ De acordo, sem ressalva. Aliás, isso **corrige** a situação anterior, em
       que o app dividia banco com o warehouse de bloqueios/IATAs (§4.3).
 
-- [ ] **8.4. Migrações e código no repositório `Cativa-Operadora/CRM_CATIVA_COMERCIAL`.**
-      🔴 **Divergência que precisa ser resolvida.** O código hoje está em:
+- [~] **8.4. Migrações e código no repositório `Cativa-Operadora/CRM_CATIVA_COMERCIAL`.**
+      ✅ **De acordo com o destino; a mudança ainda não foi executada.**
+
+      **O repositório da organização já existe e está pronto para receber o
+      código** — verifiquei: `Cativa-Operadora/CRM_CATIVA_COMERCIAL`, privado,
+      criado em 04/09/2026, vazio (apenas um `README.md`), e o desenvolvedor já
+      tem permissão de **push** (não de admin).
+
+      **Onde o código está hoje:**
       - `github.com/sout-MMdev/crm_cativa_comercial` — o CRM
-      - `github.com/sout-MMdev/formulario_comercial` — formulário + monorepo
+      - `github.com/sout-MMdev/formulario_comercial` — formulário + backend + docs
 
-      Ou seja: **conta pessoal, não a organização**, e são **dois repositórios**,
-      não um. O levantamento supõe um repositório só, na org.
+      Ou seja: **conta pessoal, e dois repositórios**, enquanto o levantamento
+      supõe um só, na organização.
 
-      Duas decisões necessárias:
-      1. **Transferir** os repositórios para `Cativa-Operadora`? (é transferência,
-         não cópia — preserva histórico e issues)
-      2. O formulário vai junto? Ele **compartilha o mesmo backend**, então separar
-         os dois de organização criaria uma fronteira artificial.
+      **Encaminhamento acordado:** consolidar tudo em
+      `Cativa-Operadora/CRM_CATIVA_COMERCIAL`, trazendo o CRM para dentro do
+      monorepo como subpasta (via `git subtree`, preservando o histórico). Assim
+      as migrations passam a viver no repositório que esta regra aponta.
 
-      📝 Nota de nomenclatura: padronizei os nomes em **minúsculas**
+      🟡 **Ainda não executado**, por uma razão prática: os dois projetos
+      compartilham um back end, e a consolidação é independente da migração do
+      Supabase. Faz sentido concluir a migração primeiro e reorganizar os
+      repositórios depois, sem pressa e sem risco de misturar as duas mudanças.
+
+      📝 **Nota de nomenclatura:** os nomes foram padronizados em **minúsculas**
       (`crm_cativa_comercial`), porque o npm rejeita maiúscula em nome de pacote.
-      O levantamento usa `CRM_CATIVA_COMERCIAL`. Vale alinhar qual forma vale para
-      o repositório.
+      O repositório da organização usa `CRM_CATIVA_COMERCIAL`. Isso não conflita
+      — nome de repositório e nome de pacote npm são coisas diferentes — mas vale
+      registrar para não gerar confusão.
 
 - [x] **8.5. Dados pessoais seguem a LGPD.**
       ✅ De acordo. O desenho já favorece isso: coleta mínima (sem CPF, sem
@@ -687,12 +734,22 @@ houver argumento, ele é de **isolamento** (§8.3), não de carga. E esse argume
 bom: a convivência anterior com o warehouse no mesmo banco é exatamente o que a
 política nova quer evitar.
 
-**As três coisas que precisam de resposta da Cativa antes de seguir:**
+**As três perguntas que estavam em aberto foram respondidas:**
 
-1. **§8.4** — os repositórios vão para a organização? O formulário vai junto?
-2. **§1.5** — há relação prevista com CRM_CATIVA ou DISNEY_EXPERT?
-3. **§7.1** — perder 24h de trabalho de campo justifica o custo de recuperação
-   ponto-a-ponto?
+| Pergunta | Resposta |
+|---|---|
+| **§1.5** — relação com outros sistemas? | ✅ **Nenhuma.** O projeto são duas partes — o formulário (desktop e mobile) e o CRM Comercial — compartilhando um back end. Nada além disso |
+| **§7.1** — contratar recuperação ponto-a-ponto? | ✅ **Não.** Backup diário basta. O formulário mantém cópia local no dispositivo; sugerido somar um `pg_dump` periódico para fora |
+| **§8.4** — repositórios na organização? | ✅ **Sim, o destino está acordado** — consolidar em `Cativa-Operadora/CRM_CATIVA_COMERCIAL`. A execução fica para depois da migração do Supabase |
 
-**E uma que é urgente por prazo, não por decisão:** reconciliar o schema real com
-as migrations (§9.2, item 1) **enquanto o projeto antigo ainda existe**.
+**O que ainda depende da Cativa** (não trava a criação do ambiente):
+
+- §1.2 e §1.4 — número de usuários e prazo de produção
+- §6.4 e §7.3 — quantas pessoas mexem no banco, e quem responde por incidente
+- §2.6 — política de retenção, sobretudo dos arquivos
+
+**E uma coisa é urgente por prazo, não por decisão:** reconciliar o schema real
+com as migrations (§9.2, item 1) **enquanto o projeto antigo ainda existe**. Já
+sabemos de uma coluna fora do controle de versão (`app.agencias.id_infotera`) e
+não há como saber se há outras sem comparar. Depois que o projeto for desligado,
+essa informação se perde para sempre.
