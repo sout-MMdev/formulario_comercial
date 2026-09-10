@@ -15,7 +15,7 @@ O arquivo do Infotera vem com **`;`** como delimitador, campos entre
    ```
    Gera `agencias_novo.csv` (vírgula, limpo, com `id_infotera` + comissão).
 
-2. No **SQL Editor** do Supabase (projeto `cativa-crm`), na ordem:
+2. No **SQL Editor** do Supabase (projeto atual), na ordem:
    - `passo0_limpar_teste.sql` — limpa visitas/estresse/ocorrências/etc.
      (só rode se houver esses registros — senão o passo 1 falha na FK).
    - `passo1_preparar.sql` — apaga a base atual + cria a tabela `stg_import`.

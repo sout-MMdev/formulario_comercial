@@ -14,8 +14,8 @@ dist/
 .claude/
 settings.json
 
-# Projeto separado (CRM em React) — possui repositório próprio
-cativa-crm/
+# Projeto separado (CRM em React) - possui repositório próprio
+CRM_CATIVA_COMERCIAL/
 
 # Versão antiga do formulário (mantida apenas localmente)
 estrutura.html
