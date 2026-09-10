@@ -15,7 +15,7 @@ dist/
 settings.json
 
 # Projeto separado (CRM em React) - possui repositório próprio
-CRM_CATIVA_COMERCIAL/
+crm_cativa_comercial/
 
 # Versão antiga do formulário (mantida apenas localmente)
 estrutura.html

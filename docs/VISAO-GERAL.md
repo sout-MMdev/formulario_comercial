@@ -16,7 +16,7 @@ Dois front-ends que dividem **um único back end**:
 | Projeto | O que faz | Quem usa |
 |---|---|---|
 | **Formulário** (desktop + mobile) | Registro em campo: visita à agência, nível de estresse, despesas e trajetos (KM) | Executivos de conta, no dia a dia |
-| **CRM** (`CRM_CATIVA_COMERCIAL`) | Gestão: agências, visitas, despesas/reembolso, ocorrências, relatórios, administração | Time comercial + gestão |
+| **CRM** (`crm_cativa_comercial`) | Gestão: agências, visitas, despesas/reembolso, ocorrências, relatórios, administração | Time comercial + gestão |
 | **Back end** (Supabase) | Banco + Auth + RLS + Storage + Edge Functions | — (serve os dois fronts) |
 
 O formulário **alimenta** o CRM: o que o executivo registra em campo vira
@@ -27,7 +27,7 @@ dado no banco, e o CRM lê/gerencia.
 ## 2. Arquitetura
 
 ```
-   FORMULÁRIO (desktop/mobile)                 CRM (CRM_CATIVA_COMERCIAL)
+   FORMULÁRIO (desktop/mobile)                 CRM (crm_cativa_comercial)
    sem login, chave anon               login + RLS por perfil
         │                                        │
         │  Edge Functions públicas               │  supabase-js (chave anon)
@@ -84,10 +84,10 @@ formulario_comercial/            (repositório do monorepo + backend)
 ├── backend/                     aguardando o novo acesso Supabase (ver backend/README.md)
 ├── backend/importacao/          scripts de importação de agências (Infotera)
 ├── docs/                        esta documentação
-└── CRM_CATIVA_COMERCIAL/        o CRM (repositório PRÓPRIO, ignorado pela raiz)
+└── crm_cativa_comercial/        o CRM (repositório PRÓPRIO, ignorado pela raiz)
 ```
 
-O `CRM_CATIVA_COMERCIAL` é um **repositório git separado** (privado) dentro da pasta.
+O `crm_cativa_comercial` é um **repositório git separado** (privado) dentro da pasta.
 
 ---
 
@@ -124,7 +124,7 @@ dos 3 projetos OK.
 
 - **Formulário:** cada app é um projeto Vite. `npm install` na raiz (workspaces)
   e `npm run dev` dentro de `apps/desktop` ou `apps/mobile`.
-- **CRM:** `npm install` + `npm run dev` dentro de `CRM_CATIVA_COMERCIAL`. Precisa de
+- **CRM:** `npm install` + `npm run dev` dentro de `crm_cativa_comercial`. Precisa de
   `.env.local` com `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`.
 - **Back end:** 🔴 **em transição.** O Supabase antigo foi retirado em
   10/09/2026 e o novo acesso ainda não chegou. A arquitetura anterior está
