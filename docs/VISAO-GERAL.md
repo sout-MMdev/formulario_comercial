@@ -16,7 +16,7 @@ Dois front-ends que dividem **um único back end**:
 | Projeto | O que faz | Quem usa |
 |---|---|---|
 | **Formulário** (desktop + mobile) | Registro em campo: visita à agência, nível de estresse, despesas e trajetos (KM) | Executivos de conta, no dia a dia |
-| **CRM** (`cativa-crm`) | Gestão: agências, visitas, despesas/reembolso, ocorrências, relatórios, administração | Time comercial + gestão |
+| **CRM** (`CRM_CATIVA_COMERCIAL`) | Gestão: agências, visitas, despesas/reembolso, ocorrências, relatórios, administração | Time comercial + gestão |
 | **Back end** (Supabase) | Banco + Auth + RLS + Storage + Edge Functions | — (serve os dois fronts) |
 
 O formulário **alimenta** o CRM: o que o executivo registra em campo vira
@@ -27,7 +27,7 @@ dado no banco, e o CRM lê/gerencia.
 ## 2. Arquitetura
 
 ```
-   FORMULÁRIO (desktop/mobile)                 CRM (cativa-crm)
+   FORMULÁRIO (desktop/mobile)                 CRM (CRM_CATIVA_COMERCIAL)
    sem login, chave anon               login + RLS por perfil
         │                                        │
         │  Edge Functions públicas               │  supabase-js (chave anon)
@@ -77,17 +77,17 @@ dado no banco, e o CRM lê/gerencia.
 ## 5. Onde está cada coisa
 
 ```
-formulario-comercial/            (repositório do monorepo + backend)
+formulario_comercial/            (repositório do monorepo + backend)
 ├── apps/desktop/                formulário desktop
 ├── apps/mobile/                 formulário mobile
 ├── packages/nucleo/             regras + serviços compartilhados (desktop↔mobile)
-├── backend/supabase/            migrations + Edge Functions (ver backend/supabase/README.md)
+├── backend/                     aguardando o novo acesso Supabase (ver backend/README.md)
 ├── backend/importacao/          scripts de importação de agências (Infotera)
 ├── docs/                        esta documentação
-└── cativa-crm/                  o CRM (repositório PRÓPRIO, ignorado pela raiz)
+└── CRM_CATIVA_COMERCIAL/        o CRM (repositório PRÓPRIO, ignorado pela raiz)
 ```
 
-O `cativa-crm` é um **repositório git separado** (privado) dentro da pasta.
+O `CRM_CATIVA_COMERCIAL` é um **repositório git separado** (privado) dentro da pasta.
 
 ---
 
@@ -124,8 +124,8 @@ dos 3 projetos OK.
 
 - **Formulário:** cada app é um projeto Vite. `npm install` na raiz (workspaces)
   e `npm run dev` dentro de `apps/desktop` ou `apps/mobile`.
-- **CRM:** `npm install` + `npm run dev` dentro de `cativa-crm`. Precisa de
+- **CRM:** `npm install` + `npm run dev` dentro de `CRM_CATIVA_COMERCIAL`. Precisa de
   `.env.local` com `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`.
-- **Back end:** SQL das migrations rodado no SQL Editor do Supabase; Edge
-  Functions com `supabase functions deploy`. Detalhe em
-  `backend/supabase/README.md`.
+- **Back end:** 🔴 **em transição.** O Supabase antigo foi retirado em
+  10/09/2026 e o novo acesso ainda não chegou. A arquitetura anterior está
+  documentada em `to_delete/ARQUITETURA.md`.
