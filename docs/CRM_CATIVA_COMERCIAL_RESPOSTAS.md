@@ -292,14 +292,34 @@ O fluxo, já documentado em `backend/importacao/README.md`:
 🟡 Frequência *a definir* — pelo desenho (apaga tudo e recarrega), a impressão é
 que é esporádico, algumas vezes por ano.
 
-🔴 **Este é o ponto mais delicado da migração.** O passo 1 *apaga a base atual*, e
-o passo 0 limpa visitas/estresse/ocorrências para não violar chave estrangeira.
-Num ambiente novo isso é inofensivo; num ambiente com dados reais, é destrutivo.
-Vale revisar esse processo antes de rodá-lo em produção.
+🔴 **Enquanto for planilha, este é o ponto mais delicado da migração.** O passo 1
+*apaga a base atual*, e o passo 0 limpa visitas/estresse/ocorrências para não
+violar chave estrangeira. Num ambiente novo isso é inofensivo; num ambiente com
+dados reais, é destrutivo.
+
+✅ **Mas isso tem prazo de validade.** A Cativa confirmou que terá a **API do
+Infotera** (§4.1), substituindo a planilha. Com API, o modelo deixa de ser
+*apaga-tudo-e-recarrega* e passa a ser **sincronização incremental** — e o risco
+destrutivo simplesmente desaparece.
+
+🔴 **Em troca, aparece uma exigência nova, e ela é relevante para o ambiente que
+será criado:** numa sincronização incremental, alguma coluna precisa dizer se um
+registro vindo da API é novo ou já existe. Essa coluna é a
+`app.agencias.id_infotera` — **exatamente a que hoje está fora do controle de
+versão** (§6.2).
+
+Ou seja: o que era um detalhe do processo de importação passa a ser a **chave do
+sincronismo**. Ela precisa nascer no schema novo como migration versionada, com
+restrição de unicidade — não como um `alter table` colado à mão, que foi como
+surgiu da primeira vez.
 
 ### 3.4. Rotinas automáticas
 
-✅ **Nenhuma agendada.** Não há cron, nem job, nem sincronização periódica.
+✅ **Hoje, nenhuma agendada.** Não há cron, nem job, nem sincronização periódica.
+
+🔴 **Isso muda com a API do Infotera** (§4.1). Sincronizar a base de agências por
+API é, por definição, uma **rotina periódica** — a primeira do sistema. Ao
+dimensionar o ambiente, considere que este item deixará de ser "nenhuma".
 
 O que existe são **4 gatilhos de banco**, que rodam por evento, não por horário:
 
@@ -346,10 +366,16 @@ superfície de exposição a menos.
 | **Infotera / Infotravel** | planilha CSV exportada e importada à mão | ✅ funcionando |
 | **Resend** (e-mail transacional) | Edge Function `enviar-email` | ⚠️ funcionando em modo teste |
 
-🟡 *Talvez, sem definição:* o `.env.example` reserva uma variável
-`INFOTERA_API_KEY`, o que sugere que **integração por API com o Infotera já foi
-cogitada** — mas nunca foi implementada. Vale confirmar se isso está no roteiro,
-porque substituiria o processo manual de §3.3.
+✅ **CONFIRMADO — e isto muda o desenho.** A Cativa terá acesso à **API do
+Infotera**, que **substituirá a planilha**. Não é mais hipótese: é o caminho.
+
+O `.env.example` já reservava a variável `INFOTERA_API_KEY` — a intenção existia
+desde o início, só faltava o acesso.
+
+O que isso muda, em uma frase: a base de agências deixa de ser **substituída por
+planilha** e passa a ser **sincronizada por API**. Os efeitos estão em §3.3
+(o processo destrutivo deixa de ser necessário), §3.4 (passa a existir rotina
+automática) e §9.2 (um risco sai da lista, outro entra).
 
 Não há integração com WhatsApp, ERP, gateway de pagamento ou e-mail marketing.
 
@@ -696,9 +722,17 @@ Em ordem de risco:
    migrations e gerar uma migration de reconciliação. **Isso precisa ser feito
    antes de desligar o projeto antigo** — depois, a informação se perde.
 
-2. 🔴 **Os scripts de importação são destrutivos** (§3.3). `passo1_preparar.sql`
-   apaga a base de agências, e `passo0` limpa visitas/ocorrências. Precisam de
-   revisão antes de rodar em produção com dados reais.
+2. 🟡 **Os scripts de importação são destrutivos** (§3.3) — mas com prazo.
+   `passo1_preparar.sql` apaga a base de agências e `passo0` limpa
+   visitas/ocorrências. Enquanto a fonte for planilha, precisam de revisão antes
+   de rodar em produção com dados reais. **A API do Infotera (§4.1) elimina esse
+   risco**, ao trocar substituição total por sincronização incremental.
+
+   🔴 **O risco que entra no lugar:** a sincronização incremental depende de uma
+   chave estável para decidir novo-versus-existente, e essa chave é a
+   `app.agencias.id_infotera` — a mesma coluna do item 1, hoje fora do controle
+   de versão. Os dois problemas são o mesmo problema, e se resolvem juntos:
+   versionar essa coluna corretamente no ambiente novo.
 
 3. 🔴 **O domínio do Resend não está verificado** (§5.5). Enquanto não estiver, os
    e-mails do sistema não chegam a ninguém além do dono da conta.
@@ -725,9 +759,10 @@ estão respondidas com fato, não estimativa. O resumo:
 | **Público** | Interno da Cativa. Sem acesso externo |
 | **Dado pessoal** | Mínimo — nome e e-mail de colaboradores, nomes de atendentes. Sem CPF, telefone ou pagamento |
 | **Arquivos** | Dois buckets privados, poucos GB/ano |
-| **Carga** | Baixa. Sem Realtime, sem jobs, sem webhooks |
+| **Carga** | Baixa. Sem Realtime e sem webhooks. Sem rotina agendada hoje — passará a ter uma, quando a API do Infotera entrar (§3.4) |
 | **Auth** | Convite por admin, sem cadastro público. 4 perfis + permissões granulares |
 | **RLS** | Já escrita e testada para todas as 16 tabelas |
+| **Integrações** | Resend (e-mail) e Infotera. A base de agências migra de planilha para **API** (§4.1) |
 
 **Não vejo argumento de volume para um projeto dedicado** — o app é leve. Se
 houver argumento, ele é de **isolamento** (§8.3), não de carga. E esse argumento é
