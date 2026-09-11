@@ -58,8 +58,20 @@ volume de **agências** (§2.2), não de usuários.
 Uma nuance importante para o dimensionamento: **o formulário não tem login**. Ele
 é usado por executivos internos, mas tecnicamente é uma página pública. A proteção
 não é autenticação — é que ele só alcança o banco por **três Edge Functions
-públicas** que devolvem exclusivamente *nomes* de agências e executivos. Nenhum
-CNPJ, endereço ou dado de carteira passa por ali.
+públicas**, de alcance limitado: nenhum CNPJ, endereço ou dado de carteira passa
+por ali.
+
+> 🔴 **Correção (11/09/2026).** Uma versão anterior deste parágrafo dizia que as
+> funções públicas devolvem "exclusivamente nomes". **Isso estava errado**, e
+> contradizia o próprio §4.4 deste documento: a `listar-executivos` devolve
+> **nome e e-mail** (`.select("nome, email")`). E-mail corporativo é dado pessoal
+> sob a LGPD. A correção e o encaminhamento estão em
+> `CRM_CATIVA_COMERCIAL_RESPOSTA_ANALISE.md`, §B2.
+>
+> 🔴 No mesmo escopo, um risco que este documento **não levantou** e deveria ter
+> levantado: a `receber-formulario` é um endpoint **público de escrita** que roda
+> com `service_role` — e não apenas grava linhas, ela **cria executivos e
+> agências** a partir de entrada não autenticada. Ver §B1 do mesmo documento.
 
 As agências parceiras **não são usuárias** — são o objeto do cadastro.
 
