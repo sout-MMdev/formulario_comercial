@@ -46,6 +46,9 @@ export function CampoAgencia({
         aoAlterar(sugestao.rotulo);
         setTermo("");
       }}
+      // Escolher a agência encerra a busca: volta direto ao passo
+      // com a agência já preenchida no campo.
+      fecharAoEscolher
       aoAceitarLivre={(texto) => {
         aoAlterar(texto);
         setTermo("");
