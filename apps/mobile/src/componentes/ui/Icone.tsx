@@ -32,11 +32,14 @@ import {
   ChevronUp,
   Envelope,
   ExclamationCircle,
+  Eye,
+  EyeSlash,
   FileEarmarkText,
   Floppy,
   GeoAlt,
   GraphUp,
   InfoCircle,
+  Key,
   List,
   Paperclip,
   Pencil,
@@ -63,6 +66,8 @@ const BOOTSTRAP: Record<NomeIcone, IconeBootstrap> = {
   checar: Check,
   lixeira: Trash,
   editar: Pencil,
+  olho: Eye,
+  olho_fechado: EyeSlash,
 
   // Objetos
   calendario: Calendar3,
@@ -79,6 +84,7 @@ const BOOTSTRAP: Record<NomeIcone, IconeBootstrap> = {
   grafico: GraphUp,
   camera: Camera,
   lista: List,
+  chave: Key,
 
   // Sinalização
   informacao: InfoCircle,

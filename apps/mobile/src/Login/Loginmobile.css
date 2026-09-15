@@ -1,0 +1,255 @@
+/* ================================================================
+   TELA DE LOGIN (mobile)
+   Arte dos 25 anos desfocada no fundo, camada azul por cima e um
+   cartão de vidro com a marca e o formulário. Cores e medidas vêm
+   só das variáveis do tema (Login/LOGIN.md §3) — nenhum HEX aqui.
+
+   Como todo CSS de tela, este arquivo fica FORA das camadas (@layer)
+   do app: vence as classes compartilhadas (.btn-icone, h1,
+   :focus-visible...) sem precisar de seletor mais forte.
+   ================================================================ */
+
+.login {
+  position: relative;
+  /* Contexto próprio: as camadas de fundo (z-index -1) ficam atrás
+     do cartão, mas na frente da cor de reserva. */
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--esp-6);
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  /* Começa do topo e rola: quando o teclado sobe, o botão continua
+     alcançável. Nada de centralizar com posição fixa. */
+  padding-top: calc(var(--esp-10) + var(--seguro-topo));
+  padding-bottom: calc(var(--esp-6) + var(--seguro-baixo));
+  padding-left: max(var(--esp-5), var(--seguro-esq));
+  padding-right: max(var(--esp-5), var(--seguro-dir));
+
+  color: var(--cor-texto-invertido);
+  background-color: var(--cor-marca-900); /* reserva, se a imagem não carregar */
+}
+
+/* ── Fundo ───────────────────────────────────────────────────── */
+
+.login__fundo,
+.login__veu {
+  position: fixed;
+  z-index: -1;
+}
+
+/* A arte passa das bordas da tela (inset negativo): o desfoque
+   esmaece as beiradas, e assim a parte esmaecida fica fora da vista. */
+.login__fundo {
+  inset: -5rem;
+  background: url("/assets/img/fundo-login.jpg") center / cover no-repeat;
+  filter: blur(24px);
+}
+
+.login__veu {
+  inset: 0;
+  background-color: var(--cor-login-veu);
+}
+
+/* ── Cartão de vidro ─────────────────────────────────────────── */
+
+.login__cartao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-6);
+  width: 100%;
+  max-width: var(--largura-maxima);
+  padding: var(--esp-8) var(--esp-6) var(--esp-6);
+  background-color: var(--cor-vidro);
+  border: 1px solid var(--cor-vidro-borda);
+  border-radius: var(--raio-xl);
+  box-shadow: var(--sombra-lg);
+
+  /* O prefixo -webkit- é o que liga o vidro nos iPhones mais antigos */
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+
+  animation: surgir 0.4s both;
+}
+
+.login__cabecalho {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--esp-3);
+  text-align: center;
+}
+
+.login__logo {
+  width: 110px;
+  height: auto;
+}
+
+/* O tema dá ao h1 a fonte de título e o azul; aqui é manuscrito e branco */
+.login__titulo {
+  font-family: var(--fonte-manuscrita);
+  font-size: var(--texto-3xl);
+  font-weight: var(--peso-normal); /* a Kaushan Script só tem um peso */
+  line-height: var(--linha-apertada);
+  letter-spacing: normal;
+  color: var(--cor-texto-invertido);
+}
+
+.login__linha {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: var(--cor-vidro-linha);
+}
+
+.login__app {
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+  letter-spacing: var(--letra-ampla);
+  text-transform: uppercase;
+  color: var(--cor-vidro-texto-suave);
+}
+
+/* ── Formulário ──────────────────────────────────────────────── */
+
+.login__formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+}
+
+.login__campo {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.login__icone {
+  position: absolute;
+  left: 0;
+  color: var(--cor-vidro-texto-suave);
+  pointer-events: none;
+}
+
+/* Só a linha de baixo, como na referência. Altura de 56px e letra de
+   16px continuam: com letra menor o iPhone dá zoom ao tocar no campo. */
+.login__entrada {
+  width: 100%;
+  min-height: var(--altura-campo);
+  padding: 0 var(--esp-2) 0 var(--esp-8); /* 32px = ícone de 20px + folga */
+  font-size: var(--texto-campo);
+  color: var(--cor-texto-invertido);
+  caret-color: var(--cor-destaque-500);
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid var(--cor-vidro-linha);
+  border-radius: 0;
+  appearance: none;
+  transition: border-color var(--transicao-rapida);
+}
+
+/* Foco: a linha fica amarela e engrossa. Com box-sizing: border-box a
+   borda de 2px não empurra o layout (a altura continua 56px). Não
+   trocar por sombra interna: numa largura com fração de pixel ela
+   deixa um fiapo amarelo na lateral direita do campo. */
+.login__entrada:focus {
+  outline: none;
+  border-bottom-width: 2px;
+  border-bottom-color: var(--cor-destaque-500);
+}
+
+.login__entrada::placeholder {
+  color: var(--cor-vidro-texto-suave);
+}
+
+/* Espaço para o botão de olho não cobrir o texto da senha */
+.login__entrada--senha {
+  padding-right: calc(var(--toque-minimo) + var(--esp-1));
+}
+
+/* O Edge desenha um olho próprio no campo de senha — o nosso basta */
+.login__entrada::-ms-reveal {
+  display: none;
+}
+
+/* Preenchimento automático: o Chrome pinta o campo de claro e o texto
+   branco some. Mantém o texto branco e adia a troca de fundo. */
+.login__entrada:-webkit-autofill,
+.login__entrada:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--cor-texto-invertido);
+  caret-color: var(--cor-destaque-500);
+  transition: background-color 600000s 0s;
+}
+
+.login__olho {
+  position: absolute;
+  right: 0;
+  color: var(--cor-vidro-texto-suave);
+}
+
+.login__olho:active:not(:disabled) {
+  color: var(--cor-texto-invertido);
+  background-color: var(--cor-vidro);
+}
+
+/* A linha inteira é tocável, não só a caixinha */
+.login__lembrar {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  min-height: var(--toque-minimo);
+  font-size: var(--texto-sm);
+  color: var(--cor-vidro-texto-suave);
+  cursor: pointer;
+}
+
+.login__lembrar input {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  accent-color: var(--cor-destaque-500);
+}
+
+/* Caixa clara: texto vermelho direto sobre o azul fica ilegível */
+.login__erro {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  padding: var(--esp-3);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-medio);
+  line-height: var(--linha-normal);
+  color: var(--cor-erro-600);
+  background-color: var(--cor-erro-100);
+  border-radius: var(--raio-sm);
+  animation: surgir 0.2s both;
+}
+
+.login__erro svg {
+  flex-shrink: 0;
+}
+
+.login__entrar {
+  margin-top: var(--esp-2);
+}
+
+/* O anel de foco do tema é azul e some no fundo azul */
+.login :focus-visible {
+  outline-color: var(--cor-destaque-500);
+}
+
+/* ── Rodapé ──────────────────────────────────────────────────── */
+
+.login__rodape {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--esp-1);
+  margin-top: auto;
+  font-size: var(--texto-xs);
+  line-height: var(--linha-normal);
+  text-align: center;
+  color: var(--cor-vidro-texto-suave);
+}

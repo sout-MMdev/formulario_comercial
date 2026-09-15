@@ -86,4 +86,13 @@
   --cor-nivel-alto-fundo: var(--cor-atencao-100);
   --cor-nivel-critico: var(--cor-erro-500);
   --cor-nivel-critico-fundo: var(--cor-erro-100);
+
+  /* ── 7. Login — vidro sobre o fundo desfocado ──────────────────
+     Branco translúcido por cima da arte dos 25 anos. Valores de
+     partida, acertados no olho com o fundo real.                  */
+  --cor-vidro: rgba(255, 255, 255, 0.12);
+  --cor-vidro-borda: rgba(255, 255, 255, 0.28);
+  --cor-vidro-linha: rgba(255, 255, 255, 0.45);
+  --cor-vidro-texto-suave: rgba(255, 255, 255, 0.75);
+  --cor-login-veu: rgba(0, 52, 98, 0.45); /* --cor-marca-900 translúcido */
 }

@@ -23,6 +23,8 @@ export const nomesIcone = [
   "checar",
   "lixeira",
   "editar",
+  "olho",
+  "olho_fechado",
 
   // Objetos
   "calendario",
@@ -39,6 +41,7 @@ export const nomesIcone = [
   "grafico",
   "camera",
   "lista",
+  "chave",
 
   // Sinalização
   "informacao",
