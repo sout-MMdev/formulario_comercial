@@ -24,7 +24,7 @@ export default defineConfig({
       ],
       workbox: {
         // Casca do app: cacheada para abrir rápido e funcionar offline
-        globPatterns: ["**/*.{js,css,html,svg,png,ico,woff2}"],
+        globPatterns: ["**/*.{js,css,html,svg,png,jpg,ico,woff2}"],
         navigateFallback: "/index.html",
         // Navegações para a futura API não caem no index.html
         navigateFallbackDenylist: [/^\/api/],

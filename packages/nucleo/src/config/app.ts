@@ -13,6 +13,9 @@ export const DESENVOLVEDOR = "Maxuel Nogueira";
 /** Caminho do logotipo dentro de public/. */
 export const CAMINHO_LOGO = "/assets/img/Logo Cativa_RGB_Logo Azul_Horizontal.png";
 
+/** Logotipo branco, para fundo escuro (tela de login). */
+export const CAMINHO_LOGO_BRANCA = "/assets/img/logo-cativa-branca.png";
+
 // ── Seletor de data ──────────────────────────────────────────────
 
 export const NOMES_MESES: string[] = [
