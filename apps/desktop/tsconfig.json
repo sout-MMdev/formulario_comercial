@@ -22,7 +22,9 @@
     "paths": {
       "@/*": ["./src/*"],
       "@cativa/nucleo": ["../../packages/nucleo/src/index.ts"],
-      "@cativa/nucleo/*": ["../../packages/nucleo/src/*"]
+      "@cativa/nucleo/*": ["../../packages/nucleo/src/*"],
+      "@cativa/tema": ["../../packages/tema/src/index.ts"],
+      "@cativa/tema/*": ["../../packages/tema/src/*"]
     },
 
     "types": ["node", "vite/client"],

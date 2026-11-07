@@ -1,12 +1,6 @@
 /* ================================================================
-   ROOT — CORES
-   Fonte única de verdade da paleta. Nenhum arquivo de componente
-   ou de aba deve escrever um HEX direto: sempre var(--cor-...).
-
-   A ordem abaixo é a ordem oficial da marca Cativa:
-     1. Azul escuro   2. Azul médio   3. Azul claro
-     4. Amarelo       5. Amarelo claro
-   Depois vêm os neutros e, por último, as cores de feedback.
+   TEMA — CORES (@cativa/tema)
+   Fonte única de verdade da paleta oficial Cativa.
    ================================================================ */
 
 :root {
@@ -50,9 +44,7 @@
   --cor-erro-500: #e74c3c;
   --cor-erro-100: #fdeceb;
 
-  /* ── 5. Papéis semânticos ──────────────────────────────────────
-     Os componentes consomem ESTES nomes, não os da paleta acima.
-     Trocar o tema = reapontar estas linhas.                       */
+  /* ── 5. Papéis semânticos ────────────────────────────────────── */
   --cor-fundo: var(--cor-neutro-25);
   --cor-superficie: var(--cor-branco);
   --cor-superficie-suave: var(--cor-neutro-50);
@@ -76,8 +68,7 @@
   --cor-cta-hover: var(--cor-destaque-600);
   --cor-cta-texto: var(--cor-marca-900);
 
-  /* ── 6. Níveis do termômetro de estresse ───────────────────────
-     Escala fixa: quanto maior o risco de churn, mais quente.      */
+  /* ── 6. Níveis do termômetro de estresse ─────────────────────── */
   --cor-nivel-baixo: var(--cor-sucesso-500);
   --cor-nivel-baixo-fundo: var(--cor-sucesso-100);
   --cor-nivel-medio: var(--cor-destaque-500);
@@ -87,12 +78,10 @@
   --cor-nivel-critico: var(--cor-erro-500);
   --cor-nivel-critico-fundo: var(--cor-erro-100);
 
-  /* ── 7. Login — vidro sobre o fundo desfocado ──────────────────
-     Branco translúcido por cima da arte dos 25 anos. Valores de
-     partida, acertados no olho com o fundo real.                  */
+  /* ── 7. Login e elementos translúcidos ───────────────────────── */
   --cor-vidro: rgba(255, 255, 255, 0.12);
   --cor-vidro-borda: rgba(255, 255, 255, 0.28);
   --cor-vidro-linha: rgba(255, 255, 255, 0.45);
   --cor-vidro-texto-suave: rgba(255, 255, 255, 0.75);
-  --cor-login-veu: rgba(0, 52, 98, 0.45); /* --cor-marca-900 translúcido */
+  --cor-login-veu: rgba(0, 52, 98, 0.45);
 }

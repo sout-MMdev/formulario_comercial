@@ -1,131 +1,82 @@
-# Visão Geral — Sistema Cativa Operadora
+# Visão Geral do Sistema — Gestão Comercial
 
-Documentação de alto nível dos três projetos e de como eles se conversam.
-Para o detalhe de cada parte, veja [FORMULARIO.md](FORMULARIO.md) e, no
-repositório do CRM, `docs/CRM.md`.
-
-> ⚠️ Este documento cita o CRM (privado/Cativa). Se o repositório do
-> formulário for aberto como portfólio, remova/mova esta pasta antes.
+Documentação de arquitetura de alto nível do ecossistema do **Formulário Comercial**.
+Para detalhes específicos da aplicação e de suas regras, consulte [FORMULARIO.md](FORMULARIO.md).
 
 ---
 
 ## 1. O que é
 
-Dois front-ends que dividem **um único back end**:
+Uma solução corporativa composta por **dois front-ends independentes** (Desktop e Mobile PWA) que compartilham um **núcleo comum de regras de negócio em TypeScript** (`@cativa/nucleo`) e integram-se com o backend Supabase:
 
 | Projeto | O que faz | Quem usa |
 |---|---|---|
-| **Formulário** (desktop + mobile) | Registro em campo: visita à agência, nível de estresse, despesas e trajetos (KM) | Executivos de conta, no dia a dia |
-| **CRM** (`crm_cativa_comercial`) | Gestão: agências, visitas, despesas/reembolso, ocorrências, relatórios, administração | Time comercial + gestão |
-| **Back end** (Supabase) | Banco + Auth + RLS + Storage + Edge Functions | — (serve os dois fronts) |
-
-O formulário **alimenta** o CRM: o que o executivo registra em campo vira
-dado no banco, e o CRM lê/gerencia.
+| **Formulário Desktop** (`apps/desktop`) | Registro em escritório: visitas a agências, termômetro de estresse, despesas e KM | Executivos de conta e assistentes |
+| **Formulário Mobile PWA** (`apps/mobile`) | Registro em campo via smartphone com interface tátil e offline-first | Executivos de conta em trânsito |
+| **Núcleo Compartilhado** (`packages/nucleo`) | Motor central: regras de cálculo, validações, estado e integrações | Consumido por ambos os frontends |
+| **Backend** (Supabase) | Banco PostgreSQL + RLS + Storage de comprovantes + Edge Functions | Serve com segurança as aplicações |
 
 ---
 
-## 2. Arquitetura
+## 2. Arquitetura de Comunicação e Segurança
 
 ```
-   FORMULÁRIO (desktop/mobile)                 CRM (crm_cativa_comercial)
-   sem login, chave anon               login + RLS por perfil
-        │                                        │
-        │  Edge Functions públicas               │  supabase-js (chave anon)
-        │  (listar-agencias,                      │  + Edge Functions com login
-        │   listar-executivos,                    │  (enviar-email, admin-usuarios)
-        │   receber-formulario)                   │
-        ▼                                        ▼
+   FORMULÁRIO (Desktop / Mobile PWA)
+   Autônomo com fallback offline e chave pública (anon)
+         │
+         │  Edge Functions públicas com rate-limiting
+         │  (listar-agencias, listar-executivos, receber-formulario)
+         ▼
    ┌──────────────────────────────────────────────────────┐
-   │                   SUPABASE (schema app)               │
-   │  Postgres + RLS · Auth · Storage · Edge Functions     │
+   │                   SUPABASE                            │
+   │  Postgres (Schema app com RLS) · Storage · Deno      │
    └──────────────────────────────────────────────────────┘
 ```
 
-- O **formulário** não tem login. Ele fala com o banco só por **Edge Functions
-  públicas** (a chave de serviço fica no servidor). Assim o repositório pode ir
-  público sem vazar dado real.
-- O **CRM** tem login. Usa a **chave anon** no navegador (pública por design) e
-  o **RLS** decide o que cada perfil vê. Ações privilegiadas (criar usuário,
-  enviar e-mail) passam por **Edge Functions** que exigem login.
+- **Privacidade e LGPD:** O formulário público no cliente nunca baixa a tabela inteira de agências nem expõe dados sensíveis como faturamento ou comissões. As Edge Functions devolvem apenas o necessário para autocompletion.
+- **Segurança de Dados:** O RLS (Row Level Security) garante que cada usuário opere estritamente dentro da sua carteira autorizada.
+- **Fallback para Demonstração:** Sem variáveis de ambiente configuradas, os serviços chaveiam automaticamente para um repositório local (`localStorage`) e dados mockados, permitindo testes sem dependências externas.
 
 ---
 
-## 3. Stack
+## 3. Stack Tecnológica
 
-- **Front:** React 19 + TypeScript + Vite. Roteamento (CRM) com React Router.
-- **Back:** Supabase — Postgres (schema `app`), Auth, RLS, Storage, Edge
-  Functions em **Deno** (não Node).
-- **E-mail:** Resend (via Edge Function).
-- **Deploy:** Vercel — formulário = 2 projetos (desktop e mobile); CRM = 1 projeto.
-- **i18n (CRM):** pt/en/es, um arquivo de textos por tela.
-
----
-
-## 4. Segurança (regra de ouro)
-
-- Tudo que vai pro navegador é **público**. Segredo (service_role, chave do
-  Resend) mora **só em Edge Functions** (`supabase secrets`).
-- A **chave anon** é pública de propósito — quem protege o dado é o **RLS** no
-  servidor, não o front.
-- O formulário só alcança **nomes** de agências/executivos (via Edge Function),
-  nunca a tabela inteira. Sem dado real no bundle → **LGPD** ok.
-- Cada Edge Function do CRM confere permissão por dentro (ex.: `admin-usuarios`
-  exige Administrador/Gestor).
+- **Front-end:** React + TypeScript + Vite.
+- **PWA:** Vite Plugin PWA com Service Workers (Workbox) e suporte a instalação offline.
+- **Arquitetura:** Monorepo com npm workspaces e Domain-Driven Design (DDD).
+- **Estilos:** CSS modular moderno com `@layer` (tema, root, base, compartilhado).
+- **Back-end:** Supabase — PostgreSQL, RLS, Storage e Edge Functions em Deno.
 
 ---
 
-## 5. Onde está cada coisa
+## 4. Estrutura do Repositório
 
 ```
-formulario_comercial/            (repositório do monorepo + backend)
-├── apps/desktop/                formulário desktop
-├── apps/mobile/                 formulário mobile
-├── packages/nucleo/             regras + serviços compartilhados (desktop↔mobile)
-├── backend/                     aguardando o novo acesso Supabase (ver backend/README.md)
-├── backend/importacao/          scripts de importação de agências (Infotera)
-├── docs/                        esta documentação
-└── crm_cativa_comercial/        o CRM (repositório PRÓPRIO, ignorado pela raiz)
+formulario_comercial/
+├── apps/
+│   ├── desktop/                 # Interface Desktop (Abas horizontais e resumo ao vivo)
+│   └── mobile/                  # Interface Mobile PWA (Passo a passo otimizado para toque)
+├── packages/
+│   ├── nucleo/                  # Lógica pura de domínio, regras de reembolso e testes
+│   └── tema/                    # Tokens de design e identidade visual compartilhados
+├── backend/                     # Documentação de integração, scripts e variáveis de ambiente
+└── docs/                        # Documentação técnica e funcional
 ```
 
-O `crm_cativa_comercial` é um **repositório git separado** (privado) dentro da pasta.
-
 ---
 
-## 6. Estado atual
+## 5. Como Executar
 
-| Área | Situação |
-|---|---|
-| Formulário (desktop + mobile) | ✅ Ligado ao back end (fallback fictício por LGPD) |
-| CRM — Agências, Ficha, Despesas, Visitas, Meu Painel | ✅ Real (Supabase + RLS) |
-| CRM — Admin (Usuários, Perfis, Liberações) | ✅ Real (inclui criar login/senha via Edge Function) |
-| CRM — Notificações, Ocorrências, Histórico, Estresse | ✅ Real |
-| CRM — Foto do usuário (própria + admin) + 1º acesso | ✅ Real |
-| **CRM — Relatórios** (aba + "Meus Relatórios") | 🔴 **Ainda mock** — ver pendências |
+```bash
+# 1. Instalar as dependências do monorepo
+npm install
 
-**Saúde do código (03/09/2026):** testes do núcleo 49/49, lint limpo, builds
-dos 3 projetos OK.
+# 2. Rodar a suíte de testes unitários do núcleo
+npm test
 
----
+# 3. Executar o app Desktop (porta 5501)
+npm run dev:desktop
 
-## 7. Pendências conhecidas
-
-1. **Relatórios do CRM** — único mock restante. Os blocos leem de dados
-   fictícios mesmo com o back end ligado; `gerar/baixar/enviar` são simulados.
-   De-mock envolve: consultas de agregação por executivo/período, geração de
-   PDF de verdade e envio por e-mail.
-2. **Domínio no Resend** — verificar o DNS do domínio pra e-mails reais saírem
-   pros destinatários (hoje modo teste entrega só pro dono da conta Resend).
-3. **Formulário público** — se abrir como portfólio: limpar histórico do git e
-   remover qualquer referência à marca/d'ados Cativa (inclui esta pasta `docs/`).
-
----
-
-## 8. Como rodar (resumo)
-
-- **Formulário:** cada app é um projeto Vite. `npm install` na raiz (workspaces)
-  e `npm run dev` dentro de `apps/desktop` ou `apps/mobile`.
-- **CRM:** `npm install` + `npm run dev` dentro de `crm_cativa_comercial`. Precisa de
-  `.env.local` com `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`.
-- **Back end:** 🔴 **em transição.** O Supabase antigo foi retirado em
-  10/09/2026 e o novo acesso ainda não chegou. A arquitetura anterior está
-  documentada em `to_delete/ARQUITETURA.md`.
+# 4. Executar o app Mobile PWA (porta 5502)
+npm run dev:mobile
+```

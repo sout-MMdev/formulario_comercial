@@ -12,16 +12,16 @@
   <br>
 
   <p align="center">
-    <strong>Sistema comercial corporativo desenvolvido com foco em alta produtividade, unindo programação moderna em TypeScript e engenharia assistida por Inteligência Artificial.</strong>
+    <strong>Solução corporativa desenvolvida para substituir processos manuais em planilhas por uma plataforma ágil, responsiva e com cálculo financeiro automatizado em TypeScript puro.</strong>
   </p>
 
   <p align="center">
-    <a href="#-visão-geral">Visão Geral</a> •
+    <a href="#-o-desafio-de-negócio-do-excel-ao-app">O Desafio de Negócio</a> •
+    <a href="#-guia-rápido-para-avaliadores--recrutadores">Guia para Avaliadores</a> •
     <a href="#-arquitetura-monorepo">Arquitetura</a> •
     <a href="#-desktop--mobile-pwa">Desktop × Mobile</a> •
     <a href="#-regras-de-negócio--testes">Regras & Testes</a> •
     <a href="#-como-executar">Como Executar</a> •
-    <a href="#-desenvolvimento-com-ia">Desenvolvimento com IA</a> •
     <a href="#-autor">Autor</a>
   </p>
 
@@ -29,64 +29,87 @@
 
 ---
 
-## 📌 Visão Geral
+## 🎯 O Desafio de Negócio: Do Excel ao App
 
-O **Formulário Comercial** é uma solução completa para equipes comerciais externas realizarem o registro ágil de visitas técnicas, ocorrências de relacionamento com agências parceiras, trajetos percorridos e prestação de contas de despesas com cálculo automático de reembolso.
+Historicamente, as equipes comerciais externas e a gestão utilizavam **planilhas manuais de Excel** para registrar os atendimentos às agências parceiras, controlar os quilômetros rodados e prestar contas dos gastos de viagem (combustível, refeições e hospedagens).
 
-A solução foi projetada sob uma arquitetura de **dois aplicativos independentes** que compartilham exatamente o mesmo motor de regras de negócio:
+### Os Problemas da Operação Manual:
+* ❌ **Fórmulas Quebradas & Erros de Cálculo:** A tarifa por quilômetro rodado variava conforme o executivo, gerando frequentes divergências manuais nos fechamentos de reembolso.
+* ❌ **Comprovantes Perdidos:** Recibos fiscais se perdiam no trânsito antes de chegar ao departamento financeiro.
+* ❌ **Falta de Dados Estruturados:** A gestão não conseguia monitorar em tempo real o nível de estresse ou insatisfação das agências visitadas.
+* ❌ **Processo Lento e Descentralizado:** Preenchimentos demorados no fim do expediente geravam atrasos no pagamento de reembolsos.
 
-| Aplicação | Público-Alvo | Dispositivo / Formato | Porta Padrão |
-| :--- | :--- | :--- | :--- |
-| **Desktop** (`@cativa/desktop`) | Preenchimento rápido em escritório | Computador / Telas largas (Navegação por Abas) | `5501` |
-| **Mobile PWA** (`@cativa/mobile`) | Lançamento em campo pelos executivos | Celular / PWA instalável (Fluxo passo a passo) | `5502` |
+### A Solução Implementada:
+Desenvolvi este sistema com **dois aplicativos desacoplados** (Desktop e Mobile PWA) integrados a um **motor de domínio compartilhado em TypeScript puro**. O sistema automatiza regras financeiras rigorosas, calcula instantaneamente os valores a reembolsar, exige anexos apenas para compras no cartão pessoal, salva rascunhos offline no dispositivo e centraliza a ocorrência de relacionamento das agências.
 
-Ambas as aplicações compartilham o pacote agnóstico **`@cativa/nucleo`**, garantindo que as regras de reembolso, validações e fluxos de dados sejam idênticos em qualquer dispositivo.
+---
+
+## 🚀 Guia Rápido para Avaliadores & Recrutadores
+
+Você pode clonar e rodar o projeto **imediatamente na sua máquina sem precisar criar banco de dados ou configurar chaves**.
+
+O sistema conta com um **Modo Demonstração (Mock Seguro)** nativo: na ausência de variáveis de ambiente de produção, ele aciona automaticamente fallbacks fictícios conformes com a LGPD:
+
+1. **Instale e rode em 2 comandos:**
+   ```bash
+   npm install
+   npm run dev:desktop   # Abre em http://localhost:5501
+   ```
+2. **Cenários prontos para testar no Desktop:**
+   * **Tarifas Dinâmicas de KM:** Selecione diferentes executivos (ex: *Diego Martins* possui tarifa diferenciada de R$ 1,43/km vs. *Paulo Souza* com R$ 1,30/km padrão). Veja o reembolso atualizar no resumo ao vivo.
+   * **Classificação de Despesas:** Lance um gasto no **Cartão Pessoal** (o sistema exige upload de comprovante e soma no reembolso) vs. **Cartão Clara/Corporativo** com combustível (o sistema desconta automaticamente do reembolso final).
+   * **Termômetro de Relacionamento:** Marque o estresse da agência como *Alto* ou *Crítico* e veja a validação exigir a descrição do problema e os setores acionados.
+   * **Persistência Local:** Salve o dia e feche o navegador. Ao reabrir, os dados continuam disponíveis no histórico de rascunhos (`localStorage`).
+3. **Cenários para testar no Mobile PWA (`npm run dev:mobile` - porta 5502):**
+   * Interface mobile first com alvos de toque de 56px e teclado numérico adaptado.
+   * **Tela de Login:** Acesse `http://localhost:5502/?login` para visualizar a experiência de login mobile moderno com efeito de vidro (*glassmorphism*).
 
 ---
 
 ## 🏛️ Arquitetura Monorepo
 
-O projeto adota uma arquitetura modular baseada em **npm workspaces**, desacoplando a regra de negócio da camada de apresentação:
+O projeto adota uma arquitetura modular baseada em **npm workspaces**, desacoplando totalmente a regra de negócio da camada de apresentação:
 
 ```
 formulario/
 ├── packages/
-│   ├── nucleo/          ← O MOTOR CENTRAL (Lógica pura em TypeScript)
+│   ├── nucleo/          ← MOTOR DE DOMÍNIO (TypeScript Puro - DDD)
 │   │   └── src/
 │   │       ├── tipos/       Definições de domínio e tipagem estrita
-│   │       ├── config/      Executivos, tarifas, produtos, setores (com dados fictícios de demonstração)
+│   │       ├── config/      Executivos, tarifas, produtos, setores e APIs
 │   │       ├── regras/      Cálculo de reembolso, validação, fluxo e termômetro
 │   │       ├── estado/      Reducer de estado compartilhado (usado por ambos os apps)
-│   │       ├── servicos/    Integrações (IBGE, ViaCEP, agências, persistência local)
+│   │       ├── servicos/    Integrações (IBGE, ViaCEP, agências, envio e storage)
 │   │       └── utils/       Formatadores de moeda, datas e documentos
 │   │
-│   └── tema/            ← SISTEMA DE DESIGN (CSS puro + SVGs)
-│       ├── cores.css        Paleta de cores e variáveis semânticas
-│       ├── tipografia.css   Escala tipográfica padronizada
-│       ├── efeitos.css      Sombras, raios de borda e transições
-│       └── icones.ts        Ícones em traçados SVG reutilizáveis
+│   └── tema/            ← SISTEMA DE DESIGN (Tokens CSS compartilhados)
+│       └── src/
+│           ├── cores.css        Paleta institucional e papéis semânticos
+│           ├── tipografia.css   Escala tipográfica padronizada (Inter)
+│           ├── efeitos.css      Sombras institucionais, raios e transições
+│           └── reset.css        Normalização e suporte a prefers-reduced-motion
 │
 └── apps/
-    ├── desktop/         ← Interface focada em tela cheia (Abas e painéis lado a lado)
-    └── mobile/          ← Interface Mobile First (PWA, passos guiados e alvos de toque)
+    ├── desktop/         ← Interface para computador (Abas horizontais e Resumo ao Vivo)
+    └── mobile/          ← Interface Mobile First PWA (Passo a passo com 100dvh e safe-areas)
 ```
 
 ### O que é compartilhado vs. específico:
 
 | Recurso / Camada | Compartilhado? | Implementação |
 | :--- | :---: | :--- |
-| **Regras de Negócio e Cálculos** | ✅ **Sim** | `@cativa/nucleo` (100% reutilizável) |
-| **Gerenciamento de Estado do Formulário** | ✅ **Sim** | `@cativa/nucleo/estado` (Reducer) |
-| **Serviços de API e Storage** | ✅ **Sim** | `@cativa/nucleo/servicos` |
-| **Estilos, Cores e Ícones** | ✅ **Sim** | `@cativa/tema` |
+| **Regras de Negócio e Cálculos Financeiros** | ✅ **Sim** | `@cativa/nucleo` (100% agnóstico de UI) |
+| **Gerenciamento de Estado do Formulário** | ✅ **Sim** | `@cativa/nucleo/estado` (FormularioReducer) |
+| **Design Tokens & Variáveis Visuais** | ✅ **Sim** | `@cativa/tema` (CSS moderno) |
+| **Serviços de API e Storage Offline** | ✅ **Sim** | `@cativa/nucleo/servicos` |
 | **Layout e Navegação** | ❌ **Específico** | Desktop (Abas) × Mobile (Passos) |
-| **Experiência de Input (Touch vs. Mouse)** | ❌ **Específico** | Otimizado para cada fator de forma |
+| **Ergonomia de Entrada (Mouse vs. Touch)** | ❌ **Específico** | Otimizado para o fator de forma de cada dispositivo |
 
 ---
 
 ## 📱 Desktop × Mobile PWA
 
-A versão mobile não é apenas o desktop reduzido; ela foi concebida seguindo rigorosas diretrizes de ergonomia móvel:
+A versão mobile não é apenas o desktop reduzido; ela foi construída seguindo diretrizes rigorosas de ergonomia móvel:
 
 ```
 Fluxo Mobile:
@@ -102,45 +125,49 @@ Fluxo Mobile:
 | **Navegação** | Abas horizontais com trilha lateral | Passo a passo com barra de progresso |
 | **Densidade** | 2 a 3 campos por linha | Um assunto por tela |
 | **Altura dos Campos** | 46px | **56px** (área de toque ideal no polegar) |
-| **Tamanho da Fonte** | 15px | **16px** (evita zoom automático no iOS) |
+| **Tamanho da Fonte** | 15px | **16px** (evita zoom indesejado no iOS Safari) |
 | **Botões de Ação** | Rodapé do painel | **Barra fixa inferior** na zona de conforto |
-| **Comprovantes** | Upload de arquivo | **Tirar foto direto da câmera** ou galeria |
+| **Comprovantes** | Upload de arquivo | **Câmera direta** ou galeria de fotos |
 | **Área Visível** | `100vh` | `100dvh` + suporte a *safe areas* do iPhone |
 
 ---
 
 ## 🧪 Regras de Negócio & Testes Automatizados
 
-O sistema conta com **49 testes unitários** automatizados rodando nativamente com `node --test` e TypeScript, cobrindo todos os cenários críticos:
+O motor central conta com **49 testes unitários** automatizados rodando nativamente no Node.js via TypeScript puro:
 
 ```bash
 npm test
 ```
 
 ```text
-▶ etapas visíveis (5.1ms)
-▶ tarifa por quilômetro (6.4ms)
-▶ reembolso de quilometragem (2.3ms)
-▶ classificação da despesa (2.7ms)
-▶ fechamento do dia (5.8ms)
-▶ identificação (1.0ms)
-▶ visita (1.9ms)
-▶ despesas e comprovantes (1.5ms)
-▶ registro do termômetro de estresse (0.4ms)
+▶ etapas visíveis (1.8ms)
+▶ etapa inicial de cada relatório (0.3ms)
+▶ relatórios que faltam (0.4ms)
+▶ estado de cada etapa na trilha (0.4ms)
+▶ tarifa por quilômetro (1.5ms)
+▶ reembolso de quilometragem (0.4ms)
+▶ classificação da despesa (0.6ms)
+▶ fechamento do dia (1.1ms)
+▶ e-mail (1.4ms)
+▶ identificação (0.6ms)
+▶ visita (0.5ms)
+▶ despesas e comprovantes (0.8ms)
+▶ salvar o dia (0.2ms)
+▶ registro do termômetro de estresse (0.3ms)
 
 ℹ tests 49
 ℹ suites 14
 ℹ pass 49
 ℹ fail 0
-ℹ duration_ms 361ms
+ℹ duration_ms 182ms
 ```
 
 ### Regras Principais Validadas nos Testes:
-* **Cálculo de Reembolso por KM:** Multiplicação precisa da quilometragem pela tarifa configurada, com suporte a tarifas personalizadas por executivo.
-* **Fechamento Financeiro do Dia:**
-  $$\text{Total a Reembolsar} = \text{Reembolso KM} + \text{Cartão Pessoal} - \text{Abastecimentos no Cartão Corporativo}$$
-* **Obrigatoriedade de Comprovantes:** Exigência de anexo para gastos em cartão pessoal e dispensa para cartão corporativo pré-aprovado.
-* **Termômetro de Relacionamento:** Abertura de ocorrência obrigatória para níveis de estresse Médio, Alto e Crítico.
+* **Fórmula de Fechamento do Dia:**
+  $$\text{Total a Reembolsar} = \text{Reembolso KM} + \text{Cartão Pessoal} - \text{Abastecimento Cartão Clara}$$
+* **Obrigatoriedade de Comprovantes:** Exigência de nota fiscal anexada para despesas em cartão pessoal; dispensa de comprovante para cartão corporativo pré-aprovado.
+* **Gatilho de Ocorrência:** Obrigatoriedade de detalhamento técnico para níveis de estresse Médio, Alto e Crítico.
 
 ---
 
@@ -157,34 +184,24 @@ cd formulario_comercial
 npm install
 ```
 
-### 2. Iniciar os Aplicativos
+### 2. Executar Verificação e Testes
+```bash
+# Validar tipagem estrita em todos os pacotes
+npm run typecheck
 
-Você pode rodar os dois aplicativos simultaneamente em abas separadas do terminal:
+# Executar a suíte de testes unitários
+npm test
+```
+
+### 3. Iniciar as Aplicações
 
 ```bash
 # Iniciar a aplicação Desktop (Abre em http://localhost:5501)
 npm run dev:desktop
 
-# Iniciar a aplicação Mobile (Abre em http://localhost:5502)
+# Iniciar a aplicação Mobile PWA (Abre em http://localhost:5502)
 npm run dev:mobile
 ```
-
-### 3. Testar no Celular (Rede Local Wi-Fi)
-Ao executar `npm run dev:mobile`, o Vite disponibiliza um endereço na rede local (ex: `http://192.168.1.X:5502`).
-1. Conecte o celular na mesma rede Wi-Fi do computador.
-2. Acesse o endereço no navegador do celular.
-3. **No Android (Chrome):** Toque em **⋮ → Instalar aplicativo**.
-4. **No iOS (Safari):** Toque em **Compartilhar → Adicionar à Tela de Início**.
-
----
-
-## 🤖 Desenvolvimento com IA & Boas Práticas
-
-Este projeto foi construído combinando **fundamentos sólidos de desenvolvimento Full Stack** com o uso estratégico de **agentes de Inteligência Artificial**, explorando o que há de mais moderno na produtividade do desenvolvedor:
-
-* **Arquitetura Orientada a Domínio (DDD):** Isolamento de toda regra de negócio pura em `@cativa/nucleo`, permitindo que o mesmo código rode no browser e no Node.js.
-* **Engenharia de Testes Assistida por IA:** Cobertura de casos de borda (arredondamento financeiro, campos vazios, fluxo de navegação) estruturados com agilidade.
-* **Segurança e Conformidade (LGPD):** Separação estrita entre dados de demonstração (mock) e infraestrutura de produção, garantindo que nenhum dado sensível ou chave de API seja exposta.
 
 ---
 
@@ -193,3 +210,4 @@ Este projeto foi construído combinando **fundamentos sólidos de desenvolviment
 Desenvolvido por **Maxuel (sout-MMdev)**.
 
 [![GitHub](https://img.shields.io/badge/GitHub-sout--MMdev-181717?style=flat&logo=github&logoColor=white)](https://github.com/sout-MMdev)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Maxuel-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com)

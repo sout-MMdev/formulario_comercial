@@ -1,7 +1,6 @@
 /* ================================================================
-   BASE — RESET
-   Zera as diferenças entre navegadores. Não define aparência:
-   só remove padrões que atrapalham.
+   TEMA — RESET (@cativa/tema)
+   Normalização de estilos entre navegadores.
    ================================================================ */
 
 *,
@@ -62,7 +61,7 @@ a {
   text-decoration: none;
 }
 
-/* Remove as setinhas dos inputs numéricos — o valor é digitado */
+/* Remove spin-buttons de inputs numéricos */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -74,7 +73,6 @@ input[type="number"] {
   appearance: textfield;
 }
 
-/* Respeita quem prefere menos animação no sistema */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

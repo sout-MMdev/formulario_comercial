@@ -1,6 +1,6 @@
 /* ================================================================
-   ROOT — EFEITOS
-   Raios, sombras, transições e camadas (z-index).
+   TEMA — EFEITOS (@cativa/tema)
+   Raios de borda, sombras com tom institucional e transições.
    ================================================================ */
 
 :root {
@@ -12,15 +12,14 @@
   --raio-xl: 22px;
   --raio-total: 999px;
 
-  /* ── Sombras — sempre com tom azulado, nunca cinza puro ────── */
+  /* ── Sombras — tom institucional, nunca cinza puro ─────────── */
   --sombra-xs: 0 1px 2px rgba(16, 40, 72, 0.06);
   --sombra-sm: 0 2px 6px rgba(16, 40, 72, 0.07);
   --sombra-md: 0 6px 18px rgba(16, 40, 72, 0.09);
   --sombra-lg: 0 16px 40px rgba(16, 40, 72, 0.14);
   --sombra-foco: 0 0 0 3px var(--cor-foco-anel);
 
-  /* Elevação TINTADA dos botões de ação — dá "peso" e faz o CTA
-     saltar da tela (azul para o primário, amarelo para o destaque) */
+  /* Elevação tintada dos botões de ação */
   --sombra-acao: 0 6px 16px rgba(0, 75, 138, 0.26), 0 2px 4px rgba(0, 75, 138, 0.16);
   --sombra-cta: 0 6px 16px rgba(224, 168, 0, 0.32), 0 2px 4px rgba(224, 168, 0, 0.2);
 
@@ -31,8 +30,8 @@
 
   /* ── Camadas ───────────────────────────────────────────────── */
   --camada-base: 1;
-  --camada-suspensa: 100; /* listas de autocomplete, multiselect */
-  --camada-fixa: 500; /* cabeçalho                           */
-  --camada-modal: 1000; /* pop-ups                             */
-  --camada-splash: 9999; /* tela de carregamento                */
+  --camada-suspensa: 100;
+  --camada-fixa: 500;
+  --camada-modal: 1000;
+  --camada-splash: 9999;
 }

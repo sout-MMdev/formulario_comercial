@@ -1,13 +1,6 @@
 /* ================================================================
-   TEMA — APP MOBILE (identidade visual DESTE app)
-   Cores, tipografia, efeitos e reset SÓ do mobile. É uma cópia
-   própria: mexer numa cor aqui NÃO afeta o app desktop.
-
-   Não entra aqui: dimensões de toque/layout — isso é decisão do app
-   e fica em estilos/root/ (o mobile usa campo de 56px + safe-areas).
+   TEMA — APP MOBILE (Design tokens via @cativa/tema)
+   Cores institucionais, escala tipográfica, sombras e reset.
    ================================================================ */
 
-@import "./reset.css";
-@import "./cores.css";
-@import "./tipografia.css";
-@import "./efeitos.css";
+@import "@cativa/tema/index.css";

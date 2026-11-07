@@ -1,49 +1,49 @@
-# Backend — aguardando o novo acesso Supabase
+# 🔌 Backend & Integração Supabase
 
-> **Estado atual: vazio de propósito.** O backend Supabase antigo foi retirado
-> em 10/09/2026, e o novo ainda não chegou.
+Este diretório descreve a camada de serviços e backend do **Formulário Comercial**, projetado sob a infraestrutura do **Supabase** (PostgreSQL, Row Level Security e Edge Functions).
 
-## O que aconteceu
+---
 
-O projeto Supabase que sustentava este backend foi substituído. Todo o SQL
-(schema, RLS, gatilhos) e as Edge Functions saíram daqui para não induzir a
-erro — descreviam um projeto que não é mais o nosso.
+## 🏛️ Arquitetura de Comunicação
 
-**Nada foi perdido.** Está tudo em [`../to_delete/`](../to_delete/), com a
-arquitetura documentada:
-
-| Onde | O quê |
-|---|---|
-| [`../to_delete/ARQUITETURA.md`](../to_delete/ARQUITETURA.md) | o desenho do sistema — schema, tabelas, RLS, buckets, funções |
-| [`../to_delete/ETAPAS.md`](../to_delete/ETAPAS.md) | as 15 etapas, na ordem em que foram construídas |
-| [`../to_delete/backend-supabase/`](../to_delete/backend-supabase/) | os arquivos originais, intactos |
-
-## O que ainda vive aqui
+O formulário adota o princípio de **mínima exposição de privilégios**:
 
 ```
-backend/
-  importacao/     tratamento da planilha do Infotravel (independe do Supabase)
-  .env.example    modelo das variáveis — SEM segredo de verdade
+[Formulário Desktop / Mobile]
+       │
+       │  Requisições públicas sem credencial administrativa
+       ▼
+[Supabase Edge Functions] ──(Validação & RLS)──► [PostgreSQL - Schema app]
+  ├── listar-agencias (autocomplete protegido)
+  ├── listar-executivos (apenas nomes e e-mails)
+  └── receber-formulario (transação completa do dia + cópia por e-mail)
 ```
 
-## Quando o novo acesso chegar
+1. **Frontend Desacoplado:** O formulário público no navegador utiliza apenas a chave pública `anon`. Nenhuma chave administrativa (`service_role`) trafega no cliente.
+2. **Edge Functions como Barreira de Proteção:** Consultas a agências e gravação de visitas passam por funções no servidor (Deno) que filtram colunas sensíveis (como CNPJ de agências, dados financeiros completos ou senhas).
+3. **Segurança no Banco (RLS):** Toda a integridade e isolamento de dados reside nas políticas de **Row Level Security** do PostgreSQL.
 
-1. Ler `ARQUITETURA.md` como **especificação**, não como script — boa parte das
-   decisões continua válida, mas confirme cada uma contra as instruções novas.
-2. Recriar `supabase/migrations/` do zero, uma migration por mudança.
-3. Ligar o CLI (`supabase link` + `supabase db push`) **desde o começo**. No
-   projeto antigo o SQL era colado à mão no editor, e isso era uma dívida
-   conhecida.
+---
 
-## Segurança — as regras que continuam valendo
+## 🛡️ Modo Offline / Demonstração (Portfólio & Testes)
 
-Independem de qual projeto Supabase esteja conectado:
+Quando o projeto é executado localmente sem as variáveis de ambiente `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`:
 
-1. **Tudo que vai pro navegador é público.** Segredo (`service_role`, chave de
-   e-mail, API do Infotera) mora só nas Edge Functions.
-2. No front, só a chave **pública (anon)** — ela é pública por design. Quem
-   protege os dados é o **RLS**.
-3. Variável com prefixo `VITE_` **entra no bundle**. Lá só vai URL e chave
-   pública.
-4. O back end **revalida toda requisição** (RLS + checagem de perfil). O front
-   valida só por conveniência.
+* O sistema entra automaticamente em **modo de simulação (`TEM_BACKEND = false`)**.
+* O serviço de envio chaveia para `envioMock.ts`, salvando os dados no `localStorage` do navegador e simulando a resposta da API com sucesso.
+* O autocomplete utiliza a base demonstrativa segura em `agencias.json`.
+
+Isso permite que qualquer avaliador teste a aplicação completa de ponta a ponta sem necessidade de provisionar banco de dados.
+
+---
+
+## ⚙️ Conectando a um Supabase Real
+
+Para apontar o formulário para um ambiente Supabase real:
+
+1. Crie um arquivo `.env` na raiz do app desejado (`apps/desktop/.env` ou `apps/mobile/.env`) com base no `.env.example`:
+   ```bash
+   VITE_SUPABASE_URL=https://seu-projeto.supabase.co
+   VITE_SUPABASE_ANON_KEY=sua_chave_publica_anon
+   ```
+2. Ao reiniciar a aplicação (`npm run dev:desktop` ou `npm run dev:mobile`), o formulário detectará as variáveis e alternará automaticamente para `envioApi.ts`.

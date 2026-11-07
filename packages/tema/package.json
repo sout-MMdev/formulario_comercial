@@ -1,0 +1,15 @@
+{
+  "name": "@cativa/tema",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Design tokens, paleta de cores, tipografia e efeitos compartilhados",
+  "exports": {
+    ".": "./src/index.ts",
+    "./css": "./src/index.css",
+    "./cores.css": "./src/cores.css",
+    "./tipografia.css": "./src/tipografia.css",
+    "./efeitos.css": "./src/efeitos.css",
+    "./reset.css": "./src/reset.css"
+  }
+}
