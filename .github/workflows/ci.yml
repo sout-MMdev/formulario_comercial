@@ -52,6 +52,11 @@ jobs:
 
       - run: npm ci
 
+      # Tipos dos arquivos que rodam no Deno (servidor.ts e os index.ts),
+      # que o typecheck do Node não cobre.
+      - name: Checar tipos das Edge Functions (Deno)
+        run: npm run backend:checar-funcoes
+
       # Só os serviços que os testes usam: banco, API (Kong + PostgREST),
       # Auth, Edge Functions e Mailpit. Painel, logs e storage ficam de fora.
       - name: Subir o Supabase local
