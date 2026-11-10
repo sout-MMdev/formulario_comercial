@@ -49,6 +49,7 @@ export function Resumo() {
     agenciasVisitadas,
     adicionarRelatorio,
     salvarDia,
+    comecarOutroDia,
   } = useFormulario();
 
   const { trajetos, despesas, agenciasComercial, visita } = estado;
@@ -71,6 +72,12 @@ export function Resumo() {
   // Só há "Relatório enviado!" quando o CRM aceitou o relatório.
   const situacao = resultado ? classificarEnvio(resultado) : null;
   const envioFalhou = situacao?.tipo === "falhou";
+
+  function fecharConfirmacao() {
+    setSalvo(false);
+    // Na falha, o executivo continua no resumo com os dados.
+    if (!envioFalhou) comecarOutroDia();
+  }
 
   return (
     <>
@@ -346,9 +353,9 @@ export function Resumo() {
         aberta={salvo}
         etiqueta={envioFalhou ? "Envio não concluído" : "Relatório finalizado"}
         titulo={envioFalhou ? "Não foi possível enviar" : "Relatório enviado!"}
-        aoFechar={() => setSalvo(false)}
+        aoFechar={fecharConfirmacao}
         rodape={
-          <Botao variante="primario" largo onClick={() => setSalvo(false)}>
+          <Botao variante="primario" largo onClick={fecharConfirmacao}>
             {envioFalhou ? "Voltar ao resumo" : "Começar outro dia"}
           </Botao>
         }

@@ -74,7 +74,8 @@ export function Resumo() {
   function fecharConfirmacao() {
     setSalvo(false);
     // Na falha, o executivo fica no resumo com os dados para tentar de novo.
-    if (!envioFalhou) irParaEtapa("identificacao");
+    // No sucesso, começa um dia novo (o reinício volta para a Identificação).
+    if (!envioFalhou) despachar({ tipo: "reiniciar" });
   }
 
   return (
