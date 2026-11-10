@@ -51,6 +51,15 @@ describe("envio do relatório para o back end", () => {
     assert.equal(resultado.erro, "Não foi possível enviar o relatório.");
   });
 
+  it("resposta 200 sem a confirmação esperada: não conta como enviado", async () => {
+    mock.method(globalThis, "fetch", async () => Response.json({}, { status: 200 }));
+
+    const resultado = await envioApi.enviar(DIA);
+
+    assert.equal(resultado.enviadoAoCrm, false);
+    assert.equal(resultado.erro, "O servidor respondeu de um jeito inesperado. Tente de novo.");
+  });
+
   it("erro do servidor com mensagem: repassa a mensagem do servidor", async () => {
     mock.method(globalThis, "fetch", async () =>
       Response.json({ erro: "Executivo não encontrado ou inativo." }, { status: 422 }),
