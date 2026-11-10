@@ -125,6 +125,8 @@ erDiagram
 - **Views de gestão:** `v_reembolso_mensal` (quanto cada executivo recebe por
   mês) e `v_agencias_em_alerta` (agências cujo estresse mais recente é Alto ou
   Crítico).
+- **Horário de Brasília:** item sem data conta no dia em que o relatório chegou,
+  no fuso `America/Sao_Paulo` (o banco guarda em UTC).
 - **Migrations** em `backend/supabase/migrations/`, aplicadas em ordem;
   **seed** fictício em `backend/supabase/seed.sql`.
 
@@ -224,7 +226,7 @@ e-mail) mora em `backend/`.
 - **Decisão:** o servidor aplica as mesmas funções de validação da tela, com as
   mesmas mensagens, e acrescenta limites de estrutura: km até 5.000, valor até
   R$ 100.000, textos até 300 caracteres (2.000 nas descrições), quantidades por
-  dia e datas que existem.
+  dia, datas que existem e categoria de despesa entre as opções da tela.
 - **Por quê:** o que a tela recusa o servidor também recusa, do mesmo jeito; os
   limites protegem o banco de dados malformados ou enormes.
 - **Custo:** a tela não confere esses limites; quem passar deles recebe uma
@@ -279,14 +281,15 @@ e-mail) mora em `backend/`.
 
 | Camada | O que cobre | Onde | Comando |
 |---|---|---|---|
-| Núcleo (70) | Reembolso, validação, fluxo, envio, formatadores | `packages/nucleo/src/**/*.teste.ts` | `npm test` |
-| Unidade do back-end (54) | Validação, montagem, processamento, HTTP, e-mail, scripts | `backend/testes/unidade/` | `npm test` |
-| Banco — pgTAP (90) | Tabelas, RLS, privilégios, constraints, função, views | `backend/supabase/tests/` | `npm run backend:testar-banco` |
+| Núcleo (72) | Reembolso, validação, fluxo, envio, formatadores | `packages/nucleo/src/**/*.teste.ts` | `npm test` |
+| Unidade do back-end (61) | Validação, montagem, processamento, HTTP, e-mail, scripts, dados fictícios do front × banco | `backend/testes/unidade/` | `npm test` |
+| Banco — pgTAP (92) | Tabelas, RLS, privilégios, constraints, função, views | `backend/supabase/tests/` | `npm run backend:testar-banco` |
 | Integração (11) | As funções chamadas pela rede, com banco e Mailpit | `backend/testes/integracao/` | `npm run backend:testar-funcoes` |
+| Tipos do Deno | `servidor.ts` e os `index.ts` das funções | `backend/supabase/functions/` | `npm run backend:checar-funcoes` |
 
 O **CI** (`.github/workflows/ci.yml`) roda tudo a cada push: um job para o
-front (tipos, testes, build) e outro que sobe um Supabase temporário no GitHub
-e roda os testes do banco e das funções.
+front (tipos, testes, build) e outro que checa os tipos do Deno, sobe um
+Supabase temporário no GitHub e roda os testes do banco e das funções.
 
 ---
 
@@ -303,6 +306,3 @@ e roda os testes do banco e das funções.
   sem botão de reenviar.
 - **Lista de executivos:** aparece primeiro com os dados de demonstração e é
   trocada pela do servidor assim que ele responde.
-- **Fuso horário:** as views e o assunto do e-mail (quando falta a data da
-  visita) usam UTC; um relatório recebido às 22h do último dia do mês (horário
-  de Brasília) conta no mês seguinte na `v_reembolso_mensal`.

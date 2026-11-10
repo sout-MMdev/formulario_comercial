@@ -17,7 +17,8 @@ backend/
 │   ├── migrations/               o banco, em ordem de criação
 │   │   ├── …_schema_inicial.sql      9 tabelas, enums, RLS e permissões
 │   │   ├── …_registrar_relatorio.sql grava um relatório inteiro numa transação
-│   │   └── …_views_gestao.sql        reembolso mensal e agências em alerta
+│   │   ├── …_views_gestao.sql        reembolso mensal e agências em alerta
+│   │   └── …_views_horario_brasilia.sql as views contam o dia no horário de Brasília
 │   ├── seed.sql                  dados fictícios: 12 executivos, 24 agências, 3 relatórios
 │   ├── tests/                    testes do banco (pgTAP)
 │   └── functions/                Edge Functions (Deno)
@@ -100,6 +101,7 @@ npm run backend:parar
 | `npm run backend:testar-banco` | Testes do banco (pgTAP) |
 | `npm run backend:testar-funcoes` | Testes de integração das funções |
 | `npm run backend:testar` | Os dois acima |
+| `npm run backend:checar-funcoes` | Checa os tipos do código Deno das funções (`deno check`, sem Docker) |
 | `npm test` (raiz) | Testes de unidade do núcleo e do back-end (sem Docker) |
 
 ---
