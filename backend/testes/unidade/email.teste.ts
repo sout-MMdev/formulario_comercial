@@ -80,6 +80,17 @@ describe("envio pelo Mailpit", () => {
     });
   });
 
+  it("o envio tem tempo limite (a função nunca fica presa esperando o e-mail)", async () => {
+    let sinal: AbortSignal | null | undefined;
+    const fn = (async (_url: string | URL | Request, init?: RequestInit) => {
+      sinal = init?.signal;
+      return new Response("{}", { status: 200 });
+    }) as typeof fetch;
+    await criarEnviadorMailpit("http://mailpit:8025", fn).enviar(MENSAGEM);
+
+    assert.ok(sinal instanceof AbortSignal, "fetch sem AbortSignal");
+  });
+
   it("rejeita quando o Mailpit responde erro", async () => {
     const { fn } = fetchFalso(500);
     await assert.rejects(criarEnviadorMailpit("http://mailpit:8025", fn).enviar(MENSAGEM));

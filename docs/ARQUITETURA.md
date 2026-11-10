@@ -26,7 +26,7 @@ flowchart LR
   end
   N -. "mesmas regras" .-> A
   N -. "mesmas regras" .-> F
-  A -- "HTTPS + chave pública" --> K
+  A -- "pedido HTTP + chave pública" --> K
 ```
 
 O mesmo código de regras roda em três lugares: no app do computador, no app do
@@ -44,8 +44,9 @@ celular e no servidor. Se uma regra muda no núcleo, os três acompanham.
 
 **Sem back-end configurado** (o site publicado), os apps entram no **modo
 demonstração**: listas fictícias e envio simulado. Com back-end (variáveis
-`VITE_SUPABASE_*`), as mesmas telas usam as funções de verdade. A troca
-acontece em um lugar só: `packages/nucleo/src/servicos/envio/index.ts`.
+`VITE_SUPABASE_*`), as mesmas telas usam as funções de verdade. Quem decide é
+uma constante só, `TEM_BACKEND` (`packages/nucleo/src/config/app.ts`), que os
+serviços de envio, executivos e agências consultam.
 
 ---
 
@@ -57,7 +58,7 @@ arquivo responsável por cada passo:
 | # | Passo | Onde está |
 |---|---|---|
 | 1 | O app monta o dia (`DiaSalvo`) e chama `finalizarDia` | `apps/*/src/contexto/FormularioContexto.tsx` |
-| 2 | `envioApi` faz `POST /functions/v1/receber-formulario` com a chave pública | `packages/nucleo/src/servicos/envio/envioApi.ts` |
+| 2 | `envioApi` faz `POST /functions/v1/receber-formulario` com a chave pública e o número de envio do dia | `packages/nucleo/src/servicos/envio/envioApi.ts`, `idEnvio.ts` |
 | 3 | A função confere CORS, chave pública (401) e método (405) | `backend/supabase/functions/_compartilhado/http.ts` (`criarTratador`) |
 | 4 | Lê o corpo: até 256 KB (413) e JSON válido (400) | `http.ts` (`lerCorpoJson`) |
 | 5 | Valida a estrutura e aplica **as mesmas regras da tela** (400) | `_compartilhado/validacao.ts` |
@@ -208,21 +209,27 @@ e-mail) mora em `backend/`.
   for inválido.
 - **Custo:** parte da lógica fica em PL/pgSQL, coberta por testes pgTAP.
 
-### 6.4 Idempotência por (executivo, id do dia)
-- **Decisão:** o app gera um id por dia; `unique (executivo_id, id_cliente)` +
-  `on conflict do nothing`.
-- **Por quê:** clique duplo ou internet que cai e volta não duplicam relatório
-  nem e-mail.
-- **Custo:** se a primeira tentativa gravou mas o e-mail falhou, o reenvio não
-  tenta o e-mail de novo (fica registrado como "falhou" em `emails_enviados`).
+### 6.4 Idempotência por (executivo, número de envio)
+- **Decisão:** o app manda um número de envio por dia e repete o MESMO número
+  quando o executivo tenta de novo sem mudar nada (`servicos/envio/idEnvio.ts`);
+  o banco tem `unique (executivo_id, id_cliente)` + `on conflict do nothing`.
+- **Por quê:** se a internet cai depois que o servidor gravou, a nova tentativa
+  não duplica relatório, e-mail nem reembolso.
+- **Custo:** se o executivo editar o dia depois de uma falha em que a gravação
+  na verdade deu certo, o dia editado entra como outro relatório. E se a
+  primeira tentativa gravou mas o e-mail falhou, o reenvio não tenta o e-mail
+  de novo (fica registrado como "falhou" em `emails_enviados`).
 
-### 6.5 Servidor tão rígido quanto a tela, nem mais nem menos
-- **Decisão:** o servidor aplica as mesmas funções de validação da tela, mais
-  limites de estrutura (tamanhos, quantidades, datas reais).
-- **Por quê:** um relatório aceito pela tela nunca é recusado pelo servidor, e o
-  que a tela recusa o servidor também recusa, com a mesma mensagem.
-- **Custo:** regras que a tela não cobra o servidor também não cobra (ver
-  limitações).
+### 6.5 Servidor com as mesmas regras da tela, mais limites de segurança
+- **Decisão:** o servidor aplica as mesmas funções de validação da tela, com as
+  mesmas mensagens, e acrescenta limites de estrutura: km até 5.000, valor até
+  R$ 100.000, textos até 300 caracteres (2.000 nas descrições), quantidades por
+  dia e datas que existem.
+- **Por quê:** o que a tela recusa o servidor também recusa, do mesmo jeito; os
+  limites protegem o banco de dados malformados ou enormes.
+- **Custo:** a tela não confere esses limites; quem passar deles recebe uma
+  mensagem técnica ("Dados inválidos em trajetos[0].km."). E regras que a tela
+  não cobra o servidor também não cobra (ver limitações).
 
 ### 6.6 Cópia para o e-mail cadastrado
 - **Decisão:** a cópia vai para o e-mail do executivo no banco, não para o
@@ -272,8 +279,8 @@ e-mail) mora em `backend/`.
 
 | Camada | O que cobre | Onde | Comando |
 |---|---|---|---|
-| Núcleo (67) | Reembolso, validação, fluxo, envio, formatadores | `packages/nucleo/src/**/*.teste.ts` | `npm test` |
-| Unidade do back-end (53) | Validação, montagem, processamento, HTTP, e-mail, scripts | `backend/testes/unidade/` | `npm test` |
+| Núcleo (70) | Reembolso, validação, fluxo, envio, formatadores | `packages/nucleo/src/**/*.teste.ts` | `npm test` |
+| Unidade do back-end (54) | Validação, montagem, processamento, HTTP, e-mail, scripts | `backend/testes/unidade/` | `npm test` |
 | Banco — pgTAP (90) | Tabelas, RLS, privilégios, constraints, função, views | `backend/supabase/tests/` | `npm run backend:testar-banco` |
 | Integração (11) | As funções chamadas pela rede, com banco e Mailpit | `backend/testes/integracao/` | `npm run backend:testar-funcoes` |
 
@@ -296,3 +303,6 @@ e roda os testes do banco e das funções.
   sem botão de reenviar.
 - **Lista de executivos:** aparece primeiro com os dados de demonstração e é
   trocada pela do servidor assim que ele responde.
+- **Fuso horário:** as views e o assunto do e-mail (quando falta a data da
+  visita) usam UTC; um relatório recebido às 22h do último dia do mês (horário
+  de Brasília) conta no mês seguinte na `v_reembolso_mensal`.

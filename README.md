@@ -3,7 +3,7 @@
 <div align="center">
 
   [![CI](https://github.com/sout-MMdev/formulario_comercial/actions/workflows/ci.yml/badge.svg)](https://github.com/sout-MMdev/formulario_comercial/actions/workflows/ci.yml)
-  ![Testes](https://img.shields.io/badge/Testes-221%20passando-brightgreen?style=flat)
+  ![Testes](https://img.shields.io/badge/Testes-225%20passando-brightgreen?style=flat)
   ![Node.js](https://img.shields.io/badge/Node.js-22.18%2B-339933?style=flat&logo=nodedotjs&logoColor=white)
 
   ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
@@ -109,7 +109,7 @@ flowchart LR
   end
   N -. "mesmas regras" .-> A
   N -. "mesmas regras" .-> F
-  A -- "HTTPS + chave pública" --> K
+  A -- "pedido HTTP + chave pública" --> K
 ```
 
 * **O mesmo código de regras roda nos dois apps e no servidor.** Mudou uma regra no núcleo, os três acompanham.
@@ -185,11 +185,11 @@ Fluxo Mobile:
 
 | Camada | Testes | O que cobre |
 | :--- | :---: | :--- |
-| **Núcleo** (`packages/nucleo`) | 67 | Reembolso, validações, fluxo das etapas, envio e formatadores |
-| **Unidade do back-end** (`backend/testes/unidade`) | 53 | Validação do corpo, recálculo no servidor, processamento, HTTP, e-mail |
+| **Núcleo** (`packages/nucleo`) | 70 | Reembolso, validações, fluxo das etapas, envio e formatadores |
+| **Unidade do back-end** (`backend/testes/unidade`) | 54 | Validação do corpo, recálculo no servidor, processamento, HTTP, e-mail |
 | **Banco** (pgTAP, `backend/supabase/tests`) | 90 | Tabelas, RLS, privilégios, regras, gravação atômica, views |
 | **Integração** (`backend/testes/integracao`) | 11 | As Edge Functions chamadas pela rede, com banco e e-mail |
-| **Total** | **221** | O **CI** roda todos a cada push |
+| **Total** | **225** | O **CI** roda todos a cada push |
 
 ### Regras Principais Validadas nos Testes:
 * **Fórmula de Fechamento do Dia:**

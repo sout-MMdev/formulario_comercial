@@ -19,6 +19,9 @@ export interface EnviadorEmail {
 
 const REMETENTE = { Email: "relatorios@empresa.exemplo", Name: "Relatório Comercial" };
 
+/** Tempo máximo de espera pelo serviço de e-mail; depois disso, conta como falha. */
+export const TEMPO_LIMITE_EMAIL_MS = 5000;
+
 /** Adaptador do Mailpit: POST <urlBase>/api/v1/send. */
 export function criarEnviadorMailpit(urlBase: string, fetchFn: typeof fetch = fetch): EnviadorEmail {
   return {
@@ -32,6 +35,7 @@ export function criarEnviadorMailpit(urlBase: string, fetchFn: typeof fetch = fe
           Subject: mensagem.assunto,
           Text: mensagem.texto,
         }),
+        signal: AbortSignal.timeout(TEMPO_LIMITE_EMAIL_MS),
       });
       if (!resposta.ok) {
         throw new Error(`Mailpit respondeu ${resposta.status}.`);
