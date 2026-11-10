@@ -10,7 +10,7 @@
 import { useState, type ComponentType } from "react";
 import { Splash } from "@/componentes/layout/Splash";
 import { useFormulario } from "@/contexto/useFormulario";
-import { Logintelamobile } from "@/Login/Logintelamobile";
+import { TelaLogin } from "@/login/TelaLogin";
 import type { NomePasso } from "@/navegacao/passos";
 import { AgenciasVisitadas } from "@/passos/AgenciasVisitadas";
 import { Analise } from "@/passos/Analise";
@@ -36,13 +36,13 @@ export function App() {
   const [carregando, setCarregando] = useState(true);
   const { passo } = useFormulario();
 
-  // TEMPORÁRIO (etapa 1 do login) — sai na etapa 3 (Login/LOGIN.md §7).
+  // TEMPORÁRIO (etapa 1 do login) — sai na etapa 3 (docs/planejamento/login-mobile.md §7).
   // `?login` mostra a tela com um login de teste; `?login=seu@email`
   // simula um e-mail lembrado; "erro@teste.com" simula senha errada.
   const parametros = new URLSearchParams(window.location.search);
   if (parametros.has("login")) {
     return (
-      <Logintelamobile
+      <TelaLogin
         emailLembrado={parametros.get("login") ?? ""}
         aoEntrar={async ({ email }) => {
           await new Promise((esperar) => setTimeout(esperar, 800));

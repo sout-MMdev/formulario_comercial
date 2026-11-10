@@ -2,7 +2,7 @@
    TELA DE LOGIN (mobile)
    Arte dos 25 anos desfocada no fundo, camada azul por cima e um
    cartão de vidro com a marca e o formulário. Cores e medidas vêm
-   só das variáveis do tema (Login/LOGIN.md §3) — nenhum HEX aqui.
+   só das variáveis do tema (docs/planejamento/login-mobile.md §3) — nenhum HEX aqui.
 
    Como todo CSS de tela, este arquivo fica FORA das camadas (@layer)
    do app: vence as classes compartilhadas (.btn-icone, h1,
