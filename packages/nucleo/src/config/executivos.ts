@@ -18,7 +18,7 @@ export const emailsExecutivos: Record<string, string> = {
   "MARIANA COSTA": "norte@empresa.exemplo",
   "RICARDO ALVES": "riodejaneiro@empresa.exemplo",
   "JULIANA PEREIRA": "bahia@empresa.exemplo",
-  "ANDRE OLIVEIRA": "minasgerais@empresa.exemplo",
+  "ANDRÉ OLIVEIRA": "minasgerais@empresa.exemplo",
   "CAMILA RIBEIRO": "goias@empresa.exemplo",
   "GUSTAVO MENDES": "brasilia@empresa.exemplo",
 };
@@ -38,7 +38,7 @@ export const executivos: { valor: string; rotulo: string }[] = [
   { valor: "MARIANA COSTA", rotulo: "MARIANA COSTA" },
   { valor: "RICARDO ALVES", rotulo: "RICARDO ALVES" },
   { valor: "JULIANA PEREIRA", rotulo: "JULIANA PEREIRA" },
-  { valor: "ANDRE OLIVEIRA", rotulo: "ANDRÉ OLIVEIRA" },
+  { valor: "ANDRÉ OLIVEIRA", rotulo: "ANDRÉ OLIVEIRA" },
   { valor: "CAMILA RIBEIRO", rotulo: "CAMILA RIBEIRO" },
   { valor: "GUSTAVO MENDES", rotulo: "GUSTAVO MENDES" },
 ];
