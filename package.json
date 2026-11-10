@@ -25,7 +25,9 @@
     "backend:resetar": "npx -y supabase@2.122.0 db reset --workdir backend",
     "backend:testar-banco": "npx -y supabase@2.122.0 test db --workdir backend",
     "backend:testar-funcoes": "node --test backend/testes/integracao/*.teste.ts",
-    "backend:testar": "npm run backend:testar-banco && npm run backend:testar-funcoes"
+    "backend:testar": "npm run backend:testar-banco && npm run backend:testar-funcoes",
+    "backend:conectar-apps": "node backend/scripts/conectar-apps.ts",
+    "backend:desconectar-apps": "node backend/scripts/conectar-apps.ts --remover"
   },
   "devDependencies": {
     "@types/node": "^26.1.2",

@@ -10,7 +10,7 @@
 
 import { before, describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { lerAmbienteLocal, type AmbienteLocal } from "./ambiente.ts";
+import { lerAmbienteLocal, type AmbienteLocal } from "../../scripts/ambiente-local.ts";
 import type { DiaSalvo } from "../../supabase/functions/_compartilhado/nucleo.ts";
 
 let ambiente: AmbienteLocal;

@@ -25,7 +25,7 @@
   },
   /* Só o que é TypeScript "puro". Os index.ts e o servidor.ts usam
      APIs do Deno (Deno.serve, Deno.env) e são checados pelo Deno.   */
-  "include": ["supabase/functions/_compartilhado/*.ts", "testes/**/*.ts"],
+  "include": ["supabase/functions/_compartilhado/*.ts", "testes/**/*.ts", "scripts/**/*.ts"],
   "exclude": [
     "supabase/functions/_compartilhado/servidor.ts",
     "supabase/functions/*/index.ts"

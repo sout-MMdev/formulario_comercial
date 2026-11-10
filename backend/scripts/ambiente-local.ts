@@ -1,7 +1,8 @@
 // ================================================================
 // AMBIENTE LOCAL — endereços e chaves do Supabase que está rodando
 // Lê `supabase status -o json`, então nenhuma chave fica escrita no
-// código. Os valores nunca são impressos.
+// código. Usado pelo conectar-apps.ts e pelos testes de integração.
+// Os valores das chaves nunca são impressos.
 // ================================================================
 
 import { execSync } from "node:child_process";
@@ -18,18 +19,19 @@ export interface AmbienteLocal {
   urlMailpit: string;
 }
 
-const RAIZ_DO_REPO = fileURLToPath(new URL("../../../", import.meta.url));
+export const RAIZ_DO_REPO = fileURLToPath(new URL("../../", import.meta.url));
 
 export function lerAmbienteLocal(): AmbienteLocal {
   let saida: string;
   try {
+    // Comando fixo, sem nenhuma entrada externa.
     saida = execSync("npx -y supabase@2.122.0 status -o json --workdir backend", {
       cwd: RAIZ_DO_REPO,
       encoding: "utf8",
       stdio: ["ignore", "pipe", "ignore"],
     });
   } catch {
-    throw new Error("Supabase local parado. Rode `npm run backend:iniciar` antes dos testes.");
+    throw new Error("Supabase local parado. Rode `npm run backend:iniciar` antes.");
   }
 
   const status = JSON.parse(saida) as Record<string, string>;
