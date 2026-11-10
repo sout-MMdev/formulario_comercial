@@ -18,7 +18,12 @@
     "preview:desktop": "npm run preview --workspace @cativa/desktop",
     "preview:mobile": "npm run preview --workspace @cativa/mobile",
     "typecheck": "tsc -b",
-    "test": "npm run test --workspace @cativa/nucleo"
+    "test": "npm run test --workspace @cativa/nucleo",
+    "backend:iniciar": "npx -y supabase@2.122.0 start --workdir backend",
+    "backend:parar": "npx -y supabase@2.122.0 stop --workdir backend",
+    "backend:status": "npx -y supabase@2.122.0 status --workdir backend",
+    "backend:resetar": "npx -y supabase@2.122.0 db reset --workdir backend",
+    "backend:testar-banco": "npx -y supabase@2.122.0 test db --workdir backend"
   },
   "devDependencies": {
     "@types/node": "^26.1.2",
