@@ -20,17 +20,13 @@ Não mudar sem falar com a Cativa. A fonte de cada regra está entre parênteses
   público e tira do ar as listas públicas de agências e de executivos.
 - **E-mail e senha**, pelo Supabase Auth (`signInWithPassword`). Sem cadastro
   público, sem login social, sem SSO, sem link mágico.
-- **Quem cria as contas é o sistema**, pela Edge Function `admin-usuarios` do CRM,
-  com **senha provisória**. No 1º acesso a troca é obrigatória
+- **Quem cria as contas é a administração**, por uma Edge Function de
+  administração (a criar), com **senha provisória**. No 1º acesso a troca é obrigatória
   (`precisa_trocar_senha` + função `marcar_senha_trocada()`).
 - **Não existe "esqueci minha senha" automático.** Quem esquece fala com o gestor,
   que reseta a senha pela administração.
-- **O executivo do formulário é o mesmo usuário do CRM:** `app.executivos` se liga
-  ao `auth.users` por `auth_id`, e o gatilho `trg_link_executivo` faz essa ligação
-  pelo e-mail.
-- **Os dois Auth não se confundem**: o login do formulário é o Auth
-  do **projeto do CRM**. O projeto CATIVA (base de unidades) tem outro Auth, com
-  outra finalidade, e não serve aqui.
+- **Cada executivo tem uma conta:** a tabela `executivos` ganha `auth_id`, ligado
+  ao `auth.users`; um gatilho faz essa ligação pelo e-mail.
 - **A chave pública no navegador é pública por natureza.** Quem protege os dados é
   o RLS no servidor; o que a tela mostra ou esconde é só conveniência
   (backend/README).
@@ -411,19 +407,18 @@ Senha resetada pelo gestor, conta desativada ou token que não renova: o
 
 ## 8. Etapa 4 — login real com o Supabase
 
-Só depois que a conta nova do Supabase estiver pronta.
+Só depois que houver um Supabase com Auth (o back-end local deste repositório já
+serve para desenvolver).
 
 ### 8.1 Antes de começar
 
-- [ ] Projeto **do CRM** criado na conta nova. É o Auth dele que guarda os
-      executivos.
-- [ ] Primeira migration aplicada: `app.executivos` com `auth_id` e
-      `precisa_trocar_senha`, o gatilho `trg_link_executivo` e a função
-      `marcar_senha_trocada()`.
-- [ ] Auth sem cadastro público, com as contas criadas pela Edge Function
-      `admin-usuarios`.
+- [ ] Supabase com Auth ligado (local ou na nuvem).
+- [ ] Migration nova: `executivos` com `auth_id` e `precisa_trocar_senha`, o
+      gatilho de ligação pelo e-mail e a função `marcar_senha_trocada()`.
+- [ ] Auth sem cadastro público, com as contas criadas por uma Edge Function de
+      administração.
 - [ ] `apps/mobile/.env.local` com `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`
-      (a chave **pública**) do projeto novo. O `.gitignore` já ignora `.env.*`.
+      (a chave **pública**) do projeto. O `.gitignore` já ignora `.env.*`.
       **Nunca** coloque a chave secreta no front.
 
 ### 8.2 No app
@@ -464,9 +459,9 @@ Só depois que a conta nova do Supabase estiver pronta.
 ### 8.4 Pontos de atenção
 
 - **Tarifa por km pelo nome.** `obterTarifaKm` (`regras/reembolso.ts`) compara o
-  nome de quem preenche com a lista de tarifa especial. O `nome` que vem de
-  `app.executivos` precisa bater com essa lista, ou a tarifa passa a vir do back
-  end. Decidir nesta etapa.
+  nome de quem preenche com a lista de tarifa especial. O servidor já usa a
+  tarifa da tabela `executivos`; com login, a tela também pode passar a usá-la.
+  Decidir nesta etapa.
 - **Sem internet com sessão guardada:** confirmar que o app abre e segue para a
   abertura.
 - **Documentos a atualizar:** `docs/FORMULARIO.md` (§4) e `docs/ARQUITETURA.md`

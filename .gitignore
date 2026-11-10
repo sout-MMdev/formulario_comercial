@@ -14,6 +14,9 @@ dist/
 .claude/
 settings.json
 
+# Pasta de outro projeto que já esteve aqui: nunca versionar
+crm_cativa_comercial/
+
 # Capturas e logs de testes no navegador (Playwright)
 .playwright-mcp/
 

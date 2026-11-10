@@ -2,3 +2,7 @@
 .env
 .env.local
 .env.*.local
+
+# Planilhas de importação (dados reais): nunca versionar
+importacao/*.csv
+importacao/*.xlsx

@@ -19,7 +19,7 @@ import {
 import { emailValido } from "@cativa/nucleo/regras";
 import "./TelaLogin.css";
 
-// ── Contrato (LOGIN.md §5) ───────────────────────────────────────
+// ── Contrato (docs/planejamento/login-mobile.md §5) ──────────────
 // Na etapa 2 estes três tipos mudam para @cativa/nucleo/tipos.
 
 /** Quem entrou. `nome` é a chave usada na tarifa por km. */
@@ -77,8 +77,8 @@ export function TelaLogin({
     if (entrando) return;
 
     // Lê do próprio formulário, não só do estado: o preenchimento
-    // automático do navegador às vezes não dispara o onChange (o login
-    // do CRM já teve esse problema).
+    // automático do navegador às vezes não dispara o onChange (problema
+    // comum em telas de login).
     const dados = new FormData(evento.currentTarget);
     const emailDigitado = String(dados.get("email") ?? "").trim();
     const senhaDigitada = String(dados.get("senha") ?? "");

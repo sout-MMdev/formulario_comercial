@@ -1,7 +1,7 @@
 // ================================================================
 // ENVIO — IMPLEMENTAÇÃO REAL (back end)
 // Manda o relatório do dia para a Edge Function `receber-formulario`,
-// que grava tudo no CRM (schema app) e dispara a cópia por e-mail.
+// que valida, recalcula, grava no banco e dispara a cópia por e-mail.
 // Usada quando há back end configurado; senão, entra o envioMock.
 // ================================================================
 
