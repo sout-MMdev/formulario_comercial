@@ -125,7 +125,7 @@ select * from public.registrar_relatorio(
         "produtos": [], "atendentes": [],
         "cep": null, "logradouro": null, "numero": null, "complemento": null,
         "bairro": null, "cidade": "Ponta Grossa", "uf": "PR",
-        "estresses": [{ "nivel": "Baixo", "setores": [], "descricao": null }],
+        "estresses": [{ "nivel": "Baixo", "setores": ["Comercial"], "descricao": null }],
         "acoes": [{ "setor": "Comercial", "detalhe": "Apresentar o pacote de fim de ano." }] }
     ],
     "trajetos": [
