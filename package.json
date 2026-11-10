@@ -18,7 +18,16 @@
     "preview:desktop": "npm run preview --workspace @cativa/desktop",
     "preview:mobile": "npm run preview --workspace @cativa/mobile",
     "typecheck": "tsc -b",
-    "test": "npm run test --workspace @cativa/nucleo"
+    "test": "npm run test --workspace @cativa/nucleo && node --test backend/testes/unidade/*.teste.ts",
+    "backend:iniciar": "npx -y supabase@2.122.0 start --workdir backend",
+    "backend:parar": "npx -y supabase@2.122.0 stop --workdir backend",
+    "backend:status": "npx -y supabase@2.122.0 status --workdir backend",
+    "backend:resetar": "npx -y supabase@2.122.0 db reset --workdir backend",
+    "backend:testar-banco": "npx -y supabase@2.122.0 test db --workdir backend",
+    "backend:testar-funcoes": "node --test backend/testes/integracao/*.teste.ts",
+    "backend:testar": "npm run backend:testar-banco && npm run backend:testar-funcoes",
+    "backend:conectar-apps": "node backend/scripts/conectar-apps.ts",
+    "backend:desconectar-apps": "node backend/scripts/conectar-apps.ts --remover"
   },
   "devDependencies": {
     "@types/node": "^26.1.2",

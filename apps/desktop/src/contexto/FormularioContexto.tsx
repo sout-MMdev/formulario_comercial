@@ -135,14 +135,14 @@ export function ProvedorFormulario({ children }: { children: ReactNode }) {
   const salvarDia = useCallback(async (): Promise<ResultadoEnvio> => {
     const dia = montarDiaParaSalvar();
     // Envia ao CRM (+ cópia por e-mail); a cópia local só é gravada se
-    // o envio foi aceito. Se falhar, o formulário fica preenchido para
-    // o executivo tentar de novo.
-    const resultado = await finalizarDia(dia, {
+    // o envio foi aceito. O formulário NÃO é zerado aqui: zerar volta
+    // para a Identificação e desmontaria a confirmação na tela de
+    // Resumo. Quem zera é o Resumo, quando o executivo fecha a
+    // confirmação de sucesso. Na falha, os dados ficam para tentar de novo.
+    return finalizarDia(dia, {
       repositorio: repositorioDias,
       envio: servicoEnvio,
     });
-    if (resultado.enviadoAoCrm) despachar({ tipo: "reiniciar" });
-    return resultado;
   }, [montarDiaParaSalvar]);
 
   const valor = useMemo<ValorContexto>(

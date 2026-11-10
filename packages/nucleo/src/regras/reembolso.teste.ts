@@ -13,6 +13,7 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import {
+  calcularReembolsoComTarifa,
   calcularReembolsoKm,
   calcularTotaisDia,
   classificarDespesa,
@@ -92,6 +93,27 @@ describe("reembolso de quilometragem", () => {
     assert.equal(calcularReembolsoKm(0, "PAULO SOUZA"), 0);
     assert.equal(calcularReembolsoKm(-10, "PAULO SOUZA"), 0);
     assert.equal(calcularReembolsoKm(Number.NaN, "PAULO SOUZA"), 0);
+  });
+});
+
+// ── Reembolso com a tarifa informada ─────────────────────────────
+// O servidor usa a tarifa que está no banco, não a lista do front.
+
+describe("reembolso com tarifa informada", () => {
+  it("multiplica os KM pela tarifa recebida", () => {
+    assert.equal(calcularReembolsoComTarifa(100, 1.3), 130);
+  });
+
+  it("arredonda em duas casas, igual ao cálculo por nome", () => {
+    assert.equal(
+      calcularReembolsoComTarifa(10.5, 1.43),
+      Number((10.5 * 1.43).toFixed(2)),
+    );
+  });
+
+  it("devolve zero para quilometragem zero ou negativa", () => {
+    assert.equal(calcularReembolsoComTarifa(0, 1.3), 0);
+    assert.equal(calcularReembolsoComTarifa(-5, 1.3), 0);
   });
 });
 

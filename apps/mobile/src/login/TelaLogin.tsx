@@ -1,6 +1,6 @@
 // ================================================================
 // TELA DE LOGIN (mobile)
-// Etapa 1 do Login/LOGIN.md: visual e comportamento.
+// Etapa 1 de docs/planejamento/login-mobile.md: visual e comportamento.
 //
 // A tela só mostra e avisa. Quem confere a senha de verdade é quem
 // passa `aoEntrar` — hoje um login de teste, depois o simulado do
@@ -17,7 +17,7 @@ import {
   NOME_EMPRESA,
 } from "@cativa/nucleo/config";
 import { emailValido } from "@cativa/nucleo/regras";
-import "./Loginmobile.css";
+import "./TelaLogin.css";
 
 // ── Contrato (LOGIN.md §5) ───────────────────────────────────────
 // Na etapa 2 estes três tipos mudam para @cativa/nucleo/tipos.
@@ -40,7 +40,7 @@ export type ResultadoEntrar =
   | { ok: true; usuario: UsuarioSessao }
   | { ok: false; motivo: MotivoFalhaLogin; mensagem: string };
 
-interface PropsLogintelamobile {
+interface PropsTelaLogin {
   /** E-mail lembrado neste celular ("" se não houver). */
   emailLembrado: string;
   /** Tenta entrar. A tela não sabe se o login é simulado ou real. */
@@ -51,10 +51,10 @@ interface PropsLogintelamobile {
   }) => Promise<ResultadoEntrar>;
 }
 
-export function Logintelamobile({
+export function TelaLogin({
   emailLembrado,
   aoEntrar,
-}: PropsLogintelamobile) {
+}: PropsTelaLogin) {
   const [email, setEmail] = useState(emailLembrado);
   const [senha, setSenha] = useState("");
   const [lembrarEmail, setLembrarEmail] = useState(Boolean(emailLembrado));

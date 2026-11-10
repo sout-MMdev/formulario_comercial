@@ -62,6 +62,8 @@ interface ValorContexto {
   escolherRelatorio: (fluxo: NomeFluxo) => void;
   adicionarRelatorio: (fluxo: NomeFluxo) => void;
   salvarDia: () => Promise<ResultadoEnvio>;
+  /** Depois de um envio aceito: zera o dia e volta ao primeiro passo. */
+  comecarOutroDia: () => void;
 }
 
 export const FormularioContexto = createContext<ValorContexto | null>(null);
@@ -186,19 +188,21 @@ export function ProvedorFormulario({ children }: { children: ReactNode }) {
     };
 
     // Envia ao CRM (+ cópia por e-mail); a cópia local só é gravada se
-    // o envio foi aceito. Se falhar, o formulário fica preenchido para
-    // o executivo tentar de novo.
-    const resultado = await finalizarDia(dia, {
+    // o envio foi aceito. O formulário NÃO é zerado aqui: o passo de
+    // Resumo mostra a confirmação e chama comecarOutroDia() quando o
+    // executivo a fecha. Na falha, os dados ficam para tentar de novo.
+    return finalizarDia(dia, {
       repositorio: repositorioDias,
       envio: servicoEnvio,
     });
-    if (resultado.enviadoAoCrm) {
-      despachar({ tipo: "reiniciar" });
-      setPasso("executivo");
-      setSentido("avancar");
-    }
-    return resultado;
   }, [estado, agenciasVisitadas]);
+
+  /** Zera o dia (mantém o executivo) e volta ao primeiro passo. */
+  const comecarOutroDia = useCallback(() => {
+    despachar({ tipo: "reiniciar" });
+    setPasso("executivo");
+    setSentido("avancar");
+  }, []);
 
   const valor = useMemo<ValorContexto>(
     () => ({
@@ -219,6 +223,7 @@ export function ProvedorFormulario({ children }: { children: ReactNode }) {
       escolherRelatorio,
       adicionarRelatorio,
       salvarDia,
+      comecarOutroDia,
     }),
     [
       estado,
@@ -236,6 +241,7 @@ export function ProvedorFormulario({ children }: { children: ReactNode }) {
       escolherRelatorio,
       adicionarRelatorio,
       salvarDia,
+      comecarOutroDia,
     ],
   );
 

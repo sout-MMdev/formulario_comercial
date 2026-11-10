@@ -4,10 +4,10 @@ Desenho da tela de login do app mobile e do caminho até a integração com o
 Supabase, combinado em **15/09/2026**. É o guia para quem for codificar: a
 **etapa 1 (a tela)** é a de agora; as outras seguem a ordem da §2.
 
-> **Conta do Supabase em migração.** Nada neste documento depende de URL, chave
-> ou id de projeto: tudo isso vem do `.env`. Os documentos de
-> `backend/docsupabase/` citam o projeto atual — confira com a conta nova antes
-> de usar qualquer valor de lá.
+> **Situação:** planejamento de uma funcionalidade futura. Hoje existe só a
+> etapa 1 (a tela, em `apps/mobile/src/login/`, aberta com `/?login` e um login
+> de teste). O login real não faz parte do back-end local deste repositório
+> (ver `docs/ARQUITETURA.md`, "Limitações conhecidas").
 
 ---
 
@@ -16,19 +16,19 @@ Supabase, combinado em **15/09/2026**. É o guia para quem for codificar: a
 Não mudar sem falar com a Cativa. A fonte de cada regra está entre parênteses
 (links na §13).
 
-- **O formulário exige login** (Entrega §5.1). Isso fecha o `receber-formulario`
+- **O formulário exige login**. Isso fecha o `receber-formulario`
   público e tira do ar as listas públicas de agências e de executivos.
 - **E-mail e senha**, pelo Supabase Auth (`signInWithPassword`). Sem cadastro
-  público, sem login social, sem SSO, sem link mágico (Respostas §5.1; Análise §A2).
+  público, sem login social, sem SSO, sem link mágico.
 - **Quem cria as contas é o sistema**, pela Edge Function `admin-usuarios` do CRM,
   com **senha provisória**. No 1º acesso a troca é obrigatória
-  (`precisa_trocar_senha` + função `marcar_senha_trocada()`) (Respostas §5.1 e §5.4).
+  (`precisa_trocar_senha` + função `marcar_senha_trocada()`).
 - **Não existe "esqueci minha senha" automático.** Quem esquece fala com o gestor,
-  que reseta a senha pela administração (Respostas §5.4).
+  que reseta a senha pela administração.
 - **O executivo do formulário é o mesmo usuário do CRM:** `app.executivos` se liga
   ao `auth.users` por `auth_id`, e o gatilho `trg_link_executivo` faz essa ligação
-  pelo e-mail (Respostas).
-- **Os dois Auth não se confundem** (Entrega §6.1): o login do formulário é o Auth
+  pelo e-mail.
+- **Os dois Auth não se confundem**: o login do formulário é o Auth
   do **projeto do CRM**. O projeto CATIVA (base de unidades) tem outro Auth, com
   outra finalidade, e não serve aqui.
 - **A chave pública no navegador é pública por natureza.** Quem protege os dados é
@@ -85,7 +85,7 @@ tela inteira (rola quando o teclado sobe)
 | Fundo | Arte dos 25 anos salva em `apps/mobile/public/assets/img/fundo-login.jpg`, reduzida para 800 px (71 KB). Numa camada com `position: fixed` atrás de tudo: `background-size: cover`, `filter: blur(24px)` e `inset: -5rem` (a camada passa das bordas da tela). Cor de reserva: `--cor-marca-900`. | Imagem desfocada não precisa de resolução, então o arquivo fica leve. O desfoque esmaece as beiradas da imagem; com a camada passando das bordas, essa parte fica fora da vista em qualquer tamanho de tela. |
 | Camada azul | Por cima do fundo, com a cor `--cor-login-veu`. | Garante a leitura do texto branco. |
 | Cartão | Fundo `--cor-vidro`; borda 1px `--cor-vidro-borda`; `--raio-xl`; `backdrop-filter: blur(12px)` **e** `-webkit-backdrop-filter: blur(12px)`; espaço interno `--esp-6`; margem lateral `--esp-5`; largura máxima `--largura-maxima`. | Sem o prefixo `-webkit-`, o vidro não aparece nos iPhones mais antigos. |
-| Logo | `apps/mobile/public/assets/img/logo-cativa-branca.png`: cópia de `crm_cativa_comercial/public/img/logobranca-cativa.png` (4229 px, 326 KB) reduzida para 320 px (24 KB). Na tela, 110 px de largura. O caminho vai numa constante `CAMINHO_LOGO_BRANCA` em `packages/nucleo/src/config/app.ts`, ao lado de `CAMINHO_LOGO`. | A logo azul que o app usa hoje some no fundo azul. |
+| Logo | `apps/mobile/public/assets/img/logo-cativa-branca.png`: versão branca do logo, reduzida para 320 px (24 KB). Na tela, 110 px de largura. O caminho vai numa constante `CAMINHO_LOGO_BRANCA` em `packages/nucleo/src/config/app.ts`, ao lado de `CAMINHO_LOGO`. | A logo azul que o app usa hoje some no fundo azul. |
 | Título | "Boas-vindas!" com `--fonte-manuscrita` (Kaushan Script), tamanho `--texto-3xl`, branco, centralizado. | Serve para executivos e executivas. |
 | Linha | 1px, cor `--cor-vidro-linha`, entre o título e o nome do app. | Igual à referência. |
 | Nome do app | `NOME_APP` do núcleo; `--texto-xs`, `--peso-medio`, `--letra-ampla`, maiúsculas, cor `--cor-vidro-texto-suave`. | Mesmo estilo da tela de abertura. |
@@ -98,7 +98,7 @@ tela inteira (rola quando o teclado sobe)
 | Rodapé | Fora do cartão; `--texto-xs`; cor `--cor-vidro-texto-suave`; espaço de baixo somando `--seguro-baixo`. `NOME_EMPRESA` e o ano com `new Date().getFullYear()`, como na tela de abertura. | Sem recuperação automática de senha, o caminho é o gestor. |
 | Rolagem | A tela usa `min-height: 100dvh` e o conteúdo começa do topo (espaço `--esp-10` + `--seguro-topo`). **Não** centralizar com posição fixa. | Quando o teclado sobe, a pessoa precisa conseguir rolar até o botão. |
 
-### 3.3 O que acrescentar fora da pasta `Login`
+### 3.3 O que acrescentar fora da pasta `login`
 
 **`apps/mobile/src/estilos/tema/cores.css`** — nova seção no fim do `:root`
 (o projeto não permite cor escrita direto no componente):
@@ -152,8 +152,8 @@ chave: Key,
 
 ### 3.4 Nomes
 
-Os arquivos podem manter os nomes atuais (`Logintelamobile.tsx` e
-`Loginmobile.css`); o `.tsx` importa o CSS com `import "./Loginmobile.css";`.
+Os arquivos são `src/login/TelaLogin.tsx` e `src/login/TelaLogin.css`;
+o `.tsx` importa o CSS com `import "./TelaLogin.css";`.
 As classes seguem o padrão do app (`bloco__elemento`):
 
 `login`, `login__fundo`, `login__veu`, `login__cartao`, `login__logo`,
@@ -190,8 +190,8 @@ celular (Google ou iCloud) reconhece a tela e oferece salvar e preencher.
 1. Se já está entrando, não faz nada: dois toques não viram duas tentativas.
 2. Lê o e-mail e a senha **do próprio formulário**
    (`new FormData(evento.currentTarget)`), não só do estado. O preenchimento
-   automático do navegador às vezes não dispara o `onChange` — o login do CRM já
-   teve esse problema. O e-mail vai sem espaços nas pontas (`trim()`).
+   automático do navegador às vezes não dispara o `onChange` (problema comum em
+   telas de login). O e-mail vai sem espaços nas pontas (`trim()`).
 3. Confere sem chamar ninguém:
    - algum campo vazio → "Preencha e-mail e senha."
    - e-mail fora do formato (`emailValido`, de `@cativa/nucleo/regras`) →
@@ -246,7 +246,7 @@ export type ResultadoEntrar =
   | { ok: true; usuario: UsuarioSessao }
   | { ok: false; motivo: MotivoFalhaLogin; mensagem: string };
 
-interface PropsLogintelamobile {
+interface PropsTelaLogin {
   /** E-mail lembrado neste celular ("" se não houver). */
   emailLembrado: string;
   /** Tenta entrar. A tela não sabe se o login é simulado ou real. */
@@ -258,7 +258,7 @@ interface PropsLogintelamobile {
 }
 ```
 
-- **Etapa 1:** os tipos podem ficar no próprio `Logintelamobile.tsx`.
+- **Etapa 1:** os tipos podem ficar no próprio `TelaLogin.tsx`.
 - **Etapa 2:** `UsuarioSessao`, `MotivoFalhaLogin` e `ResultadoEntrar` mudam para
   `packages/nucleo/src/tipos/index.ts`, e a tela passa a importá-los de
   `@cativa/nucleo/tipos`.
@@ -272,13 +272,13 @@ Enquanto o login não está na entrada do app (§7), um desvio **temporário** n
 **depois** dos hooks (`useState` e `useFormulario`), senão o React reclama:
 
 ```tsx
-// TEMPORÁRIO (etapa 1 do login) — sai na etapa 3 (Login/LOGIN.md §7).
+// TEMPORÁRIO (etapa 1 do login) — sai na etapa 3 (docs/planejamento/login-mobile.md §7).
 // `?login` mostra a tela com um login de teste; `?login=seu@email`
 // simula um e-mail lembrado; "erro@teste.com" simula senha errada.
 const parametros = new URLSearchParams(window.location.search);
 if (parametros.has("login")) {
   return (
-    <Logintelamobile
+    <TelaLogin
       emailLembrado={parametros.get("login") ?? ""}
       aoEntrar={async ({ email }) => {
         await new Promise((esperar) => setTimeout(esperar, 800));
@@ -369,7 +369,7 @@ Abre o app
 ```
 
 O login vem **antes** da abertura porque a abertura carrega as agências, e
-`listar-agencias` passa a exigir login (Entrega §5.1). Quem já entrou uma vez não
+`listar-agencias` passa a exigir login. Quem já entrou uma vez não
 vê mais o login: a sessão fica guardada e se renova sozinha.
 
 ### 7.2 O que muda
@@ -416,7 +416,7 @@ Só depois que a conta nova do Supabase estiver pronta.
 ### 8.1 Antes de começar
 
 - [ ] Projeto **do CRM** criado na conta nova. É o Auth dele que guarda os
-      executivos (Entrega §6.1).
+      executivos.
 - [ ] Primeira migration aplicada: `app.executivos` com `auth_id` e
       `precisa_trocar_senha`, o gatilho `trg_link_executivo` e a função
       `marcar_senha_trocada()`.
@@ -429,12 +429,11 @@ Só depois que a conta nova do Supabase estiver pronta.
 ### 8.2 No app
 
 1. Instalar a biblioteca no núcleo:
-   `npm install @supabase/supabase-js --workspace @cativa/nucleo` (o CRM usa a
-   versão 2).
+   `npm install @supabase/supabase-js --workspace @cativa/nucleo` (versão 2).
 2. Criar um cliente único no núcleo, só quando `TEM_BACKEND`:
-   `createClient(SUPABASE_URL, SUPABASE_ANON, { db: { schema: "app" } })`. As
+   `createClient(SUPABASE_URL, SUPABASE_ANON)`. As
    opções padrão já guardam a sessão no `localStorage` e renovam o token
-   sozinhas. Modelo: `crm_cativa_comercial/src/lib/supabase.ts`.
+   sozinhas.
 3. `entrar`: `auth.signInWithPassword({ email, password: senha })`.
    - Erro → `traduzirErroLogin(error)`.
    - Sucesso → buscar o executivo com
@@ -448,9 +447,8 @@ Só depois que a conta nova do Supabase estiver pronta.
    mandam `Authorization: Bearer <chave pública>`. Passam a mandar o token de quem
    entrou (`session.access_token`). O cabeçalho `apikey` continua com a chave
    pública.
-6. Modelo da lógica toda: `crm_cativa_comercial/src/contexto/SessaoContexto.tsx`.
 
-### 8.3 No back end (Entrega §5.1)
+### 8.3 No back end
 
 - `listar-agencias`, `listar-executivos` e `receber-formulario` passam a ser
   publicadas **sem** `--no-verify-jwt`.
@@ -471,7 +469,7 @@ Só depois que a conta nova do Supabase estiver pronta.
   end. Decidir nesta etapa.
 - **Sem internet com sessão guardada:** confirmar que o app abre e segue para a
   abertura.
-- **Documentos a atualizar:** `docs/FORMULARIO.md` (§4) e `docs/VISAO-GERAL.md`
+- **Documentos a atualizar:** `docs/FORMULARIO.md` (§4) e `docs/ARQUITETURA.md`
   ainda dizem que o formulário não tem login.
 
 ---
@@ -485,9 +483,6 @@ Só depois que a conta nova do Supabase estiver pronta.
   `rpc("marcar_senha_trocada")` (a função só mexe na linha da própria pessoa).
 - Mensagens próprias para `weak_password` (senha fraca) e `same_password` (igual
   à provisória).
-- Modelo: `concluirPrimeiroAcesso` em
-  `crm_cativa_comercial/src/contexto/SessaoContexto.tsx` e a tela
-  `crm_cativa_comercial/src/pages/TrocarSenha/`.
 
 ---
 
@@ -506,7 +501,7 @@ Só depois que a conta nova do Supabase estiver pronta.
 ## 11. Fora deste trabalho
 
 - **"Esqueci minha senha" automático.** Depende de SMTP próprio no Auth (Resend) e
-  de um endereço de retorno (Análise §C8). Por enquanto, quem esquece fala com o
+  de um endereço de retorno. Por enquanto, quem esquece fala com o
   gestor.
 - **Dias salvos por pessoa.** A lista `cativa_dias_salvos` é do aparelho: se duas
   pessoas usarem o mesmo celular, uma vê os dias da outra.
@@ -529,18 +524,10 @@ Só depois que a conta nova do Supabase estiver pronta.
 
 ## 13. Referências
 
-- **Entrega** — decisões da Cativa (§5.1 login; §6.1 os dois Auth):
-  [CRM_CATIVA_COMERCIAL_ENTREGA_DEV.md](../../../../backend/docsupabase/CRM_CATIVA_COMERCIAL_ENTREGA_DEV.md)
-- **Respostas** — autenticação e controle de acesso (§5):
-  [CRM_CATIVA_COMERCIAL_RESPOSTAS.md](../../../../docs/CRM_CATIVA_COMERCIAL_RESPOSTAS.md)
-- **Análise** — por que o formulário ganhou login (§B1), fluxos de Auth (§A2) e
-  "esqueci minha senha" (§C8):
-  [CRM_CATIVA_COMERCIAL_RESPOSTA_ANALISE.md](../../../../docs/CRM_CATIVA_COMERCIAL_RESPOSTA_ANALISE.md)
-- **backend/README** — o papel do RLS:
-  [README.md](../../../../backend/README.md)
-- **Visão do formulário:** [FORMULARIO.md](../../../../docs/FORMULARIO.md)
-- **Login pronto no CRM** (lógica para copiar; o visual é outro):
-  [Login.tsx](../../../../crm_cativa_comercial/src/pages/Login/Login.tsx) ·
-  [SessaoContexto.tsx](../../../../crm_cativa_comercial/src/contexto/SessaoContexto.tsx) ·
-  [supabase.ts](../../../../crm_cativa_comercial/src/lib/supabase.ts) ·
-  [TrocarSenha.tsx](../../../../crm_cativa_comercial/src/pages/TrocarSenha/TrocarSenha.tsx)
+- **Arquitetura atual** (back-end sem login, banco fechado):
+  [ARQUITETURA.md](../ARQUITETURA.md)
+- **Back-end local** (o papel do RLS e das Edge Functions):
+  [backend/README.md](../../backend/README.md)
+- **Visão dos apps:** [FORMULARIO.md](../FORMULARIO.md)
+- **Supabase Auth com e-mail e senha:**
+  [documentação oficial](https://supabase.com/docs/guides/auth/passwords)

@@ -14,11 +14,8 @@ dist/
 .claude/
 settings.json
 
-# Projeto separado (CRM em React) - possui repositório próprio
-crm_cativa_comercial/
-
-# Versão antiga do formulário (mantida apenas localmente)
-estrutura.html
+# Capturas e logs de testes no navegador (Playwright)
+.playwright-mcp/
 
 # Sistema operacional
 Thumbs.db

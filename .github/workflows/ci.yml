@@ -1,0 +1,61 @@
+# ================================================================
+# CI — roda a cada push e pull request
+#   front: tipos + testes de unidade (núcleo e back-end) + build dos apps
+#   back:  sobe um Supabase temporário no runner do GitHub e roda os
+#          testes do banco (pgTAP) e das Edge Functions (integração)
+# Nada aqui usa conta do Supabase nem segredos: o banco é local ao runner
+# e some no fim do job.
+# ================================================================
+
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  front:
+    name: Front (tipos, testes e build)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+
+  back:
+    name: Back-end (banco e Edge Functions)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      # Só os serviços que os testes usam: banco, API (Kong + PostgREST),
+      # Auth, Edge Functions e Mailpit. Painel, logs e storage ficam de fora.
+      - name: Subir o Supabase local
+        run: npm run backend:iniciar -- -x studio,imgproxy,logflare,vector,realtime,storage-api,supavisor
+
+      - name: Testes do banco e das Edge Functions
+        run: npm run backend:testar

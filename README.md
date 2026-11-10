@@ -1,33 +1,40 @@
-# 💼 Formulário Comercial — Gestão de Visitas & Despesas (Desktop & Mobile PWA)
+# 💼 Formulário Comercial — Visitas & Despesas (Desktop, Mobile PWA e Back-end)
 
 <div align="center">
+
+  [![CI](https://github.com/sout-MMdev/formulario_comercial/actions/workflows/ci.yml/badge.svg)](https://github.com/sout-MMdev/formulario_comercial/actions/workflows/ci.yml)
+  ![Testes](https://img.shields.io/badge/Testes-221%20passando-brightgreen?style=flat)
+  ![Node.js](https://img.shields.io/badge/Node.js-22.18%2B-339933?style=flat&logo=nodedotjs&logoColor=white)
 
   ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
   ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
   ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
   ![PWA](https://img.shields.io/badge/PWA-Ready-5A0FC8?style=for-the-badge&logo=pwa&logoColor=white)
-  ![Testes](https://img.shields.io/badge/Testes-64%2F64%20Passando%20%E2%9C%85-brightgreen?style=for-the-badge)
-  ![Node.js](https://img.shields.io/badge/Node.js-20%2B-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+  ![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white)
+  ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+  ![Deno](https://img.shields.io/badge/Deno-000000?style=for-the-badge&logo=deno&logoColor=white)
 
   <br>
 
   <p align="center">
-    <strong>Solução corporativa desenvolvida para substituir processos manuais em planilhas por uma plataforma ágil, responsiva e com cálculo financeiro automatizado em TypeScript puro.</strong>
+    <strong>Plataforma que substitui planilhas de Excel por dois apps (computador e celular) com cálculo financeiro automático, um núcleo de regras em TypeScript puro e um back-end com banco, funções e testes.</strong>
   </p>
 
   <p align="center">
-    <a href="#-o-desafio-de-negócio-do-excel-ao-app">O Desafio de Negócio</a> •
-    <a href="#-guia-rápido-para-avaliadores--recrutadores">Guia para Avaliadores</a> •
-    <a href="#-arquitetura-monorepo">Arquitetura</a> •
-    <a href="#-desktop--mobile-pwa">Desktop × Mobile</a> •
-    <a href="#-regras-de-negócio--testes">Regras & Testes</a> •
-    <a href="#-como-executar">Como Executar</a> •
-    <a href="#-autor">Autor</a>
+    <a href="#desafio">O Desafio</a> •
+    <a href="#guia">Guia para Avaliadores</a> •
+    <a href="#arquitetura">Arquitetura</a> •
+    <a href="#desktop-mobile">Desktop × Mobile</a> •
+    <a href="#testes">Regras & Testes</a> •
+    <a href="#como-executar">Como Executar</a> •
+    <a href="#autor">Autor</a>
   </p>
 
 </div>
 
 ---
+
+<a name="desafio"></a>
 
 ## 🎯 O Desafio de Negócio: Do Excel ao App
 
@@ -40,76 +47,116 @@ Historicamente, as equipes comerciais externas e a gestão utilizavam **planilha
 * ❌ **Processo Lento e Descentralizado:** Preenchimentos demorados no fim do expediente geravam atrasos no pagamento de reembolsos.
 
 ### A Solução Implementada:
-Desenvolvi este sistema com **dois aplicativos desacoplados** (Desktop e Mobile PWA) integrados a um **motor de domínio compartilhado em TypeScript puro**. O sistema automatiza regras financeiras rigorosas, calcula instantaneamente os valores a reembolsar, exige anexos apenas para compras no cartão pessoal, salva rascunhos offline no dispositivo e centraliza a ocorrência de relacionamento das agências.
+Desenvolvi **dois aplicativos** (Desktop e Mobile PWA) que compartilham um **núcleo de regras em TypeScript puro**, e um **back-end em Supabase** que recebe os relatórios. O sistema calcula na hora os valores a reembolsar, exige comprovante só para compras no cartão pessoal, salva o histórico no dispositivo e grava cada dia no banco de forma segura: o servidor **refaz as contas com a tarifa do banco**, grava tudo numa transação só e manda uma cópia por e-mail ao executivo.
 
 ---
+
+<a name="guia"></a>
 
 ## 🚀 Guia Rápido para Avaliadores & Recrutadores
 
-Você pode clonar e rodar o projeto **imediatamente na sua máquina sem precisar criar banco de dados ou configurar chaves**.
+### 1. Ver funcionando em 2 comandos (sem Docker)
 
-O sistema conta com um **Modo Demonstração (Mock Seguro)** nativo: na ausência de variáveis de ambiente de produção, ele aciona automaticamente fallbacks fictícios conformes com a LGPD:
+O **modo demonstração** usa dados fictícios e simula o envio — nada de banco ou chaves:
 
-1. **Instale e rode em 2 comandos:**
-   ```bash
-   npm install
-   npm run dev:desktop   # Abre em http://localhost:5501
-   ```
-2. **Cenários prontos para testar no Desktop:**
-   * **Tarifas Dinâmicas de KM:** Selecione diferentes executivos (ex: *Diego Martins* possui tarifa diferenciada de R$ 1,43/km vs. *Paulo Souza* com R$ 1,30/km padrão). Veja o reembolso atualizar no resumo ao vivo.
-   * **Classificação de Despesas:** Lance um gasto no **Cartão Pessoal** (o sistema exige upload de comprovante e soma no reembolso) vs. **Cartão Clara/Corporativo** com combustível (o sistema desconta automaticamente do reembolso final).
-   * **Termômetro de Relacionamento:** Marque o estresse da agência como *Alto* ou *Crítico* e veja a validação exigir a descrição do problema e os setores acionados.
-   * **Persistência Local:** Salve o dia e feche o navegador. Ao reabrir, os dados continuam disponíveis no histórico de rascunhos (`localStorage`).
-3. **Cenários para testar no Mobile PWA (`npm run dev:mobile` - porta 5502):**
-   * Interface mobile first com alvos de toque de 56px e teclado numérico adaptado.
-   * **Tela de Login:** Acesse `http://localhost:5502/?login` para visualizar a experiência de login mobile moderno com efeito de vidro (*glassmorphism*).
+```bash
+npm install
+npm run dev:desktop   # http://localhost:5501
+```
+
+### 2. Ver o back-end de verdade (com Docker)
+
+Com o Docker Desktop aberto, o Supabase sobe **na sua máquina**, sem conta:
+
+```bash
+npm run backend:iniciar        # banco PostgreSQL + Edge Functions + caixa de e-mail
+npm run backend:conectar-apps  # liga os apps ao back-end local
+npm run dev:desktop
+```
+
+Preencha um relatório, clique em **Salvar o dia** e confira:
+* as linhas gravadas no **Supabase Studio**: http://127.0.0.1:54323 (tabela `relatorios`);
+* a cópia por e-mail no **Mailpit**: http://127.0.0.1:54324.
+
+### 3. Rodar os testes
+
+```bash
+npm test                  # núcleo + back-end (sem Docker)
+npm run backend:testar    # banco (pgTAP) + Edge Functions pela rede (com Docker)
+```
+
+### Cenários prontos para testar
+* **Tarifas Dinâmicas de KM:** *Diego Martins* tem tarifa de R$ 1,43/km e *Paulo Souza* R$ 1,30/km. Veja o reembolso atualizar no resumo ao vivo.
+* **Classificação de Despesas:** gasto no **Cartão Pessoal** exige comprovante e soma no reembolso; **abastecimento no Cartão Clara** é descontado.
+* **Termômetro de Relacionamento:** estresse *Médio*, *Alto* ou *Crítico* exige descrição e setores.
+* **Histórico Local:** depois de salvar, o dia aparece em "Dias salvos", mesmo fechando o navegador (`localStorage`).
+* **Mobile PWA:** `npm run dev:mobile` (porta 5502), interface com alvos de toque de 56px; protótipo de login em `http://localhost:5502/?login`.
 
 ---
 
-## 🏛️ Arquitetura Monorepo
+<a name="arquitetura"></a>
 
-O projeto adota uma arquitetura modular baseada em **npm workspaces**, desacoplando totalmente a regra de negócio da camada de apresentação:
+## 🏛️ Arquitetura em 1 minuto
+
+```mermaid
+flowchart LR
+  N["packages/nucleo<br/>regras de negócio<br/>em TypeScript puro"]
+  A["apps/desktop e apps/mobile<br/>React no navegador"]
+  subgraph supabase["Supabase local (Docker)"]
+    K["Kong<br/>porta de entrada"] --> F["Edge Functions<br/>Deno"]
+    F -- "chave de serviço" --> DB[("PostgreSQL<br/>RLS fechado")]
+    F -- "cópia do relatório" --> MP["Mailpit<br/>e-mail de teste"]
+  end
+  N -. "mesmas regras" .-> A
+  N -. "mesmas regras" .-> F
+  A -- "HTTPS + chave pública" --> K
+```
+
+* **O mesmo código de regras roda nos dois apps e no servidor.** Mudou uma regra no núcleo, os três acompanham.
+* **O servidor não confia no navegador:** valida tudo de novo e recalcula o dinheiro com a tarifa do banco.
+* **O banco é fechado:** RLS em todas as tabelas; o navegador não lê nem grava nada direto, só pelas três Edge Functions.
+* **Gravação atômica e idempotente:** o dia inteiro entra numa transação; enviar duas vezes não duplica.
+
+📖 Detalhes, diagramas, decisões e limitações: **[docs/ARQUITETURA.md](docs/ARQUITETURA.md)**.
+
+### Mapa do repositório
 
 ```
-formulario/
-├── packages/
-│   ├── nucleo/          ← MOTOR DE DOMÍNIO (TypeScript Puro - DDD)
-│   │   └── src/
-│   │       ├── tipos/       Definições de domínio e tipagem estrita
-│   │       ├── config/      Executivos, tarifas, produtos, setores e APIs
-│   │       ├── regras/      Cálculo de reembolso, validação, fluxo e termômetro
-│   │       ├── estado/      Reducer de estado compartilhado (usado por ambos os apps)
-│   │       ├── servicos/    Integrações (IBGE, ViaCEP, agências, envio e storage)
-│   │       └── utils/       Formatadores de moeda, datas e documentos
-│   │
-│   └── tema/            ← SISTEMA DE DESIGN (Tokens CSS compartilhados)
-│       └── src/
-│           ├── cores.css        Paleta institucional e papéis semânticos
-│           ├── tipografia.css   Escala tipográfica padronizada (Inter)
-│           ├── efeitos.css      Sombras institucionais, raios e transições
-│           └── reset.css        Normalização e suporte a prefers-reduced-motion
-│
-└── apps/
-    ├── desktop/         ← Interface para computador (Abas horizontais e Resumo ao Vivo)
-    └── mobile/          ← Interface Mobile First PWA (Passo a passo com 100dvh e safe-areas)
+formulario_comercial/
+├── apps/                 FRONT-END
+│   ├── desktop/          App para computador (abas + resumo ao vivo)
+│   └── mobile/           App para celular (PWA, um passo por tela)
+├── packages/             COMPARTILHADO
+│   ├── nucleo/           Regras de negócio, estado e tipos (TypeScript puro)
+│   └── tema/             Cores, tipografia e efeitos (tokens CSS)
+├── backend/              BACK-END
+│   ├── supabase/         migrations, seed, testes pgTAP e Edge Functions
+│   ├── testes/           testes de unidade e de integração das funções
+│   └── scripts/          liga os apps ao back-end local
+├── docs/                 arquitetura, apps e planejamento
+└── .github/workflows/    CI: testes a cada push
 ```
+
+Cada pasta principal tem um `README.md` dizendo o que tem ali e onde mexer.
 
 ### O que é compartilhado vs. específico:
 
 | Recurso / Camada | Compartilhado? | Implementação |
 | :--- | :---: | :--- |
-| **Regras de Negócio e Cálculos Financeiros** | ✅ **Sim** | `@cativa/nucleo` (100% agnóstico de UI) |
-| **Gerenciamento de Estado do Formulário** | ✅ **Sim** | `@cativa/nucleo/estado` (FormularioReducer) |
-| **Design Tokens & Variáveis Visuais** | ✅ **Sim** | `@cativa/tema` (CSS moderno) |
-| **Serviços de API e Storage Offline** | ✅ **Sim** | `@cativa/nucleo/servicos` |
+| **Regras de Negócio e Cálculos Financeiros** | ✅ **Sim** (apps e servidor) | `@cativa/nucleo` (sem React) |
+| **Gerenciamento de Estado do Formulário** | ✅ **Sim** | `@cativa/nucleo/estado` (formularioReducer) |
+| **Design Tokens & Variáveis Visuais** | ✅ **Sim** | `@cativa/tema` (CSS) |
+| **Envio, Histórico Local e APIs (IBGE, ViaCEP)** | ✅ **Sim** | `@cativa/nucleo/servicos` |
 | **Layout e Navegação** | ❌ **Específico** | Desktop (Abas) × Mobile (Passos) |
-| **Ergonomia de Entrada (Mouse vs. Touch)** | ❌ **Específico** | Otimizado para o fator de forma de cada dispositivo |
+| **Banco, Chave de Serviço e E-mail** | 🔒 **Só no servidor** | `backend/` (Edge Functions + PostgreSQL) |
 
 ---
 
+<a name="desktop-mobile"></a>
+
 ## 📱 Desktop × Mobile PWA
 
-A versão mobile não é apenas o desktop reduzido; ela foi construída seguindo diretrizes rigorosas de ergonomia móvel:
+A versão mobile não é apenas o desktop reduzido; ela foi construída seguindo diretrizes de ergonomia móvel:
 
 ```
 Fluxo Mobile:
@@ -132,56 +179,36 @@ Fluxo Mobile:
 
 ---
 
-## 🧪 Regras de Negócio & Testes Automatizados
+<a name="testes"></a>
 
-O motor central conta com **64 testes unitários** automatizados rodando nativamente no Node.js via TypeScript puro:
+## 🧪 Regras de Negócio & Testes
 
-```bash
-npm test
-```
-
-```text
-▶ etapas visíveis (5.4ms)
-▶ etapa inicial de cada relatório (1.0ms)
-▶ relatórios que faltam (1.5ms)
-▶ estado de cada etapa na trilha (3.0ms)
-▶ tarifa por quilômetro (5.3ms)
-▶ reembolso de quilometragem (1.2ms)
-▶ classificação da despesa (1.8ms)
-▶ fechamento do dia (2.2ms)
-▶ e-mail (2.4ms)
-▶ identificação (2.3ms)
-▶ visita (1.8ms)
-▶ despesas (2.8ms)
-▶ salvar o dia (0.6ms)
-▶ registro do termômetro (1.1ms)
-▶ envio do relatório para o back end (35.5ms)
-▶ finalizar o dia (5.7ms)
-▶ situação do envio do relatório (7.1ms)
-▶ limpar o texto do local (2.4ms)
-
-ℹ tests 64
-ℹ suites 18
-ℹ pass 64
-ℹ fail 0
-ℹ duration_ms 284ms
-```
-
-Os testes de envio garantem que a tela de "Relatório enviado" só aparece quando o envio foi aceito, e que uma falha mostra um motivo claro em vez de um erro técnico.
+| Camada | Testes | O que cobre |
+| :--- | :---: | :--- |
+| **Núcleo** (`packages/nucleo`) | 67 | Reembolso, validações, fluxo das etapas, envio e formatadores |
+| **Unidade do back-end** (`backend/testes/unidade`) | 53 | Validação do corpo, recálculo no servidor, processamento, HTTP, e-mail |
+| **Banco** (pgTAP, `backend/supabase/tests`) | 90 | Tabelas, RLS, privilégios, regras, gravação atômica, views |
+| **Integração** (`backend/testes/integracao`) | 11 | As Edge Functions chamadas pela rede, com banco e e-mail |
+| **Total** | **221** | O **CI** roda todos a cada push |
 
 ### Regras Principais Validadas nos Testes:
 * **Fórmula de Fechamento do Dia:**
   $$\text{Total a Reembolsar} = \text{Reembolso KM} + \text{Cartão Pessoal} - \text{Abastecimento Cartão Clara}$$
-* **Obrigatoriedade de Comprovantes:** Exigência de nota fiscal anexada para despesas em cartão pessoal; dispensa de comprovante para cartão corporativo pré-aprovado.
-* **Gatilho de Ocorrência:** Obrigatoriedade de detalhamento técnico para níveis de estresse Médio, Alto e Crítico.
+* **Obrigatoriedade de Comprovantes:** nota fiscal exigida para despesas no cartão pessoal; dispensada no cartão corporativo.
+* **Gatilho de Ocorrência:** descrição obrigatória para estresse Médio, Alto e Crítico.
+* **Dinheiro recalculado no servidor:** um reembolso alterado no navegador é ignorado; vale km × tarifa do banco.
+* **Envio honesto:** a tela só diz "Relatório enviado" quando o servidor aceitou; na falha, mostra o motivo e mantém os dados.
 
 ---
+
+<a name="como-executar"></a>
 
 ## ⚙️ Como Executar
 
 ### Pré-requisitos
-* [Node.js](https://nodejs.org/) versão **20.x** ou superior.
-* Gerenciador de pacotes `npm`.
+* [Node.js](https://nodejs.org/) **22.18 ou mais novo** (os testes rodam TypeScript direto no Node).
+* `npm`.
+* Para o back-end: [Docker Desktop](https://www.docker.com/products/docker-desktop/) aberto.
 
 ### 1. Clonar e Instalar
 ```bash
@@ -190,26 +217,34 @@ cd formulario_comercial
 npm install
 ```
 
-### 2. Executar Verificação e Testes
+### 2. Modo demonstração (sem Docker)
 ```bash
-# Validar tipagem estrita em todos os pacotes
-npm run typecheck
-
-# Executar a suíte de testes unitários
-npm test
+npm run dev:desktop   # http://localhost:5501
+npm run dev:mobile    # http://localhost:5502
 ```
 
-### 3. Iniciar as Aplicações
-
+### 3. Modo completo (com Docker)
 ```bash
-# Iniciar a aplicação Desktop (Abre em http://localhost:5501)
+npm run backend:iniciar         # Supabase local: banco, funções e e-mail
+npm run backend:conectar-apps   # apps passam a usar o back-end local
 npm run dev:desktop
+# ...
+npm run backend:desconectar-apps   # volta ao modo demonstração
+npm run backend:parar
+```
 
-# Iniciar a aplicação Mobile PWA (Abre em http://localhost:5502)
-npm run dev:mobile
+Comandos, endereços e "onde mexer para…": **[backend/README.md](backend/README.md)**.
+
+### 4. Verificação
+```bash
+npm run typecheck         # tipos de todos os pacotes
+npm test                  # núcleo + unidade do back-end
+npm run backend:testar    # banco + Edge Functions (Docker)
 ```
 
 ---
+
+<a name="autor"></a>
 
 ## 👨‍💻 Autor
 

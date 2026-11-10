@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* Os módulos puros das Edge Functions e os testes rodam no Node
+       (node --test) e no Deno, que exigem a extensão .ts no import. */
+    "allowImportingTsExtensions": true,
+    "types": ["node"],
+
+    "noEmit": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "tsBuildInfoFile": "../node_modules/.tmp/backend.tsbuildinfo"
+  },
+  /* Só o que é TypeScript "puro". Os index.ts e o servidor.ts usam
+     APIs do Deno (Deno.serve, Deno.env) e são checados pelo Deno.   */
+  "include": ["supabase/functions/_compartilhado/*.ts", "testes/**/*.ts", "scripts/**/*.ts"],
+  "exclude": [
+    "supabase/functions/_compartilhado/servidor.ts",
+    "supabase/functions/*/index.ts"
+  ]
+}

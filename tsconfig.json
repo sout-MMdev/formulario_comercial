@@ -1,8 +1,17 @@
 {
   "files": [],
   "references": [
-    { "path": "./packages/nucleo" },
-    { "path": "./apps/desktop" },
-    { "path": "./apps/mobile" }
+    {
+      "path": "./packages/nucleo"
+    },
+    {
+      "path": "./apps/desktop"
+    },
+    {
+      "path": "./apps/mobile"
+    },
+    {
+      "path": "./backend"
+    }
   ]
 }

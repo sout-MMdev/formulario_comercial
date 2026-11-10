@@ -33,8 +33,15 @@ export function obterTarifaKm(nomeExecutivo: string): number {
  * Arredonda em 2 casas, como no cálculo original.
  */
 export function calcularReembolsoKm(km: number, nomeExecutivo: string): number {
+  return calcularReembolsoComTarifa(km, obterTarifaKm(nomeExecutivo));
+}
+
+/**
+ * Mesmo cálculo, com a tarifa já conhecida. É o que o servidor usa:
+ * a tarifa vem do cadastro do executivo no banco, não da lista do front.
+ */
+export function calcularReembolsoComTarifa(km: number, tarifa: number): number {
   if (!km || km <= 0) return 0;
-  const tarifa = obterTarifaKm(nomeExecutivo);
   return Number((km * tarifa).toFixed(2));
 }
 

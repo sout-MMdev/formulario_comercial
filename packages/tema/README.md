@@ -8,3 +8,9 @@ Pacote compartilhado de **tokens de design, paleta de cores, tipografia, efeitos
 * `efeitos.css`: Raios de borda (`--raio-*`), sombras com tom institucional e transições.
 * `reset.css`: Normalização entre navegadores e suporte a `prefers-reduced-motion`.
 * `index.css`: Ponto único de importação de todos os tokens.
+
+## Como os apps usam
+Os dois apps importam `@cativa/tema` (alias no `vite.config.ts` de cada um) na
+camada `tema` do CSS (`src/estilos/`). Componentes usam **só as variáveis**
+(`var(--cor-...)`, `var(--raio-...)`), nunca cores em HEX direto: mudar a
+identidade visual é mudar este pacote.
