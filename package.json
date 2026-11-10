@@ -28,7 +28,7 @@
     "backend:testar": "npm run backend:testar-banco && npm run backend:testar-funcoes",
     "backend:conectar-apps": "node backend/scripts/conectar-apps.ts",
     "backend:desconectar-apps": "node backend/scripts/conectar-apps.ts --remover",
-    "backend:checar-funcoes": "npx -y deno@2.9.5 check --node-modules-dir=none backend/supabase/functions/listar-executivos/index.ts backend/supabase/functions/listar-agencias/index.ts backend/supabase/functions/receber-formulario/index.ts"
+    "backend:checar-funcoes": "npx -y deno@2.9.5 check --node-modules-dir=none --no-lock backend/supabase/functions/listar-executivos/index.ts backend/supabase/functions/listar-agencias/index.ts backend/supabase/functions/receber-formulario/index.ts"
   },
   "devDependencies": {
     "@types/node": "^26.1.2",
