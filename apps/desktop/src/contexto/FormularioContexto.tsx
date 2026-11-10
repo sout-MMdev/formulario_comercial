@@ -17,7 +17,7 @@ import {
   obterFluxosFaltando,
 } from "@cativa/nucleo/regras";
 import { emailDoExecutivo } from "@cativa/nucleo/servicos/executivos";
-import { gerarId } from "@cativa/nucleo/utils";
+import { gerarId, limparLocal } from "@cativa/nucleo/utils";
 import { repositorioDias } from "@cativa/nucleo/servicos/armazenamento";
 import {
   servicoEnvio,
@@ -120,7 +120,11 @@ export function ProvedorFormulario({ children }: { children: ReactNode }) {
       // criadas pelo "+ Adicionar" não viram registro.
       trajetos: estado.trajetos
         .filter((t) => t.partida.trim() || t.destino.trim() || t.km)
-        .map((t) => ({ ...t })),
+        .map((t) => ({
+          ...t,
+          partida: limparLocal(t.partida),
+          destino: limparLocal(t.destino),
+        })),
       despesas: estado.despesas
         .filter((d) => d.data || d.cartao)
         .map((d) => ({ ...d })),

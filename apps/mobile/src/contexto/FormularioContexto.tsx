@@ -31,6 +31,7 @@ import {
   type ResultadoEnvio,
 } from "@cativa/nucleo/servicos/envio";
 import type { DiaSalvo, NomeFluxo, TotaisDia } from "@cativa/nucleo/tipos";
+import { limparLocal } from "@cativa/nucleo/utils";
 import { montarSequencia, type NomePasso } from "@/navegacao/passos";
 
 /** Sentido da última navegação — comanda a direção da animação. */
@@ -173,7 +174,11 @@ export function ProvedorFormulario({ children }: { children: ReactNode }) {
       agenciasComercial: estado.agenciasComercial.map((a) => ({ ...a })),
       trajetos: estado.trajetos
         .filter((t) => t.partida.trim() || t.destino.trim() || t.km)
-        .map((t) => ({ ...t })),
+        .map((t) => ({
+          ...t,
+          partida: limparLocal(t.partida),
+          destino: limparLocal(t.destino),
+        })),
       despesas: estado.despesas
         .filter((d) => d.data || d.cartao)
         .map((d) => ({ ...d })),

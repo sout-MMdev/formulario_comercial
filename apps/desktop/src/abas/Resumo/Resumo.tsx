@@ -23,6 +23,7 @@ import {
   formatarKm,
   formatarMoeda,
   juntarLista,
+  limparLocal,
 } from "@cativa/nucleo/utils";
 import type { ResultadoEnvio } from "@cativa/nucleo/servicos/envio";
 import { useFormulario } from "@/contexto/useFormulario";
@@ -225,11 +226,11 @@ export function Resumo() {
                     <div className="cartao__corpo">
                       <LinhaDado
                         chave="Partida"
-                        valor={trajeto.partida || "—"}
+                        valor={limparLocal(trajeto.partida) || "—"}
                       />
                       <LinhaDado
                         chave="Destino"
-                        valor={trajeto.destino || "—"}
+                        valor={limparLocal(trajeto.destino) || "—"}
                       />
                       <LinhaDado
                         chave="Distância"

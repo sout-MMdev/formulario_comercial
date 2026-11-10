@@ -6,7 +6,7 @@
   ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
   ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
   ![PWA](https://img.shields.io/badge/PWA-Ready-5A0FC8?style=for-the-badge&logo=pwa&logoColor=white)
-  ![Testes](https://img.shields.io/badge/Testes-49%2F49%20Passando%20%E2%9C%85-brightgreen?style=for-the-badge)
+  ![Testes](https://img.shields.io/badge/Testes-54%2F54%20Passando%20%E2%9C%85-brightgreen?style=for-the-badge)
   ![Node.js](https://img.shields.io/badge/Node.js-20%2B-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 
   <br>
@@ -134,7 +134,7 @@ Fluxo Mobile:
 
 ## 🧪 Regras de Negócio & Testes Automatizados
 
-O motor central conta com **49 testes unitários** automatizados rodando nativamente no Node.js via TypeScript puro:
+O motor central conta com **54 testes unitários** automatizados rodando nativamente no Node.js via TypeScript puro:
 
 ```bash
 npm test
@@ -156,9 +156,9 @@ npm test
 ▶ salvar o dia (0.2ms)
 ▶ registro do termômetro de estresse (0.3ms)
 
-ℹ tests 49
+ℹ tests 54
 ℹ suites 14
-ℹ pass 49
+ℹ pass 54
 ℹ fail 0
 ℹ duration_ms 182ms
 ```
@@ -207,7 +207,7 @@ npm run dev:mobile
 
 ## 👨‍💻 Autor
 
-Desenvolvido por **Maxuel (sout-MMdev)**.
+Desenvolvido por **Maxuel Monteiro (sout-MMdev)**.
 
 [![GitHub](https://img.shields.io/badge/GitHub-sout--MMdev-181717?style=flat&logo=github&logoColor=white)](https://github.com/sout-MMdev)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Maxuel-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Maxuel%20Monteiro-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/maxuel-monteiro/)

@@ -8,7 +8,7 @@ export const NOME_APP = "Relatório Comercial";
 export const NOME_EMPRESA = "Cativa Operadora";
 
 /** Crédito exibido no rodapé. */
-export const DESENVOLVEDOR = "Maxuel Nogueira";
+export const DESENVOLVEDOR = "Maxuel Monteiro";
 
 /** Caminho do logotipo dentro de public/. */
 export const CAMINHO_LOGO = "/assets/img/Logo Cativa_RGB_Logo Azul_Horizontal.png";

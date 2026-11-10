@@ -72,6 +72,15 @@ export function paraNumero(valor: string | number): number {
 
 // ── Texto ────────────────────────────────────────────────────────
 
+/**
+ * "Porto Alegre - RS, " → "Porto Alegre - RS".
+ * O campo de local deixa a vírgula esperando a rua; se a rua não vier,
+ * ela não pode aparecer no resumo nem ir para o envio.
+ */
+export function limparLocal(texto: string): string {
+  return texto.replace(/^[\s,]+|[\s,]+$/g, "");
+}
+
 /** Remove acentos e baixa a caixa — "São Paulo" casa com "sao paulo". */
 export function removerAcentos(texto: string): string {
   return texto
