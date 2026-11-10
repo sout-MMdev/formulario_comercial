@@ -16,7 +16,7 @@
     "./servicos/envio": "./src/servicos/envio/index.ts"
   },
   "scripts": {
-    "test": "node --test src/regras/*.teste.ts src/utils/*.teste.ts",
+    "test": "node --test src/regras/*.teste.ts src/utils/*.teste.ts src/servicos/envio/*.teste.ts",
     "typecheck": "tsc -b"
   }
 }

@@ -17,3 +17,7 @@ export const servicoEnvio: ServicoEnvioRelatorio = TEM_BACKEND
   : envioMock;
 
 export type { ServicoEnvioRelatorio, ResultadoEnvio } from "./servicoEnvio.ts";
+export { classificarEnvio, MOTIVO_FALHA_PADRAO } from "./situacaoEnvio.ts";
+export type { SituacaoEnvio, SituacaoCopia } from "./situacaoEnvio.ts";
+export { finalizarDia } from "./finalizarDia.ts";
+export type { DependenciasFinalizar } from "./finalizarDia.ts";

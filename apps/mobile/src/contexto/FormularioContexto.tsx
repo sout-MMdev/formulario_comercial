@@ -27,6 +27,7 @@ import {
 } from "@cativa/nucleo/regras";
 import { repositorioDias } from "@cativa/nucleo/servicos/armazenamento";
 import {
+  finalizarDia,
   servicoEnvio,
   type ResultadoEnvio,
 } from "@cativa/nucleo/servicos/envio";
@@ -184,12 +185,18 @@ export function ProvedorFormulario({ children }: { children: ReactNode }) {
         .map((d) => ({ ...d })),
     };
 
-    // Guarda uma cópia local e finaliza: envia ao CRM + e-mail
-    await repositorioDias.salvar(dia);
-    const resultado = await servicoEnvio.enviar(dia);
-    despachar({ tipo: "reiniciar" });
-    setPasso("executivo");
-    setSentido("avancar");
+    // Envia ao CRM (+ cópia por e-mail); a cópia local só é gravada se
+    // o envio foi aceito. Se falhar, o formulário fica preenchido para
+    // o executivo tentar de novo.
+    const resultado = await finalizarDia(dia, {
+      repositorio: repositorioDias,
+      envio: servicoEnvio,
+    });
+    if (resultado.enviadoAoCrm) {
+      despachar({ tipo: "reiniciar" });
+      setPasso("executivo");
+      setSentido("avancar");
+    }
     return resultado;
   }, [estado, agenciasVisitadas]);
 

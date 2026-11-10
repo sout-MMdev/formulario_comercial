@@ -28,7 +28,10 @@ import {
   juntarLista,
   limparLocal,
 } from "@cativa/nucleo/utils";
-import type { ResultadoEnvio } from "@cativa/nucleo/servicos/envio";
+import {
+  classificarEnvio,
+  type ResultadoEnvio,
+} from "@cativa/nucleo/servicos/envio";
 import { useFormulario } from "@/contexto/useFormulario";
 import { PASSOS } from "@/navegacao/passos";
 import "./Resumo.css";
@@ -64,6 +67,10 @@ export function Resumo() {
     setSalvando(false);
     setSalvo(true);
   }
+
+  // Só há "Relatório enviado!" quando o CRM aceitou o relatório.
+  const situacao = resultado ? classificarEnvio(resultado) : null;
+  const envioFalhou = situacao?.tipo === "falhou";
 
   return (
     <>
@@ -337,27 +344,40 @@ export function Resumo() {
       {/* ── Confirmação ──────────────────────────────────────── */}
       <Folha
         aberta={salvo}
-        etiqueta="Relatório finalizado"
-        titulo="Relatório enviado!"
+        etiqueta={envioFalhou ? "Envio não concluído" : "Relatório finalizado"}
+        titulo={envioFalhou ? "Não foi possível enviar" : "Relatório enviado!"}
         aoFechar={() => setSalvo(false)}
         rodape={
           <Botao variante="primario" largo onClick={() => setSalvo(false)}>
-            Começar outro dia
+            {envioFalhou ? "Voltar ao resumo" : "Começar outro dia"}
           </Botao>
         }
       >
-        <p className="texto-suave">
-          O relatório foi <strong>enviado ao CRM</strong>.
-          {resultado?.emailEnviado ? (
-            <>
-              {" "}
-              Uma cópia foi para o seu e-mail (
-              <strong>{resultado.emailDestino}</strong>).
-            </>
-          ) : (
-            " Não foi possível identificar seu e-mail para enviar a cópia."
-          )}
-        </p>
+        {situacao?.tipo === "falhou" ? (
+          <p className="texto-suave">
+            {situacao.motivo} Seus dados continuam aqui para você enviar de
+            novo.
+          </p>
+        ) : (
+          <p className="texto-suave">
+            O relatório foi <strong>enviado ao CRM</strong>.
+            {situacao?.copia === "enviada" ? (
+              <>
+                {" "}
+                Uma cópia foi para o seu e-mail (
+                <strong>{situacao.emailDestino}</strong>).
+              </>
+            ) : situacao?.copia === "falhou" ? (
+              <>
+                {" "}
+                Não foi possível enviar a cópia para{" "}
+                <strong>{situacao.emailDestino}</strong> agora.
+              </>
+            ) : (
+              " Não foi possível identificar seu e-mail para enviar a cópia."
+            )}
+          </p>
+        )}
       </Folha>
     </>
   );

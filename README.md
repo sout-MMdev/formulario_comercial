@@ -6,7 +6,7 @@
   ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
   ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
   ![PWA](https://img.shields.io/badge/PWA-Ready-5A0FC8?style=for-the-badge&logo=pwa&logoColor=white)
-  ![Testes](https://img.shields.io/badge/Testes-54%2F54%20Passando%20%E2%9C%85-brightgreen?style=for-the-badge)
+  ![Testes](https://img.shields.io/badge/Testes-64%2F64%20Passando%20%E2%9C%85-brightgreen?style=for-the-badge)
   ![Node.js](https://img.shields.io/badge/Node.js-20%2B-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 
   <br>
@@ -134,34 +134,40 @@ Fluxo Mobile:
 
 ## 🧪 Regras de Negócio & Testes Automatizados
 
-O motor central conta com **54 testes unitários** automatizados rodando nativamente no Node.js via TypeScript puro:
+O motor central conta com **64 testes unitários** automatizados rodando nativamente no Node.js via TypeScript puro:
 
 ```bash
 npm test
 ```
 
 ```text
-▶ etapas visíveis (1.8ms)
-▶ etapa inicial de cada relatório (0.3ms)
-▶ relatórios que faltam (0.4ms)
-▶ estado de cada etapa na trilha (0.4ms)
-▶ tarifa por quilômetro (1.5ms)
-▶ reembolso de quilometragem (0.4ms)
-▶ classificação da despesa (0.6ms)
-▶ fechamento do dia (1.1ms)
-▶ e-mail (1.4ms)
-▶ identificação (0.6ms)
-▶ visita (0.5ms)
-▶ despesas e comprovantes (0.8ms)
-▶ salvar o dia (0.2ms)
-▶ registro do termômetro de estresse (0.3ms)
+▶ etapas visíveis (5.4ms)
+▶ etapa inicial de cada relatório (1.0ms)
+▶ relatórios que faltam (1.5ms)
+▶ estado de cada etapa na trilha (3.0ms)
+▶ tarifa por quilômetro (5.3ms)
+▶ reembolso de quilometragem (1.2ms)
+▶ classificação da despesa (1.8ms)
+▶ fechamento do dia (2.2ms)
+▶ e-mail (2.4ms)
+▶ identificação (2.3ms)
+▶ visita (1.8ms)
+▶ despesas (2.8ms)
+▶ salvar o dia (0.6ms)
+▶ registro do termômetro (1.1ms)
+▶ envio do relatório para o back end (35.5ms)
+▶ finalizar o dia (5.7ms)
+▶ situação do envio do relatório (7.1ms)
+▶ limpar o texto do local (2.4ms)
 
-ℹ tests 54
-ℹ suites 14
-ℹ pass 54
+ℹ tests 64
+ℹ suites 18
+ℹ pass 64
 ℹ fail 0
-ℹ duration_ms 182ms
+ℹ duration_ms 284ms
 ```
+
+Os testes de envio garantem que a tela de "Relatório enviado" só aparece quando o envio foi aceito, e que uma falha mostra um motivo claro em vez de um erro técnico.
 
 ### Regras Principais Validadas nos Testes:
 * **Fórmula de Fechamento do Dia:**
