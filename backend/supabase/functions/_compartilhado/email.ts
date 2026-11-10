@@ -9,7 +9,7 @@
 // Arquivo puro: o fetch é injetado, então os testes rodam no Node.
 // ================================================================
 
-import { dataDeHojeIso, formatarData, formatarKm, formatarMoeda } from "./nucleo.ts";
+import { formatarData, formatarKm, formatarMoeda } from "./nucleo.ts";
 import type { ExecutivoCadastrado, MensagemEmail, RelatorioParaGravar } from "./tipos.ts";
 
 export interface EnviadorEmail {
@@ -44,12 +44,26 @@ export function criarEnviadorMailpit(urlBase: string, fetchFn: typeof fetch = fe
   };
 }
 
+/**
+ * Data de hoje (AAAA-MM-DD) no horário de Brasília. O servidor roda em
+ * UTC: depois das 21h, em UTC já é o dia seguinte.
+ */
+export function dataDeHojeEmBrasilia(agora: Date = new Date()): string {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Sao_Paulo",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(agora);
+}
+
 /** A cópia vai SEMPRE para o e-mail cadastrado do executivo. */
 export function montarEmailCopia(
   relatorio: RelatorioParaGravar,
   executivo: ExecutivoCadastrado,
+  agora: Date = new Date(),
 ): MensagemEmail {
-  const data = formatarData(relatorio.data_visita ?? dataDeHojeIso());
+  const data = formatarData(relatorio.data_visita ?? dataDeHojeEmBrasilia(agora));
   const agencias = relatorio.agencias.map((agencia) => agencia.nome).join(", ") || "nenhuma";
 
   const texto = [

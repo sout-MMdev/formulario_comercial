@@ -13,7 +13,7 @@
 begin;
 create extension if not exists pgtap with schema extensions;
 
-select plan(13);
+select plan(15);
 
 -- Relatório fictício gravado pela própria função.
 create function pg_temp.registrar(executivo text, id_cliente bigint, resto jsonb) returns bigint
@@ -81,7 +81,7 @@ select pg_temp.registrar('CAMILA RIBEIRO', 888001, $json${
 select results_eq(
   $$select mes, total_km, total_pessoal, total_abastecimento_clara, total_final
     from public.v_reembolso_mensal where executivo = 'CAMILA RIBEIRO'$$,
-  $$select date_trunc('month', recebido_em)::date, 0::numeric, 20.00::numeric, 5.00::numeric, 15.00::numeric
+  $$select date_trunc('month', recebido_em at time zone 'America/Sao_Paulo')::date, 0::numeric, 20.00::numeric, 5.00::numeric, 15.00::numeric
     from public.relatorios where id_cliente = 888001$$,
   'mes_sem_data: itens sem data caem no mês do recebimento, com a classificação da tela'
 );
@@ -91,6 +91,20 @@ select results_eq(
     where executivo = 'BRUNO ROCHA' and mes = '2026-10-01'$$,
   $$values ('2026-10-01'::date, 60.06::numeric)$$,
   'item com data conta no mês da própria data (trajeto de outubro)'
+);
+
+-- Fuso: recebido às 22h30 de 31/10 em Brasília (01h30 de 01/11 em UTC).
+select pg_temp.registrar('JULIANA PEREIRA', 888020, $json${
+  "fluxos": ["despesas"], "total_pessoal": 10, "total_final": 10,
+  "despesas": [{ "data": null, "cartao": "Cartão Pessoal", "categoria": "Refeição",
+                 "valor": 10, "nome_comprovante": "nota.jpg" }]
+}$json$::jsonb);
+update public.relatorios set recebido_em = '2026-11-01 01:30:00+00' where id_cliente = 888020;
+
+select results_eq(
+  $$select mes from public.v_reembolso_mensal where executivo = 'JULIANA PEREIRA'$$,
+  $$values ('2026-10-01'::date)$$,
+  'fuso: item sem data recebido às 22h30 de 31/10 (Brasília) conta em outubro'
 );
 
 -- ── v_agencias_em_alerta ─────────────────────────────────────────
@@ -130,6 +144,21 @@ select results_eq(
     where agencia = 'Serra Azul Viagens'$$,
   $$values ('Serra Azul Viagens', 'Crítico', 'GUSTAVO MENDES', '2026-12-02'::date)$$,
   'empate no mesmo relatório: vale o nível mais grave'
+);
+
+-- Fuso: sem data da visita, vale o dia do recebimento em Brasília.
+select pg_temp.registrar('JULIANA PEREIRA', 888021, $json${
+  "fluxos": ["visita"],
+  "agencias": [{ "nome": "Horizonte Travel", "estresses": [
+    { "nivel": "Crítico", "setores": ["Financeiro"], "descricao": "Teste de fuso horário." }
+  ], "acoes": [] }]
+}$json$::jsonb);
+update public.relatorios set recebido_em = '2026-11-01 01:30:00+00' where id_cliente = 888021;
+
+select results_eq(
+  $$select data from public.v_agencias_em_alerta where agencia = 'Horizonte Travel'$$,
+  $$values ('2026-10-31'::date)$$,
+  'fuso: alerta sem data da visita usa o dia do recebimento em Brasília'
 );
 
 -- ── Segurança ────────────────────────────────────────────────────
