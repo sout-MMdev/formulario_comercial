@@ -20,6 +20,7 @@ import { emailDoExecutivo } from "@cativa/nucleo/servicos/executivos";
 import { gerarId, limparLocal } from "@cativa/nucleo/utils";
 import { repositorioDias } from "@cativa/nucleo/servicos/armazenamento";
 import {
+  finalizarDia,
   servicoEnvio,
   type ResultadoEnvio,
 } from "@cativa/nucleo/servicos/envio";
@@ -133,10 +134,14 @@ export function ProvedorFormulario({ children }: { children: ReactNode }) {
 
   const salvarDia = useCallback(async (): Promise<ResultadoEnvio> => {
     const dia = montarDiaParaSalvar();
-    // Guarda uma cópia local e finaliza: envia ao CRM + e-mail
-    await repositorioDias.salvar(dia);
-    const resultado = await servicoEnvio.enviar(dia);
-    despachar({ tipo: "reiniciar" });
+    // Envia ao CRM (+ cópia por e-mail); a cópia local só é gravada se
+    // o envio foi aceito. Se falhar, o formulário fica preenchido para
+    // o executivo tentar de novo.
+    const resultado = await finalizarDia(dia, {
+      repositorio: repositorioDias,
+      envio: servicoEnvio,
+    });
+    if (resultado.enviadoAoCrm) despachar({ tipo: "reiniciar" });
     return resultado;
   }, [montarDiaParaSalvar]);
 

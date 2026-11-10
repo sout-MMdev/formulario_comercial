@@ -7,14 +7,22 @@
 
 import type { DiaSalvo } from "../../tipos/index.ts";
 import type { ResultadoEnvio, ServicoEnvioRelatorio } from "./servicoEnvio.ts";
+import { MOTIVO_FALHA_PADRAO } from "./situacaoEnvio.ts";
 import { URL_RECEBER_FORMULARIO, SUPABASE_ANON } from "../../config/index.ts";
+
+/** Falha de rede: o navegador nem chegou a falar com o servidor. */
+export const MOTIVO_SEM_CONEXAO =
+  "Não foi possível conectar ao servidor. Confira sua internet e tente de novo.";
+
+type RespostaServidor = Partial<ResultadoEnvio> & { erro?: string };
 
 export const envioApi: ServicoEnvioRelatorio = {
   async enviar(dia: DiaSalvo): Promise<ResultadoEnvio> {
     const emailDestino = dia.identificacao?.email ?? "";
 
+    let resposta: Response;
     try {
-      const resposta = await fetch(URL_RECEBER_FORMULARIO, {
+      resposta = await fetch(URL_RECEBER_FORMULARIO, {
         method: "POST",
         headers: {
           apikey: SUPABASE_ANON,
@@ -23,32 +31,28 @@ export const envioApi: ServicoEnvioRelatorio = {
         },
         body: JSON.stringify(dia),
       });
-
-      const dados = (await resposta.json()) as Partial<ResultadoEnvio> & {
-        erro?: string;
-      };
-
-      if (!resposta.ok) {
-        return {
-          enviadoAoCrm: false,
-          emailEnviado: false,
-          emailDestino,
-          erro: dados?.erro ?? "Falha ao enviar o relatório.",
-        };
-      }
-
-      return {
-        enviadoAoCrm: dados.enviadoAoCrm ?? true,
-        emailEnviado: dados.emailEnviado ?? false,
-        emailDestino: dados.emailDestino ?? emailDestino,
-      };
     } catch (erro) {
+      // O detalhe técnico fica no console; a tela recebe uma frase clara.
+      console.error("Falha de rede ao enviar o relatório:", erro);
+      return { enviadoAoCrm: false, emailEnviado: false, emailDestino, erro: MOTIVO_SEM_CONEXAO };
+    }
+
+    // Um erro do servidor pode vir sem JSON (ex.: página HTML de 502).
+    const dados: RespostaServidor = await resposta.json().catch(() => ({}));
+
+    if (!resposta.ok) {
       return {
         enviadoAoCrm: false,
         emailEnviado: false,
         emailDestino,
-        erro: String(erro),
+        erro: dados.erro?.trim() || MOTIVO_FALHA_PADRAO,
       };
     }
+
+    return {
+      enviadoAoCrm: dados.enviadoAoCrm ?? true,
+      emailEnviado: dados.emailEnviado ?? false,
+      emailDestino: dados.emailDestino ?? emailDestino,
+    };
   },
 };
