@@ -27,8 +27,10 @@ import {
 } from "@cativa/nucleo/regras";
 import { repositorioDias } from "@cativa/nucleo/servicos/armazenamento";
 import {
+  criarControleIdEnvio,
   finalizarDia,
   servicoEnvio,
+  type ConteudoDia,
   type ResultadoEnvio,
 } from "@cativa/nucleo/servicos/envio";
 import type { DiaSalvo, NomeFluxo, TotaisDia } from "@cativa/nucleo/tipos";
@@ -70,6 +72,8 @@ export const FormularioContexto = createContext<ValorContexto | null>(null);
 
 export function ProvedorFormulario({ children }: { children: ReactNode }) {
   const [estado, despachar] = useReducer(formularioReducer, estadoInicial);
+  // Mesmo conteúdo → mesmo número de envio: tentar de novo não duplica.
+  const [controleIdEnvio] = useState(criarControleIdEnvio);
   const [passo, setPasso] = useState<NomePasso>("executivo");
   const [sentido, setSentido] = useState<SentidoNavegacao>("avancar");
 
@@ -162,9 +166,7 @@ export function ProvedorFormulario({ children }: { children: ReactNode }) {
   }, []);
 
   const salvarDia = useCallback(async () => {
-    const dia: DiaSalvo = {
-      id: Date.now(),
-      salvadoEm: new Date().toLocaleString("pt-BR"),
+    const conteudo: ConteudoDia = {
       fluxos: [...estado.fluxosAdicionados],
       identificacao: { ...estado.identificacao },
       visita: {
@@ -186,16 +188,24 @@ export function ProvedorFormulario({ children }: { children: ReactNode }) {
         .filter((d) => d.data || d.cartao)
         .map((d) => ({ ...d })),
     };
+    const dia: DiaSalvo = {
+      id: controleIdEnvio.idPara(conteudo),
+      salvadoEm: new Date().toLocaleString("pt-BR"),
+      ...conteudo,
+    };
 
     // Envia ao CRM (+ cópia por e-mail); a cópia local só é gravada se
     // o envio foi aceito. O formulário NÃO é zerado aqui: o passo de
     // Resumo mostra a confirmação e chama comecarOutroDia() quando o
     // executivo a fecha. Na falha, os dados ficam para tentar de novo.
-    return finalizarDia(dia, {
+    const resultado = await finalizarDia(dia, {
       repositorio: repositorioDias,
       envio: servicoEnvio,
     });
-  }, [estado, agenciasVisitadas]);
+    // Envio aceito: o próximo dia ganha um número novo.
+    if (resultado.enviadoAoCrm) controleIdEnvio.esquecer();
+    return resultado;
+  }, [estado, agenciasVisitadas, controleIdEnvio]);
 
   /** Zera o dia (mantém o executivo) e volta ao primeiro passo. */
   const comecarOutroDia = useCallback(() => {

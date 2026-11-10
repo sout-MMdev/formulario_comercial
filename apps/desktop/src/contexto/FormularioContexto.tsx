@@ -9,6 +9,7 @@ import {
   useCallback,
   useMemo,
   useReducer,
+  useState,
   type ReactNode,
 } from "react";
 import {
@@ -20,8 +21,10 @@ import { emailDoExecutivo } from "@cativa/nucleo/servicos/executivos";
 import { gerarId, limparLocal } from "@cativa/nucleo/utils";
 import { repositorioDias } from "@cativa/nucleo/servicos/armazenamento";
 import {
+  criarControleIdEnvio,
   finalizarDia,
   servicoEnvio,
+  type ConteudoDia,
   type ResultadoEnvio,
 } from "@cativa/nucleo/servicos/envio";
 import type {
@@ -60,6 +63,8 @@ export const FormularioContexto = createContext<ValorContexto | null>(null);
 
 export function ProvedorFormulario({ children }: { children: ReactNode }) {
   const [estado, despachar] = useReducer(formularioReducer, estadoInicial);
+  // Mesmo conteúdo → mesmo número de envio: tentar de novo não duplica.
+  const [controleIdEnvio] = useState(criarControleIdEnvio);
 
   // ── Derivados ──────────────────────────────────────────────────
 
@@ -102,9 +107,7 @@ export function ProvedorFormulario({ children }: { children: ReactNode }) {
   }, []);
 
   const montarDiaParaSalvar = useCallback((): DiaSalvo => {
-    return {
-      id: Date.now(),
-      salvadoEm: new Date().toLocaleString("pt-BR"),
+    const conteudo: ConteudoDia = {
       fluxos: [...estado.fluxosAdicionados],
       identificacao: { ...estado.identificacao },
       visita: {
@@ -130,7 +133,12 @@ export function ProvedorFormulario({ children }: { children: ReactNode }) {
         .filter((d) => d.data || d.cartao)
         .map((d) => ({ ...d })),
     };
-  }, [estado, agenciasVisitadas]);
+    return {
+      id: controleIdEnvio.idPara(conteudo),
+      salvadoEm: new Date().toLocaleString("pt-BR"),
+      ...conteudo,
+    };
+  }, [estado, agenciasVisitadas, controleIdEnvio]);
 
   const salvarDia = useCallback(async (): Promise<ResultadoEnvio> => {
     const dia = montarDiaParaSalvar();
@@ -139,11 +147,14 @@ export function ProvedorFormulario({ children }: { children: ReactNode }) {
     // para a Identificação e desmontaria a confirmação na tela de
     // Resumo. Quem zera é o Resumo, quando o executivo fecha a
     // confirmação de sucesso. Na falha, os dados ficam para tentar de novo.
-    return finalizarDia(dia, {
+    const resultado = await finalizarDia(dia, {
       repositorio: repositorioDias,
       envio: servicoEnvio,
     });
-  }, [montarDiaParaSalvar]);
+    // Envio aceito: o próximo dia ganha um número novo.
+    if (resultado.enviadoAoCrm) controleIdEnvio.esquecer();
+    return resultado;
+  }, [montarDiaParaSalvar, controleIdEnvio]);
 
   const valor = useMemo<ValorContexto>(
     () => ({
