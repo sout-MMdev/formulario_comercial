@@ -37,3 +37,85 @@ export function chavePublicaValida(req: Request, chavesAceitas: string[]): boole
   const chave = req.headers.get("apikey");
   return Boolean(chave) && chavesAceitas.includes(chave as string);
 }
+
+/**
+ * Lê uma variável de ambiente com chaves. Aceita os formatos que o
+ * Supabase usa: objeto JSON { "default": "sb_..." }, lista JSON ou
+ * uma chave só em texto.
+ */
+export function lerListaDeChaves(valor: string | undefined): string[] {
+  const texto = (valor ?? "").trim();
+  if (texto === "") return [];
+  try {
+    const lido: unknown = JSON.parse(texto);
+    const valores = Array.isArray(lido)
+      ? lido
+      : typeof lido === "object" && lido !== null
+        ? Object.values(lido)
+        : [lido];
+    return valores.filter((chave): chave is string => typeof chave === "string" && chave !== "");
+  } catch {
+    return [texto];
+  }
+}
+
+// ── Corpo da requisição ──────────────────────────────────────────
+
+export const ERRO_JSON_INVALIDO = "O corpo da requisição não é um JSON válido.";
+
+export type LeituraCorpo = { ok: true; corpo: unknown } | { ok: false; resposta: Response };
+
+/** Lê o corpo como JSON: 413 se passar do limite, 400 se não for JSON. */
+export async function lerCorpoJson(req: Request): Promise<LeituraCorpo> {
+  const tamanhoDeclarado = Number(req.headers.get("content-length") ?? 0);
+  if (tamanhoDeclarado > LIMITE_CORPO_BYTES) {
+    return { ok: false, resposta: responderJson(413, { erro: "O relatório é grande demais." }) };
+  }
+
+  const texto = await req.text();
+  if (new TextEncoder().encode(texto).length > LIMITE_CORPO_BYTES) {
+    return { ok: false, resposta: responderJson(413, { erro: "O relatório é grande demais." }) };
+  }
+
+  try {
+    return { ok: true, corpo: JSON.parse(texto) };
+  } catch {
+    return { ok: false, resposta: responderJson(400, { erro: ERRO_JSON_INVALIDO }) };
+  }
+}
+
+// ── Tratador padrão das Edge Functions ───────────────────────────
+
+export const ERRO_CHAVE = "Chave de acesso inválida.";
+export const ERRO_INTERNO = "Erro interno. Tente de novo em instantes.";
+
+export interface OpcoesTratador {
+  metodo: "GET" | "POST";
+  /** Chaves públicas aceitas (lidas do ambiente a cada pedido). */
+  chavesAceitas: () => string[];
+  tratar: (req: Request) => Promise<Response>;
+}
+
+/**
+ * A mesma sequência para as três funções:
+ *   OPTIONS → 204 | sem chave → 401 | método errado → 405 |
+ *   tratamento | erro inesperado → 500 (detalhe só no log).
+ */
+export function criarTratador(opcoes: OpcoesTratador): (req: Request) => Promise<Response> {
+  return async (req) => {
+    if (req.method === "OPTIONS") return responderPreflight();
+    if (!chavePublicaValida(req, opcoes.chavesAceitas())) {
+      return responderJson(401, { erro: ERRO_CHAVE });
+    }
+    if (req.method !== opcoes.metodo) {
+      return responderJson(405, { erro: `Use o método ${opcoes.metodo}.` });
+    }
+    try {
+      return await opcoes.tratar(req);
+    } catch (erro) {
+      // O detalhe (SQL, stack) fica no log do servidor, nunca na resposta.
+      console.error("Erro inesperado na função:", erro);
+      return responderJson(500, { erro: ERRO_INTERNO });
+    }
+  };
+}
