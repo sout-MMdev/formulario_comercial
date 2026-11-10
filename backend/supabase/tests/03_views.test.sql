@@ -4,7 +4,8 @@
 --     mesma classificação de despesas da tela.
 --   v_agencias_em_alerta: agências cujo registro de estresse mais
 --     recente é Alto ou Crítico.
--- Os relatórios extras são criados aqui e desfeitos no rollback.
+-- Não depende do que já está no banco: apaga os relatórios e monta o
+-- próprio cenário; o rollback do fim desfaz tudo (nada fica gravado).
 --
 -- Rodar:  npm run backend:testar-banco
 -- ================================================================
@@ -27,6 +28,30 @@ language sql as $$
     ) || resto
   )
 $$;
+
+-- ── Cenário do teste ─────────────────────────────────────────────
+delete from public.relatorios;
+
+-- Trajeto datado em outubro (BRUNO ROCHA, tarifa 1,43): 42 km = R$ 60,06.
+select pg_temp.registrar('BRUNO ROCHA', 888010, $json${
+  "fluxos": ["despesas"], "total_km": 60.06, "total_final": 60.06, "km_rodado": 42,
+  "trajetos": [{ "data": "2026-10-21", "partida": "Porto Alegre - RS", "destino": "Novo Hamburgo - RS",
+                 "km": 42, "tarifa_km": 1.43, "reembolso": 60.06 }]
+}$json$::jsonb);
+
+-- Turismo Aurora com estresse Alto; Rota Sul Turismo com Médio.
+select pg_temp.registrar('BRUNO ROCHA', 888011, $json${
+  "fluxos": ["visita"], "data_visita": "2026-10-14",
+  "agencias": [{ "nome": "Turismo Aurora", "estresses": [
+    { "nivel": "Alto", "setores": ["Financeiro"], "descricao": "Atraso no repasse de comissões." }
+  ], "acoes": [] }]
+}$json$::jsonb);
+select pg_temp.registrar('PAULO SOUZA', 888012, $json${
+  "fluxos": ["visita"], "data_visita": "2026-11-04",
+  "agencias": [{ "nome": "Rota Sul Turismo", "estresses": [
+    { "nivel": "Médio", "setores": ["Atendimento"], "descricao": "Fila de cotações." }
+  ], "acoes": [] }]
+}$json$::jsonb);
 
 -- ── v_reembolso_mensal ───────────────────────────────────────────
 select results_eq(
@@ -65,13 +90,13 @@ select results_eq(
   $$select mes, total_km from public.v_reembolso_mensal
     where executivo = 'BRUNO ROCHA' and mes = '2026-10-01'$$,
   $$values ('2026-10-01'::date, 60.06::numeric)$$,
-  'item com data conta no mês da própria data (trajeto de outubro do seed)'
+  'item com data conta no mês da própria data (trajeto de outubro)'
 );
 
 -- ── v_agencias_em_alerta ─────────────────────────────────────────
 select ok(
   exists (select 1 from public.v_agencias_em_alerta where agencia = 'Turismo Aurora' and nivel = 'Alto'),
-  'alerta_aparece: Turismo Aurora (Alto no seed) está em alerta'
+  'alerta_aparece: Turismo Aurora (Alto) está em alerta'
 );
 select ok(
   not exists (select 1 from public.v_agencias_em_alerta where agencia = 'Rota Sul Turismo'),
