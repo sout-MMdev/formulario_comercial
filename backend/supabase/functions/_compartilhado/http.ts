@@ -65,16 +65,47 @@ export const ERRO_JSON_INVALIDO = "O corpo da requisição não é um JSON váli
 
 export type LeituraCorpo = { ok: true; corpo: unknown } | { ok: false; resposta: Response };
 
+const ERRO_GRANDE_DEMAIS = "O relatório é grande demais.";
+
+/**
+ * Lê o corpo aos pedaços e para assim que passar do limite: um corpo
+ * enorme (ou que nunca termina) não chega a ser guardado na memória.
+ * Devolve null quando passou do limite.
+ */
+async function lerTextoComLimite(req: Request, limite: number): Promise<string | null> {
+  if (!req.body) return "";
+  const leitor = req.body.getReader();
+  const partes: Uint8Array[] = [];
+  let total = 0;
+  for (;;) {
+    const { done, value } = await leitor.read();
+    if (done) break;
+    total += value.byteLength;
+    if (total > limite) {
+      leitor.cancel().catch(() => {});
+      return null;
+    }
+    partes.push(value);
+  }
+  const bytes = new Uint8Array(total);
+  let posicao = 0;
+  for (const parte of partes) {
+    bytes.set(parte, posicao);
+    posicao += parte.byteLength;
+  }
+  return new TextDecoder().decode(bytes);
+}
+
 /** Lê o corpo como JSON: 413 se passar do limite, 400 se não for JSON. */
 export async function lerCorpoJson(req: Request): Promise<LeituraCorpo> {
   const tamanhoDeclarado = Number(req.headers.get("content-length") ?? 0);
   if (tamanhoDeclarado > LIMITE_CORPO_BYTES) {
-    return { ok: false, resposta: responderJson(413, { erro: "O relatório é grande demais." }) };
+    return { ok: false, resposta: responderJson(413, { erro: ERRO_GRANDE_DEMAIS }) };
   }
 
-  const texto = await req.text();
-  if (new TextEncoder().encode(texto).length > LIMITE_CORPO_BYTES) {
-    return { ok: false, resposta: responderJson(413, { erro: "O relatório é grande demais." }) };
+  const texto = await lerTextoComLimite(req, LIMITE_CORPO_BYTES);
+  if (texto === null) {
+    return { ok: false, resposta: responderJson(413, { erro: ERRO_GRANDE_DEMAIS }) };
   }
 
   try {

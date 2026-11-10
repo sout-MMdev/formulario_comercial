@@ -63,10 +63,22 @@ export function Resumo() {
 
   async function aoSalvar() {
     setSalvando(true);
-    const retorno = await salvarDia();
-    setResultado(retorno);
-    setSalvando(false);
-    setSalvo(true);
+    try {
+      setResultado(await salvarDia());
+    } catch (erro) {
+      // Rede de segurança: o envio já trata as próprias falhas, mas o
+      // botão nunca pode ficar preso em "Salvando...".
+      console.error("Falha inesperada ao salvar o dia:", erro);
+      setResultado({
+        enviadoAoCrm: false,
+        emailEnviado: false,
+        emailDestino: "",
+        erro: "Algo deu errado ao salvar. Tente de novo.",
+      });
+    } finally {
+      setSalvando(false);
+      setSalvo(true);
+    }
   }
 
   // Só há "Relatório enviado!" quando o CRM aceitou o relatório.

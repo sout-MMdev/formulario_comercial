@@ -14,6 +14,7 @@
 // ================================================================
 
 import {
+  categoriasDespesa,
   validarDespesas,
   validarIdentificacao,
   validarRegistroEstresse,
@@ -42,6 +43,9 @@ export const LIMITES = {
 
 const FLUXOS = ["visita", "despesas"];
 const CARTOES = ["Cartão Pessoal", "Cartão Clara", ""];
+// As mesmas opções do seletor da tela (ou vazio). Texto livre faria o
+// total do servidor e a view mensal discordarem ("Abastecimento " ≠ "Abastecimento").
+const CATEGORIAS = [...categoriasDespesa, ""];
 const NIVEIS: NomeNivelEstresse[] = ["Baixo", "Médio", "Alto", "Crítico"];
 
 /** Erro de estrutura: devolve a mensagem, ou null se está tudo certo. */
@@ -191,6 +195,7 @@ function conferirTrajeto(valor: unknown, campo: string): Erro {
 function conferirDespesa(valor: unknown, campo: string): Erro {
   if (!ehObjeto(valor)) return invalido(campo);
   if (!CARTOES.includes(valor.cartao as string)) return invalido(`${campo}.cartao`);
+  if (!CATEGORIAS.includes(valor.categoria as string)) return invalido(`${campo}.categoria`);
   return (
     texto(valor.id, `${campo}.id`) ??
     data(valor.data, `${campo}.data`) ??

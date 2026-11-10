@@ -113,6 +113,13 @@ describe("validação do corpo recebido", () => {
     assert.notEqual(erroDe(dia), null);
   });
 
+  it("recusa categoria fora da lista da tela, inclusive com espaço sobrando", () => {
+    const comCategoria = (categoria: string) => ({ ...diaValido(), despesas: [{ ...diaValido().despesas[0], categoria }] });
+    assert.notEqual(erroDe(comCategoria("Combustível")), null);
+    assert.notEqual(erroDe(comCategoria("Abastecimento ")), null);
+    assert.equal(erroDe(comCategoria("Abastecimento")), null);
+  });
+
   it("recusa cartão desconhecido", () => {
     const dia = { ...diaValido(), despesas: [{ ...diaValido().despesas[0], cartao: "Cartão Ouro" }] };
     assert.notEqual(erroDe(dia), null);

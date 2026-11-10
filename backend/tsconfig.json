@@ -24,7 +24,8 @@
     "tsBuildInfoFile": "../node_modules/.tmp/backend.tsbuildinfo"
   },
   /* Só o que é TypeScript "puro". Os index.ts e o servidor.ts usam
-     APIs do Deno (Deno.serve, Deno.env) e são checados pelo Deno.   */
+     APIs do Deno (Deno.serve, Deno.env) e são checados com
+     `npm run backend:checar-funcoes` (deno check, também no CI).    */
   "include": ["supabase/functions/_compartilhado/*.ts", "testes/**/*.ts", "scripts/**/*.ts"],
   "exclude": [
     "supabase/functions/_compartilhado/servidor.ts",

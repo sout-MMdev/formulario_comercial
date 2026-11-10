@@ -116,6 +116,13 @@ describe("conteúdo da cópia", () => {
     assert.match(texto, /R\$\s48,40/);
   });
 
+  it("sem data da visita, usa a data de hoje no horário de Brasília", () => {
+    // 01h30 de 01/11 em UTC = 22h30 de 31/10 em Brasília.
+    const agora = new Date("2026-11-01T01:30:00Z");
+    const mensagem = montarEmailCopia({ ...RELATORIO, data_visita: null }, EXECUTIVO, agora);
+    assert.equal(mensagem.assunto, "Relatório comercial — PAULO SOUZA — 31/10/2026");
+  });
+
   it("sem data da visita, usa a data de hoje no assunto", () => {
     const mensagem = montarEmailCopia({ ...RELATORIO, data_visita: null }, EXECUTIVO);
     assert.match(mensagem.assunto, /^Relatório comercial — PAULO SOUZA — \d{2}\/\d{2}\/\d{4}$/);

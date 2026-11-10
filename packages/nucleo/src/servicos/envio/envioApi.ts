@@ -14,6 +14,10 @@ import { URL_RECEBER_FORMULARIO, SUPABASE_ANON } from "../../config/index.ts";
 export const MOTIVO_SEM_CONEXAO =
   "Não foi possível conectar ao servidor. Confira sua internet e tente de novo.";
 
+/** Status 200, mas sem a confirmação de que o relatório foi aceito. */
+export const MOTIVO_RESPOSTA_INESPERADA =
+  "O servidor respondeu de um jeito inesperado. Tente de novo.";
+
 type RespostaServidor = Partial<ResultadoEnvio> & { erro?: string };
 
 export const envioApi: ServicoEnvioRelatorio = {
@@ -49,9 +53,19 @@ export const envioApi: ServicoEnvioRelatorio = {
       };
     }
 
+    // Só conta como aceito com a confirmação explícita do servidor.
+    if (dados.enviadoAoCrm !== true) {
+      return {
+        enviadoAoCrm: false,
+        emailEnviado: false,
+        emailDestino,
+        erro: MOTIVO_RESPOSTA_INESPERADA,
+      };
+    }
+
     return {
-      enviadoAoCrm: dados.enviadoAoCrm ?? true,
-      emailEnviado: dados.emailEnviado ?? false,
+      enviadoAoCrm: true,
+      emailEnviado: dados.emailEnviado === true,
       emailDestino: dados.emailDestino ?? emailDestino,
     };
   },

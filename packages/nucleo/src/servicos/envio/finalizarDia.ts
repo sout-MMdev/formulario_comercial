@@ -21,7 +21,13 @@ export async function finalizarDia(
 ): Promise<ResultadoEnvio> {
   const resultado = await envio.enviar(dia);
   if (resultado.enviadoAoCrm) {
-    await repositorio.salvar(dia);
+    try {
+      await repositorio.salvar(dia);
+    } catch (erro) {
+      // O relatório já está no servidor: uma falha só no histórico do
+      // aparelho (ex.: armazenamento cheio) não vira erro de envio.
+      console.error("Não foi possível guardar a cópia local do dia:", erro);
+    }
   }
   return resultado;
 }

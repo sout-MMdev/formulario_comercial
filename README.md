@@ -3,7 +3,7 @@
 <div align="center">
 
   [![CI](https://github.com/sout-MMdev/formulario_comercial/actions/workflows/ci.yml/badge.svg)](https://github.com/sout-MMdev/formulario_comercial/actions/workflows/ci.yml)
-  ![Testes](https://img.shields.io/badge/Testes-225%20passando-brightgreen?style=flat)
+  ![Testes](https://img.shields.io/badge/Testes-236%20passando-brightgreen?style=flat)
   ![Node.js](https://img.shields.io/badge/Node.js-22.18%2B-339933?style=flat&logo=nodedotjs&logoColor=white)
 
   ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
@@ -185,11 +185,11 @@ Fluxo Mobile:
 
 | Camada | Testes | O que cobre |
 | :--- | :---: | :--- |
-| **Núcleo** (`packages/nucleo`) | 70 | Reembolso, validações, fluxo das etapas, envio e formatadores |
-| **Unidade do back-end** (`backend/testes/unidade`) | 54 | Validação do corpo, recálculo no servidor, processamento, HTTP, e-mail |
-| **Banco** (pgTAP, `backend/supabase/tests`) | 90 | Tabelas, RLS, privilégios, regras, gravação atômica, views |
+| **Núcleo** (`packages/nucleo`) | 72 | Reembolso, validações, fluxo das etapas, envio e formatadores |
+| **Unidade do back-end** (`backend/testes/unidade`) | 61 | Validação do corpo, recálculo no servidor, processamento, HTTP, e-mail |
+| **Banco** (pgTAP, `backend/supabase/tests`) | 92 | Tabelas, RLS, privilégios, regras, gravação atômica, views |
 | **Integração** (`backend/testes/integracao`) | 11 | As Edge Functions chamadas pela rede, com banco e e-mail |
-| **Total** | **225** | O **CI** roda todos a cada push |
+| **Total** | **236** | O **CI** roda todos a cada push |
 
 ### Regras Principais Validadas nos Testes:
 * **Fórmula de Fechamento do Dia:**
@@ -240,6 +240,7 @@ Comandos, endereços e "onde mexer para…": **[backend/README.md](backend/READM
 npm run typecheck         # tipos de todos os pacotes
 npm test                  # núcleo + unidade do back-end
 npm run backend:testar    # banco + Edge Functions (Docker)
+npm run backend:checar-funcoes   # tipos do código Deno das funções
 ```
 
 ---

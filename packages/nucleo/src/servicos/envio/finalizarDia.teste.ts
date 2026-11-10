@@ -7,7 +7,7 @@
 // Rodar:  npm test
 // ================================================================
 
-import { describe, it } from "node:test";
+import { describe, it, mock } from "node:test";
 import assert from "node:assert/strict";
 import type { DiaSalvo } from "../../tipos/index.ts";
 import type { ResultadoEnvio } from "./servicoEnvio.ts";
@@ -48,6 +48,25 @@ describe("finalizar o dia", () => {
 
     assert.deepEqual(resultado, aceito);
     assert.deepEqual(gravados, [DIA]);
+  });
+
+  it("envio aceito, mas a cópia local falha: o resultado do envio vale mesmo assim", async () => {
+    const aceito = { enviadoAoCrm: true, emailEnviado: true, emailDestino: "ana@empresa.exemplo" };
+    const deps = {
+      repositorio: {
+        salvar: async () => {
+          throw new Error("QuotaExceededError");
+        },
+      },
+      envio: { enviar: async () => aceito },
+    };
+    const log = mock.method(console, "error", () => {});
+
+    const resultado = await finalizarDia(DIA, deps);
+
+    assert.deepEqual(resultado, aceito);
+    assert.equal(log.mock.callCount(), 1);
+    log.mock.restore();
   });
 
   it("envio recusado: não grava cópia local", async () => {
