@@ -87,6 +87,25 @@ describe("leitura do corpo JSON", () => {
     }
   });
 
+  it("corpo sem tamanho declarado para de ser lido ao passar de 256 KB", { timeout: 3000 }, async () => {
+    // 300 KB e o envio nunca termina: ler tudo antes de medir travaria a função.
+    const corpo = new ReadableStream<Uint8Array>({
+      start(controle) {
+        controle.enqueue(new Uint8Array(300 * 1024).fill(97));
+      },
+    });
+    const pedido = new Request("http://localhost/f", {
+      method: "POST",
+      body: corpo,
+      duplex: "half",
+    } as RequestInit);
+
+    const leitura = await lerCorpoJson(pedido);
+
+    assert.equal(leitura.ok, false);
+    if (!leitura.ok) assert.equal(leitura.resposta.status, 413);
+  });
+
   it("corpo acima de 256 KB responde 413", async () => {
     const leitura = await lerCorpoJson(post(JSON.stringify({ x: "a".repeat(300 * 1024) })));
     assert.equal(leitura.ok, false);
